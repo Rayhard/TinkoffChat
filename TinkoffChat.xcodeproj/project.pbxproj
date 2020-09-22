@@ -13,6 +13,7 @@
 		336ED0D3250B4BCA00E64482 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336ED0D1250B4BCA00E64482 /* Main.storyboard */; };
 		336ED0D5250B4BCB00E64482 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 336ED0D4250B4BCB00E64482 /* Assets.xcassets */; };
 		336ED0D8250B4BCB00E64482 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336ED0D6250B4BCB00E64482 /* LaunchScreen.storyboard */; };
+		33F8CE052519D60200EE593F /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F8CE042519D60200EE593F /* LogManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		336ED0D4250B4BCB00E64482 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		336ED0D7250B4BCB00E64482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		336ED0D9250B4BCB00E64482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33F8CE042519D60200EE593F /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		336ED0CA250B4BCA00E64482 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				33F8CE032519D5E600EE593F /* Managers */,
 				336E32F625173656000A40D8 /* Extentions */,
 				336ED0CB250B4BCA00E64482 /* AppDelegate.swift */,
 				336ED0CF250B4BCA00E64482 /* ProfileViewController.swift */,
@@ -73,6 +76,14 @@
 				336ED0D9250B4BCB00E64482 /* Info.plist */,
 			);
 			path = TinkoffChat;
+			sourceTree = "<group>";
+		};
+		33F8CE032519D5E600EE593F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				33F8CE042519D60200EE593F /* LogManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33F8CE052519D60200EE593F /* LogManager.swift in Sources */,
 				336ED0D0250B4BCA00E64482 /* ProfileViewController.swift in Sources */,
 				336ED0CC250B4BCA00E64482 /* AppDelegate.swift in Sources */,
 				336E32F825173695000A40D8 /* UIAlertControllerExtention.swift in Sources */,

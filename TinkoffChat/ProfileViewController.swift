@@ -20,12 +20,6 @@ class ProfileViewController: UIViewController{
         showActionSheet()
     }
     
-    
-    var showLog: Bool{
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.showLog
-    }
-    
     // MARK: Lyfestyle
     
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -53,16 +47,12 @@ class ProfileViewController: UIViewController{
         let editImageGesture = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
         circleView.addGestureRecognizer(editImageGesture)
         
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,37 +61,27 @@ class ProfileViewController: UIViewController{
         // Размер кнопки Edit изменился из-за того что viewDidAppear вызывается после viewWillLayoutSubviews и viewDidLayoutSubviews, где происходит установка констрейнов под размер экрана
         print("viewDidAppear - Edit button frame:\n\t \(editButton.frame)")
         
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        if showLog {
-            print(#function)
-        }
+        LogManager.showMessage(#function)
     }
     
     // MARK: Function
