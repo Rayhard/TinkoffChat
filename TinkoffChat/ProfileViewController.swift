@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ProfileViewController: UIViewController{
     
@@ -97,23 +98,33 @@ class ProfileViewController: UIViewController{
             self.present(vc, animated: true)
         }
         let photoCam = UIAlertAction(title: "Сделать фото", style: .default) { _ in
-            #if targetEnvironment(simulator)
-                let alertController = UIAlertController(title: nil,
-                                                        message: "Устройство не имеет камеры",
-                                                        preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок",
-                                             style: .default,
-                                             handler: nil)
-                
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
-            #else
+            
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                AlertManager.showAlert(withMessage: "Устройство не имеет камеры")
+                return
+            }
+            
+            let showCameraController = {
                 let vc = UIImagePickerController()
                 vc.sourceType = .camera
                 vc.allowsEditing = true
                 vc.delegate = self
                 self.present(vc, animated: true)
-            #endif
+            }
+            
+            if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+                showCameraController()
+            } else {
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    DispatchQueue.main.async {
+                        if granted {
+                            showCameraController()
+                        } else {
+                            AlertManager.showAlert(withMessage: "Не предоставлен доступ к камере.\nПерейдите в настройки и предоставте доступ")
+                        }
+                    }
+                }
+            }
         }
         let cancel = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
         
@@ -138,7 +149,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             picker.dismiss(animated: true)
             
             guard let image = info[.editedImage] as? UIImage else {
-                print("No image found")
+                AlertManager.showAlert(withMessage: "Не удалось получить изображение")
                 return
             }
             
@@ -152,6 +163,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             } else if let possibleImage = info[.originalImage] as? UIImage {
                 image = possibleImage
             } else {
+                AlertManager.showAlert(withMessage: "Не удалось получить изображение")
                 return
             }
 
