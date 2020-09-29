@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversationViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView?
     
     var name: String = ""
     
@@ -26,9 +26,9 @@ class ConversationViewController: UIViewController {
         super.viewDidLoad()
         self.title = name
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: "ConversationViewCell", bundle: nil), forCellReuseIdentifier: "ConversationViewCell")
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.register(UINib(nibName: "ConversationViewCell", bundle: nil), forCellReuseIdentifier: "ConversationViewCell")
     }
 
 }

@@ -9,10 +9,10 @@
 import UIKit
 
 class ConversationsListViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var profileSymbol: UILabel!
+    @IBOutlet weak var tableView: UITableView?
+    @IBOutlet weak var profileView: UIView?
+    @IBOutlet weak var profileImage: UIImageView?
+    @IBOutlet weak var profileSymbol: UILabel?
     
     var conversationsListExample: [ConversationCellModel] = [
         ConversationCellModel(name: "Anastasia", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
@@ -55,16 +55,16 @@ class ConversationsListViewController: UIViewController {
         
         conversationsList = sortArray(array: conversationsListExample)
         
-        profileView.layer.cornerRadius = profileView.frame.width / 2
-        profileImage.layer.cornerRadius = profileImage.frame.width / 2
-        profileImage.clipsToBounds = true
+        profileView?.layer.cornerRadius = (profileView?.frame.width ?? 0) / 2
+        profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 0) / 2
+        profileImage?.clipsToBounds = true
         
         let openProfileGesture = UITapGestureRecognizer(target: self, action: #selector(openProfile))
-        profileView.addGestureRecognizer(openProfileGesture)
+        profileView?.addGestureRecognizer(openProfileGesture)
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: "ConversationsListCell", bundle: nil), forCellReuseIdentifier: "ConversationsListCell")
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.register(UINib(nibName: "ConversationsListCell", bundle: nil), forCellReuseIdentifier: "ConversationsListCell")
         
         let backItem = UIBarButtonItem()
         backItem.title = ""

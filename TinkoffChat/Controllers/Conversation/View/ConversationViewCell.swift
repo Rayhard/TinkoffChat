@@ -11,24 +11,24 @@ import UIKit
 class ConversationViewCell: UITableViewCell, ConfigurableView{
     typealias ConfigurationModel = MessageCellModel
     
-    @IBOutlet weak var messageBubbleView: UIView!
-    @IBOutlet weak var textMessageLabel: UILabel!
-    @IBOutlet var leadingConstraint: NSLayoutConstraint!
-    @IBOutlet var trailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var messageBubbleView: UIView?
+    @IBOutlet weak var textMessageLabel: UILabel?
+    @IBOutlet var leadingConstraint: NSLayoutConstraint?
+    @IBOutlet var trailingConstraint: NSLayoutConstraint?
     
     func configure(with model: MessageCellModel) {
-        messageBubbleView.layer.cornerRadius = 10
+        messageBubbleView?.layer.cornerRadius = 10
         
-        textMessageLabel.text = model.text
+        textMessageLabel?.text = model.text
         
         if model.isOutput{
-            messageBubbleView.backgroundColor = UIColor(named: "LightGreen")
-            trailingConstraint.isActive = true
-            leadingConstraint.isActive = false
+            messageBubbleView?.backgroundColor = UIColor(named: "LightGreen")
+            trailingConstraint?.isActive = true
+            leadingConstraint?.isActive = false
         } else {
-            messageBubbleView.backgroundColor = UIColor(named: "LightGray")
-            trailingConstraint.isActive = false
-            leadingConstraint.isActive = true
+            messageBubbleView?.backgroundColor = UIColor(named: "LightGray")
+            trailingConstraint?.isActive = false
+            leadingConstraint?.isActive = true
         }
     }
 }

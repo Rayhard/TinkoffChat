@@ -11,17 +11,17 @@ import UIKit
 class ConversationsListCell: UITableViewCell, ConfigurableView {
     typealias ConfigurationModel = ConversationCellModel
     
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var textMessageLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel?
+    @IBOutlet weak var textMessageLabel: UILabel?
+    @IBOutlet weak var dateLabel: UILabel?
     
     func configure(with model: ConversationCellModel) {
         self.selectionStyle = .none
         
-        nameLabel.text = model.name
+        nameLabel?.text = model.name
         if model.message == ""{
-            textMessageLabel.text = "No messages yet"
-            textMessageLabel.textColor = UIColor(named: "LabelLight")
+            textMessageLabel?.text = "No messages yet"
+            textMessageLabel?.textColor = UIColor(named: "LabelLight")
             guard let customFont = UIFont(name: "BlackHole-Italic", size: UIFont.labelFontSize) else {
                 fatalError("""
                     Failed to load the "BlackHole_Italic" font.
@@ -29,23 +29,23 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
                     """
                 )
             }
-            textMessageLabel.font = UIFontMetrics.default.scaledFont(for: customFont)
-            textMessageLabel.adjustsFontForContentSizeCategory = true
+            textMessageLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)
+            textMessageLabel?.adjustsFontForContentSizeCategory = true
             
-            dateLabel.text = ""
+            dateLabel?.text = ""
         } else {
             
             if model.hasUnreadMessages{
-                textMessageLabel.font = .boldSystemFont(ofSize: 17)
-                textMessageLabel.textColor = .black
+                textMessageLabel?.font = .boldSystemFont(ofSize: 17)
+                textMessageLabel?.textColor = .black
             } else {
-                textMessageLabel.font = .none
-                textMessageLabel.textColor = UIColor(named: "LabelLight")
+                textMessageLabel?.font = .none
+                textMessageLabel?.textColor = UIColor(named: "LabelLight")
             }
             
-            textMessageLabel.text = model.message
+            textMessageLabel?.text = model.message
             
-            dateLabel.text = formDate(model.date)
+            dateLabel?.text = formDate(model.date)
         }
         
         if model.isOnline{
