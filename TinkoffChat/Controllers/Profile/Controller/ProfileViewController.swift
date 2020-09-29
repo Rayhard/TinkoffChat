@@ -13,12 +13,20 @@ class ProfileViewController: UIViewController{
     
     @IBOutlet weak var circleView: UIView!
     @IBOutlet weak var nameSymbolsLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var profileImageView: UIImageView!
     
     @IBAction func editButtonAction(_ sender: Any) {
         showActionSheet()
+    }
+    @IBAction func closeButtonAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    @IBAction func saveButtonAction(_ sender: Any) {
+        UserProfile.shared.photo = profileImageView.image
     }
     
     // MARK: Lyfestyle
@@ -37,7 +45,7 @@ class ProfileViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("viewDidLoad - Edit button frame:\n\t \(editButton.frame)")
+        LogManager.showMessage("viewDidLoad - Edit button frame:\n\t \(editButton.frame)")
         
         circleView.layer.cornerRadius = circleView.bounds.height / 2
         saveButton.layer.cornerRadius = saveButton.bounds.height / 3
@@ -47,6 +55,11 @@ class ProfileViewController: UIViewController{
         
         let editImageGesture = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
         circleView.addGestureRecognizer(editImageGesture)
+        
+        nameLabel.text = UserProfile.shared.name
+        nameSymbolsLabel.text = UserProfile.shared.symbols
+        descriptionLabel.text = UserProfile.shared.description
+        profileImageView.image = UserProfile.shared.photo
         
         LogManager.showMessage(#function)
     }
@@ -60,8 +73,7 @@ class ProfileViewController: UIViewController{
         super.viewDidAppear(animated)
         
         // Размер кнопки Edit изменился из-за того что viewDidAppear вызывается после viewWillLayoutSubviews и viewDidLayoutSubviews, где происходит установка констрейнов под размер экрана
-        print("viewDidAppear - Edit button frame:\n\t \(editButton.frame)")
-        
+        LogManager.showMessage("viewDidAppear - Edit button frame:\n\t \(editButton.frame)")
         LogManager.showMessage(#function)
     }
     
