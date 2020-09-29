@@ -22,7 +22,7 @@
                                 <rect key="frame" x="87" y="147" width="240" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIN-T4-mDd">
-                                        <rect key="frame" x="43" y="48.5" width="154" height="143"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="120"/>
                                         <color key="textColor" name="Black"/>
                                         <nil key="highlightedColor"/>
@@ -33,13 +33,15 @@
                                 </subviews>
                                 <color key="backgroundColor" name="Yellow"/>
                                 <constraints>
+                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="top" secondItem="qCL-MA-avs" secondAttribute="top" id="0QM-Nb-q4H"/>
                                     <constraint firstAttribute="width" constant="240" id="9AT-ag-Oj6"/>
                                     <constraint firstAttribute="trailing" secondItem="4TH-sw-XT2" secondAttribute="trailing" id="Abg-ez-Iah"/>
                                     <constraint firstAttribute="bottom" secondItem="4TH-sw-XT2" secondAttribute="bottom" id="Cdt-SD-6P7"/>
-                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="centerY" secondItem="qCL-MA-avs" secondAttribute="centerY" id="EqE-AK-2RV"/>
+                                    <constraint firstAttribute="trailing" secondItem="TIN-T4-mDd" secondAttribute="trailing" id="DO0-M6-0ut"/>
+                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="leading" secondItem="qCL-MA-avs" secondAttribute="leading" id="EBE-0C-eTO"/>
                                     <constraint firstItem="4TH-sw-XT2" firstAttribute="top" secondItem="qCL-MA-avs" secondAttribute="top" id="LWa-PD-tdB"/>
                                     <constraint firstAttribute="height" constant="240" id="aph-xZ-mGD"/>
-                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="centerX" secondItem="qCL-MA-avs" secondAttribute="centerX" id="b39-2t-ZcF"/>
+                                    <constraint firstAttribute="bottom" secondItem="TIN-T4-mDd" secondAttribute="bottom" id="b9e-Q8-uof"/>
                                     <constraint firstItem="4TH-sw-XT2" firstAttribute="leading" secondItem="qCL-MA-avs" secondAttribute="leading" id="ofX-1R-bdL"/>
                                 </constraints>
                             </view>

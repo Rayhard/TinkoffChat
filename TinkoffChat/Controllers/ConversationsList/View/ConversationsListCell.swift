@@ -14,27 +14,20 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
     @IBOutlet weak var nameLabel: UILabel?
     @IBOutlet weak var textMessageLabel: UILabel?
     @IBOutlet weak var dateLabel: UILabel?
+    @IBOutlet weak var photoView: UIView?
+    @IBOutlet weak var nameSymbolLabel: UILabel?
     
     func configure(with model: ConversationCellModel) {
         self.selectionStyle = .none
+        photoView?.layer.cornerRadius = (photoView?.frame.width ?? 0) / 2
         
         nameLabel?.text = model.name
+        
+        nameSymbolLabel?.text = setSymbolFromName(model.name)
+        
         if model.message == ""{
-            textMessageLabel?.text = "No messages yet"
-            textMessageLabel?.textColor = UIColor(named: "LabelLight")
-            guard let customFont = UIFont(name: "BlackHole-Italic", size: UIFont.labelFontSize) else {
-                fatalError("""
-                    Failed to load the "BlackHole_Italic" font.
-                    Make sure the font file is included in the project and the font name is spelled correctly.
-                    """
-                )
-            }
-            textMessageLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)
-            textMessageLabel?.adjustsFontForContentSizeCategory = true
-            
-            dateLabel?.text = ""
+            settingNilMessage()
         } else {
-            
             if model.hasUnreadMessages{
                 textMessageLabel?.font = .boldSystemFont(ofSize: 17)
                 textMessageLabel?.textColor = .black
@@ -53,6 +46,26 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         } else {
             backgroundColor = UIColor.white
         }
+    }
+    
+    private func settingNilMessage(){
+        textMessageLabel?.text = "No messages yet"
+        textMessageLabel?.textColor = UIColor(named: "LabelLight")
+        guard let customFont = UIFont(name: "BlackHole-Italic", size: UIFont.labelFontSize) else {
+            fatalError("""
+                Failed to load the "BlackHole_Italic" font.
+                Make sure the font file is included in the project and the font name is spelled correctly.
+                """
+            )
+        }
+        textMessageLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)
+        textMessageLabel?.adjustsFontForContentSizeCategory = true
+        
+        dateLabel?.text = ""
+    }
+    
+    private func setSymbolFromName(_ name: String) -> String{
+        return String(name.prefix(1))
     }
     
     private func formDate(_ date: Date) -> String {
