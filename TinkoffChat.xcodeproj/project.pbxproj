@@ -7,21 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		334E8737251A00B500BCDCF7 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334E8736251A00B500BCDCF7 /* AlertManager.swift */; };
+		336E32F825173695000A40D8 /* UIAlertControllerExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336E32F725173695000A40D8 /* UIAlertControllerExtention.swift */; };
 		336ED0CC250B4BCA00E64482 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336ED0CB250B4BCA00E64482 /* AppDelegate.swift */; };
-		336ED0D0250B4BCA00E64482 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336ED0CF250B4BCA00E64482 /* ViewController.swift */; };
+		336ED0D0250B4BCA00E64482 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336ED0CF250B4BCA00E64482 /* ProfileViewController.swift */; };
 		336ED0D3250B4BCA00E64482 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336ED0D1250B4BCA00E64482 /* Main.storyboard */; };
 		336ED0D5250B4BCB00E64482 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 336ED0D4250B4BCB00E64482 /* Assets.xcassets */; };
 		336ED0D8250B4BCB00E64482 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336ED0D6250B4BCB00E64482 /* LaunchScreen.storyboard */; };
+		33F8CE052519D60200EE593F /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F8CE042519D60200EE593F /* LogManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		334E8736251A00B500BCDCF7 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		336E32F725173695000A40D8 /* UIAlertControllerExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtention.swift; sourceTree = "<group>"; };
 		336ED0C8250B4BCA00E64482 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		336ED0CB250B4BCA00E64482 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		336ED0CF250B4BCA00E64482 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		336ED0CF250B4BCA00E64482 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		336ED0D2250B4BCA00E64482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		336ED0D4250B4BCB00E64482 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		336ED0D7250B4BCB00E64482 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		336ED0D9250B4BCB00E64482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33F8CE042519D60200EE593F /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		336E32F625173656000A40D8 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				336E32F725173695000A40D8 /* UIAlertControllerExtention.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
 		336ED0BF250B4BCA00E64482 = {
 			isa = PBXGroup;
 			children = (
@@ -54,14 +68,25 @@
 		336ED0CA250B4BCA00E64482 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				33F8CE032519D5E600EE593F /* Managers */,
+				336E32F625173656000A40D8 /* Extentions */,
 				336ED0CB250B4BCA00E64482 /* AppDelegate.swift */,
-				336ED0CF250B4BCA00E64482 /* ViewController.swift */,
+				336ED0CF250B4BCA00E64482 /* ProfileViewController.swift */,
 				336ED0D1250B4BCA00E64482 /* Main.storyboard */,
 				336ED0D4250B4BCB00E64482 /* Assets.xcassets */,
 				336ED0D6250B4BCB00E64482 /* LaunchScreen.storyboard */,
 				336ED0D9250B4BCB00E64482 /* Info.plist */,
 			);
 			path = TinkoffChat;
+			sourceTree = "<group>";
+		};
+		33F8CE032519D5E600EE593F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				33F8CE042519D60200EE593F /* LogManager.swift */,
+				334E8736251A00B500BCDCF7 /* AlertManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -91,7 +116,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Nikita Perezhogin";
 				TargetAttributes = {
 					336ED0C7250B4BCA00E64482 = {
@@ -135,8 +160,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				336ED0D0250B4BCA00E64482 /* ViewController.swift in Sources */,
+				33F8CE052519D60200EE593F /* LogManager.swift in Sources */,
+				336ED0D0250B4BCA00E64482 /* ProfileViewController.swift in Sources */,
+				334E8737251A00B500BCDCF7 /* AlertManager.swift in Sources */,
 				336ED0CC250B4BCA00E64482 /* AppDelegate.swift in Sources */,
+				336E32F825173695000A40D8 /* UIAlertControllerExtention.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +216,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -248,6 +277,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
