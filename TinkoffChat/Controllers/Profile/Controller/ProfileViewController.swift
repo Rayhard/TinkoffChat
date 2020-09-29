@@ -115,28 +115,8 @@ class ProfileViewController: UIViewController{
                 AlertManager.showAlert(withMessage: "Устройство не имеет камеры")
                 return
             }
+            self.checkCameraPermission()
             
-            let showCameraController = {
-                let vc = UIImagePickerController()
-                vc.sourceType = .camera
-                vc.allowsEditing = true
-                vc.delegate = self
-                self.present(vc, animated: true)
-            }
-            
-            if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
-                showCameraController()
-            } else {
-                AVCaptureDevice.requestAccess(for: .video) { granted in
-                    DispatchQueue.main.async {
-                        if granted {
-                            showCameraController()
-                        } else {
-                            AlertManager.showAlert(withMessage: "Не предоставлен доступ к камере.\nПерейдите в настройки и предоставте доступ")
-                        }
-                    }
-                }
-            }
         }
         let cancel = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
         
@@ -149,6 +129,30 @@ class ProfileViewController: UIViewController{
         optionMenu.pruneNegativeWidthConstraints()
         
         self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    private func checkCameraPermission(){
+        let showCameraController = {
+            let vc = UIImagePickerController()
+            vc.sourceType = .camera
+            vc.allowsEditing = true
+            vc.delegate = self
+            self.present(vc, animated: true)
+        }
+        
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            showCameraController()
+        } else {
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        showCameraController()
+                    } else {
+                        AlertManager.showAlert(withMessage: "Не предоставлен доступ к камере.\nПерейдите в настройки и предоставте доступ")
+                    }
+                }
+            }
+        }
     }
     
 }
