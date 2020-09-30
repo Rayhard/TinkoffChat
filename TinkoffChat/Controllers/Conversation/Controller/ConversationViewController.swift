@@ -11,6 +11,8 @@ import UIKit
 class ConversationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     
+    private let cellInditifier = String(describing: ConversationViewCell.self)
+    
     var name: String = ""
     
     var messageExample: [MessageCellModel] = [
@@ -28,7 +30,7 @@ class ConversationViewController: UIViewController {
 
         tableView?.delegate = self
         tableView?.dataSource = self
-        tableView?.register(UINib(nibName: "ConversationViewCell", bundle: nil), forCellReuseIdentifier: "ConversationViewCell")
+        tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
     }
 
 }
@@ -39,8 +41,7 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let messageCell = tableView.dequeueReusableCell(withIdentifier: "ConversationViewCell") as? ConversationViewCell
-        guard let cell = messageCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationViewCell else { return UITableViewCell() }
         
         let message = messageExample[indexPath.row]
         cell.configure(with: message)

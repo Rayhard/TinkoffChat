@@ -17,7 +17,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
     @IBOutlet weak var photoView: UIView?
     @IBOutlet weak var nameSymbolLabel: UILabel?
     
-    func configure(with model: ConversationCellModel) {
+    func configure(with model: ConfigurationModel) {
         self.selectionStyle = .none
         photoView?.layer.cornerRadius = (photoView?.frame.width ?? 0) / 2
         

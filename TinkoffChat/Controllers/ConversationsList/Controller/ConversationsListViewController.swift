@@ -14,6 +14,8 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var profileImage: UIImageView?
     @IBOutlet weak var profileSymbol: UILabel?
     
+    private let cellInditifier = String(describing: ConversationsListCell.self)
+    
     var conversationsListExample: [ConversationCellModel] = [
         ConversationCellModel(name: "Anastasia", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
         ConversationCellModel(name: "Ekaterina", message: "123123123123", date: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), isOnline: true, hasUnreadMessages: true),
@@ -64,7 +66,7 @@ class ConversationsListViewController: UIViewController {
         
         tableView?.delegate = self
         tableView?.dataSource = self
-        tableView?.register(UINib(nibName: "ConversationsListCell", bundle: nil), forCellReuseIdentifier: "ConversationsListCell")
+        tableView?.register(UINib(nibName: String(describing: ConversationsListCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
         
         let backItem = UIBarButtonItem()
         backItem.title = ""
@@ -101,8 +103,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ConversationsListCell = tableView.dequeueReusableCell(withIdentifier: "ConversationsListCell") as? ConversationsListCell
-        guard let cell = ConversationsListCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationsListCell else { return UITableViewCell()}
         
         let item = conversationsList[indexPath.section][indexPath.row]
         cell.configure(with: item)
