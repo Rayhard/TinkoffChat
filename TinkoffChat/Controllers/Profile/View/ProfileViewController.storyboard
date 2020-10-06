@@ -21,8 +21,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCL-MA-avs">
                                 <rect key="frame" x="87" y="147" width="240" height="240"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIN-T4-mDd">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="TIN-T4-mDd">
+                                        <rect key="frame" x="4" y="4" width="232" height="232"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="120"/>
                                         <color key="textColor" name="Black"/>
                                         <nil key="highlightedColor"/>
@@ -33,15 +33,15 @@
                                 </subviews>
                                 <color key="backgroundColor" name="Yellow"/>
                                 <constraints>
-                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="top" secondItem="qCL-MA-avs" secondAttribute="top" id="0QM-Nb-q4H"/>
-                                    <constraint firstAttribute="width" constant="240" id="9AT-ag-Oj6"/>
+                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="top" secondItem="qCL-MA-avs" secondAttribute="top" constant="4" id="0QM-Nb-q4H"/>
                                     <constraint firstAttribute="trailing" secondItem="4TH-sw-XT2" secondAttribute="trailing" id="Abg-ez-Iah"/>
                                     <constraint firstAttribute="bottom" secondItem="4TH-sw-XT2" secondAttribute="bottom" id="Cdt-SD-6P7"/>
-                                    <constraint firstAttribute="trailing" secondItem="TIN-T4-mDd" secondAttribute="trailing" id="DO0-M6-0ut"/>
-                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="leading" secondItem="qCL-MA-avs" secondAttribute="leading" id="EBE-0C-eTO"/>
+                                    <constraint firstAttribute="trailing" secondItem="TIN-T4-mDd" secondAttribute="trailing" constant="4" id="DO0-M6-0ut"/>
+                                    <constraint firstItem="TIN-T4-mDd" firstAttribute="leading" secondItem="qCL-MA-avs" secondAttribute="leading" constant="4" id="EBE-0C-eTO"/>
                                     <constraint firstItem="4TH-sw-XT2" firstAttribute="top" secondItem="qCL-MA-avs" secondAttribute="top" id="LWa-PD-tdB"/>
-                                    <constraint firstAttribute="height" constant="240" id="aph-xZ-mGD"/>
-                                    <constraint firstAttribute="bottom" secondItem="TIN-T4-mDd" secondAttribute="bottom" id="b9e-Q8-uof"/>
+                                    <constraint firstAttribute="height" constant="240" id="TdX-fg-LWI"/>
+                                    <constraint firstAttribute="width" constant="240" id="VZj-wW-fXK"/>
+                                    <constraint firstAttribute="bottom" secondItem="TIN-T4-mDd" secondAttribute="bottom" constant="4" id="b9e-Q8-uof"/>
                                     <constraint firstItem="4TH-sw-XT2" firstAttribute="leading" secondItem="qCL-MA-avs" secondAttribute="leading" id="ofX-1R-bdL"/>
                                 </constraints>
                             </view>
@@ -114,7 +114,6 @@ Moscow, Russia</string>
                         <viewLayoutGuide key="safeArea" id="JTw-C7-rHL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="qCL-MA-avs" firstAttribute="centerX" secondItem="odf-HC-Z95" secondAttribute="centerX" id="0OF-mM-tRi"/>
                             <constraint firstItem="ESO-5h-0Nq" firstAttribute="leading" secondItem="JTw-C7-rHL" secondAttribute="leading" id="3iV-IQ-h61"/>
                             <constraint firstItem="qCL-MA-avs" firstAttribute="top" secondItem="ESO-5h-0Nq" secondAttribute="bottom" constant="7" id="6LC-vg-lVf"/>
                             <constraint firstItem="2WG-70-HlO" firstAttribute="centerX" secondItem="odf-HC-Z95" secondAttribute="centerX" id="7Zb-29-6TF"/>
@@ -134,6 +133,7 @@ Moscow, Russia</string>
                             <constraint firstItem="JTw-C7-rHL" firstAttribute="bottom" secondItem="bBi-ya-4Ro" secondAttribute="bottom" constant="30" id="mTm-Mg-yxg"/>
                             <constraint firstItem="JTw-C7-rHL" firstAttribute="trailing" secondItem="ESO-5h-0Nq" secondAttribute="trailing" id="r7l-TB-VsV"/>
                             <constraint firstItem="bBi-ya-4Ro" firstAttribute="leading" secondItem="JTw-C7-rHL" secondAttribute="leading" constant="56" id="v9J-Bi-PfB"/>
+                            <constraint firstItem="qCL-MA-avs" firstAttribute="centerX" secondItem="odf-HC-Z95" secondAttribute="centerX" id="z41-bs-YkS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sl6-OX-k9g"/>
@@ -141,6 +141,8 @@ Moscow, Russia</string>
                         <outlet property="circleView" destination="qCL-MA-avs" id="p6Y-h8-nff"/>
                         <outlet property="descriptionLabel" destination="6CW-5R-8AZ" id="5qH-my-5Ih"/>
                         <outlet property="editButton" destination="nRh-A5-fwq" id="TYP-2a-bUc"/>
+                        <outlet property="headerTitle" destination="rek-Im-dQv" id="fkv-l5-Ju5"/>
+                        <outlet property="headerView" destination="ESO-5h-0Nq" id="Zje-3B-sC9"/>
                         <outlet property="nameLabel" destination="2WG-70-HlO" id="SKR-5X-cag"/>
                         <outlet property="nameSymbolsLabel" destination="TIN-T4-mDd" id="6DO-RS-Ybu"/>
                         <outlet property="profileImageView" destination="4TH-sw-XT2" id="fiW-ev-0FS"/>

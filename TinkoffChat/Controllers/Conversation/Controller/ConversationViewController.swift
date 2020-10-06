@@ -27,10 +27,15 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = name
+        setTheme()
 
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
+    }
+    
+    private func setTheme() {
+        self.view.backgroundColor = Theme.current.backgroundColor
     }
 
 }

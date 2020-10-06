@@ -33,6 +33,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tinkoff Chat" largeTitleDisplayMode="always" id="5z4-Pv-MLC">
+                        <barButtonItem key="leftBarButtonItem" image="Settings" id="ZYa-eU-lGh">
+                            <connections>
+                                <action selector="openThemeViewAction:" destination="LwF-fI-iRC" id="N3w-zq-pj9"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="Emk-u1-3e2">
                             <view key="customView" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9Ui-SV-HH1">
                                 <rect key="frame" x="354" y="2" width="40" height="40"/>
@@ -93,6 +98,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Settings" width="25" height="25"/>
         <namedColor name="Black">
             <color red="0.21176470588235294" green="0.21568627450980393" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

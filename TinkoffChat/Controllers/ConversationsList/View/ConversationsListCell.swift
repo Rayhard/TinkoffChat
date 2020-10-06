@@ -21,6 +21,8 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         self.selectionStyle = .none
         photoView?.layer.cornerRadius = (photoView?.frame.width ?? 0) / 2
         
+        setTheme()
+        
         nameLabel?.text = model.name
         
         nameSymbolLabel?.text = setSymbolFromName(model.name)
@@ -30,10 +32,10 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         } else {
             if model.hasUnreadMessages{
                 textMessageLabel?.font = .boldSystemFont(ofSize: 17)
-                textMessageLabel?.textColor = .black
+                textMessageLabel?.textColor = Theme.current.listText
             } else {
                 textMessageLabel?.font = .none
-                textMessageLabel?.textColor = UIColor(named: "LabelLight")
+                textMessageLabel?.textColor = Theme.current.listText
             }
             
             textMessageLabel?.text = model.message
@@ -44,13 +46,18 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         if model.isOnline{
             backgroundColor = UIColor(named: "LightYellow")
         } else {
-            backgroundColor = UIColor.white
+            backgroundColor = Theme.current.backgroundColor
         }
+    }
+    
+    private func setTheme(){
+        nameLabel?.textColor = Theme.current.textColor
+        dateLabel?.textColor = Theme.current.listText
     }
     
     private func settingNilMessage(){
         textMessageLabel?.text = "No messages yet"
-        textMessageLabel?.textColor = UIColor(named: "LabelLight")
+        textMessageLabel?.textColor = Theme.current.listText
         guard let customFont = UIFont(name: "BlackHole-Italic", size: UIFont.labelFontSize) else {
             fatalError("""
                 Failed to load the "BlackHole_Italic" font.

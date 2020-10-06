@@ -18,6 +18,8 @@ class ProfileViewController: UIViewController{
     @IBOutlet weak var saveButton: UIButton?
     @IBOutlet weak var editButton: UIButton?
     @IBOutlet weak var profileImageView: UIImageView?
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerTitle: UILabel!
     
     @IBAction func editButtonAction(_ sender: Any) {
         showActionSheet()
@@ -44,6 +46,8 @@ class ProfileViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setTheme()
         
         LogManager.showMessage("viewDidLoad - Edit button frame:\n\t \(String(describing: editButton?.frame))")
         
@@ -95,6 +99,16 @@ class ProfileViewController: UIViewController{
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         LogManager.showMessage(#function)
+    }
+    
+    private func setTheme() {
+        self.view.backgroundColor = Theme.current.backgroundColor
+        nameLabel?.textColor = Theme.current.textColor
+        descriptionLabel?.textColor = Theme.current.textColor
+        
+        headerTitle.textColor = Theme.current.textColor
+        saveButton?.backgroundColor = Theme.current.inputMessageBubbleColor
+        headerView.backgroundColor = Theme.current.inputMessageBubbleColor
     }
     
     // MARK: Function

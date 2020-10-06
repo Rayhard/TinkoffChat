@@ -14,6 +14,20 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var profileImage: UIImageView?
     @IBOutlet weak var profileSymbol: UILabel?
     
+    @IBAction func openThemeViewAction(_ sender: Any) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "ThemesViewController", bundle:nil)
+        let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as? ThemesViewController
+        guard let destinationController = resultViewController else { return }
+        
+//        destinationController.delegate = self
+        destinationController.setTheme = { [weak self] theme in
+            Theme.current = theme
+            self?.configureTheme(theme)
+        }
+        
+        self.navigationController?.pushViewController(destinationController, animated: true)
+    }
+    
     private let cellInditifier = String(describing: ConversationsListCell.self)
     
     var conversationsListExample: [ConversationCellModel] = [
@@ -56,6 +70,7 @@ class ConversationsListViewController: UIViewController {
         super.viewDidLoad()
         
         conversationsList = sortArray(array: conversationsListExample)
+        configureTheme(Theme.current)
         
         profileView?.layer.cornerRadius = (profileView?.frame.width ?? 0) / 2
         profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 0) / 2
@@ -78,6 +93,18 @@ class ConversationsListViewController: UIViewController {
         let profileStoryboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
         let profileVC = profileStoryboard.instantiateViewController(withIdentifier: "ProfileViewController")
         self.present(profileVC, animated: true)
+    }
+    
+    private func configureTheme(_ theme: ThemeModel){
+        UITableView.appearance().backgroundColor = theme.backgroundColor
+        UITableViewCell.appearance().backgroundColor = theme.backgroundColor
+
+        tableView?.reloadData()
+
+        self.navigationController?.navigationBar.barStyle = theme.navigationBarStyle
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.textColor]
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.textColor]
+        self.view.backgroundColor = theme.backgroundColor
     }
 }
 
@@ -123,3 +150,10 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     }
     
 }
+
+//extension ConversationsListViewController: ThemesPickerDelegate{
+//    func setTheme(_ theme: ThemeModel) {
+//        Theme.current = theme
+//        configureTheme(theme)
+//    }
+//}
