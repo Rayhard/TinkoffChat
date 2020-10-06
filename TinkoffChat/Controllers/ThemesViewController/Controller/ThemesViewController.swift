@@ -20,7 +20,7 @@ class ThemesViewController: UIViewController {
     @IBOutlet weak var dayMessageView: UIView!
     @IBOutlet weak var nightMessageView: UIView!
     
-    
+    // Retain cycle может возникнуть если использовать сильные ссылки. При использовании ключевых слов weak, unowned, а так же конструкции [weak self] создается слабая ссылка, которая может быть удалена ARC.
     weak var delegate: ThemesPickerDelegate?
     var setTheme: ((ThemeModel) -> Void)?
     
