@@ -13,16 +13,20 @@ final class AlertManager {
     
     static func showAlert(withMessage message: String) {
         DispatchQueue.main.async {
-            let appDelegate  = UIApplication.shared.delegate as! AppDelegate
-            let viewController = appDelegate.window!.rootViewController as! UINavigationController
             
             let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ок", style: .default) { (alert) in
-            }
-
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
             alertController.addAction(okAction)
-            viewController.present(alertController, animated: true, completion: nil)
+            
+            let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+
+            if var topController = keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                
+                topController.present(alertController, animated: true, completion: nil)
+            }
         }
     }
 }
