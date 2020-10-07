@@ -69,9 +69,9 @@ class ThemesViewController: UIViewController {
         self.setTheme?(ClassicTheme())
         saveTheme(.classic)
         
-        setupClassic(border: 3, color: .systemBlue)
-        setupDay(border: 1, color: .gray)
-        setupNight(border: 1, color: .gray)
+        setupClassicView(border: 3, color: .systemBlue)
+        setupDayView(border: 1, color: .gray)
+        setupNightView(border: 1, color: .gray)
     }
     
     @objc private func setDayTheme(){
@@ -79,9 +79,9 @@ class ThemesViewController: UIViewController {
         self.setTheme?(DayTheme())
         saveTheme(.day)
         
-        setupDay(border: 3, color: .systemBlue)
-        setupClassic(border: 1, color: .gray)
-        setupNight(border: 1, color: .gray)
+        setupDayView(border: 3, color: .systemBlue)
+        setupClassicView(border: 1, color: .gray)
+        setupNightView(border: 1, color: .gray)
     }
     
     @objc private func setNightTheme(){
@@ -89,22 +89,22 @@ class ThemesViewController: UIViewController {
         self.setTheme?(NightTheme())
         saveTheme(.night)
         
-        setupNight(border: 3, color: .systemBlue)
-        setupClassic(border: 1, color: .gray)
-        setupDay(border: 1, color: .gray)
+        setupNightView(border: 3, color: .systemBlue)
+        setupClassicView(border: 1, color: .gray)
+        setupDayView(border: 1, color: .gray)
     }
     
-    private func setupClassic(border: CGFloat, color: UIColor){
+    private func setupClassicView(border: CGFloat, color: UIColor){
         classicMessageView.layer.borderWidth = border
         classicMessageView.layer.borderColor = color.cgColor
     }
     
-    private func setupDay(border: CGFloat, color: UIColor){
+    private func setupDayView(border: CGFloat, color: UIColor){
         dayMessageView.layer.borderWidth = border
         dayMessageView.layer.borderColor = color.cgColor
     }
     
-    private func setupNight(border: CGFloat, color: UIColor){
+    private func setupNightView(border: CGFloat, color: UIColor){
         nightMessageView.layer.borderWidth = border
         nightMessageView.layer.borderColor = color.cgColor
         
@@ -126,17 +126,17 @@ class ThemesViewController: UIViewController {
         
         switch Theme.current {
         case is ClassicTheme:
-            setupClassic(border: 3, color: .systemBlue)
-            setupDay(border: 1, color: .gray)
-            setupNight(border: 1, color: .gray)
+            setupClassicView(border: 3, color: .systemBlue)
+            setupDayView(border: 1, color: .gray)
+            setupNightView(border: 1, color: .gray)
         case is DayTheme:
-            setupDay(border: 3, color: .systemBlue)
-            setupClassic(border: 1, color: .gray)
-            setupNight(border: 1, color: .gray)
+            setupDayView(border: 3, color: .systemBlue)
+            setupClassicView(border: 1, color: .gray)
+            setupNightView(border: 1, color: .gray)
         case is NightTheme:
-            setupNight(border: 3, color: .systemBlue)
-            setupDay(border: 1, color: .gray)
-            setupClassic(border: 1, color: .gray)
+            setupNightView(border: 3, color: .systemBlue)
+            setupDayView(border: 1, color: .gray)
+            setupClassicView(border: 1, color: .gray)
         default:
             return
         }

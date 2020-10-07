@@ -95,6 +95,7 @@ class ConversationsListViewController: UIViewController {
         self.present(profileVC, animated: true)
     }
     
+    //MARK: Theme
     private func configureTheme(_ theme: ThemeModel){
         UITableView.appearance().backgroundColor = theme.backgroundColor
         UITableViewCell.appearance().backgroundColor = theme.backgroundColor
@@ -108,6 +109,7 @@ class ConversationsListViewController: UIViewController {
     }
 }
 
+//MARK: UITableView configure
 extension ConversationsListViewController: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -151,6 +153,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     
 }
 
+//MARK: Method theme delegat
 //extension ConversationsListViewController: ThemesPickerDelegate{
 //    func setTheme(_ theme: ThemeModel) {
 //        Theme.current = theme

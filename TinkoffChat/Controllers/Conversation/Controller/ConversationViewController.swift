@@ -34,12 +34,14 @@ class ConversationViewController: UIViewController {
         tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
     }
     
+    //MARK: Theme
     private func setTheme() {
         self.view.backgroundColor = Theme.current.backgroundColor
     }
 
 }
 
+//MARK: UITableView configure
 extension ConversationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messageExample.count

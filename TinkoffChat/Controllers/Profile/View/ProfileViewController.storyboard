@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCL-MA-avs">
-                                <rect key="frame" x="87" y="147" width="240" height="240"/>
+                                <rect key="frame" x="87" y="121" width="240" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="TIN-T4-mDd">
                                         <rect key="frame" x="4" y="4" width="232" height="232"/>
@@ -46,13 +46,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nikita Perezhogin" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2WG-70-HlO">
-                                <rect key="frame" x="10" y="419" width="394" height="29"/>
+                                <rect key="frame" x="10" y="393" width="394" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRh-A5-fwq">
-                                <rect key="frame" x="297" y="362" width="30" height="40"/>
+                                <rect key="frame" x="297" y="336" width="30" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="j6b-k3-mfP"/>
                                 </constraints>
@@ -75,7 +75,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CW-5R-8AZ">
-                                <rect key="frame" x="10" y="480" width="394" height="41"/>
+                                <rect key="frame" x="10" y="454" width="394" height="41"/>
                                 <string key="text">iOS Developer, QA Engener
 Moscow, Russia</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -83,16 +83,16 @@ Moscow, Russia</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESO-5h-0Nq">
-                                <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rek-Im-dQv">
-                                        <rect key="frame" x="16" y="32.5" width="122" height="31.5"/>
+                                        <rect key="frame" x="16" y="19.5" width="122" height="31.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vj-1m-Qb5">
-                                        <rect key="frame" x="352" y="31.5" width="45" height="33"/>
+                                        <rect key="frame" x="352" y="18.5" width="45" height="33"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <state key="normal" title="Close"/>
                                         <connections>
@@ -105,7 +105,7 @@ Moscow, Russia</string>
                                     <constraint firstItem="1vj-1m-Qb5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rek-Im-dQv" secondAttribute="trailing" constant="8" symbolic="YES" id="1AC-Ny-tuF"/>
                                     <constraint firstItem="1vj-1m-Qb5" firstAttribute="centerY" secondItem="ESO-5h-0Nq" secondAttribute="centerY" id="N7g-Xi-E7K"/>
                                     <constraint firstItem="rek-Im-dQv" firstAttribute="leading" secondItem="ESO-5h-0Nq" secondAttribute="leading" constant="16" id="Ydy-4n-5KD"/>
-                                    <constraint firstAttribute="height" constant="96" id="foP-nz-bp2"/>
+                                    <constraint firstAttribute="height" constant="70" id="foP-nz-bp2"/>
                                     <constraint firstAttribute="trailing" secondItem="1vj-1m-Qb5" secondAttribute="trailing" constant="17" id="iDQ-jB-Kkj"/>
                                     <constraint firstItem="rek-Im-dQv" firstAttribute="centerY" secondItem="ESO-5h-0Nq" secondAttribute="centerY" id="o9A-V2-5ct"/>
                                 </constraints>

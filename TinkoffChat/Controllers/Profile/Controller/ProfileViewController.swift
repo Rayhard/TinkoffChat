@@ -171,6 +171,7 @@ class ProfileViewController: UIViewController{
     
 }
 
+// MARK: Picker delegate
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

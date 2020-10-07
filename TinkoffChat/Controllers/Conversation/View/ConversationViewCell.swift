@@ -16,6 +16,7 @@ class ConversationViewCell: UITableViewCell, ConfigurableView{
     @IBOutlet var leadingConstraint: NSLayoutConstraint?
     @IBOutlet var trailingConstraint: NSLayoutConstraint?
     
+    //MARK: Configure
     func configure(with model: ConfigurationModel) {
         messageBubbleView?.layer.cornerRadius = 10
         
