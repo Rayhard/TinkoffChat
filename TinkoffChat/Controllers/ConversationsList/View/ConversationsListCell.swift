@@ -16,14 +16,14 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
     @IBOutlet weak var dateLabel: UILabel?
     @IBOutlet weak var photoView: UIView?
     @IBOutlet weak var nameSymbolLabel: UILabel?
-    @IBOutlet weak var onlineMarkView: UIView!
-    @IBOutlet weak var indicatorOnline: UIView!
-    @IBOutlet weak var unreadMessageMark: UIView!
+    @IBOutlet weak var onlineMarkView: UIView?
+    @IBOutlet weak var indicatorOnline: UIView?
+    @IBOutlet weak var unreadMessageMark: UIView?
     
     //MARK: Configure
     func configure(with model: ConfigurationModel) {
         self.selectionStyle = .none
-        photoView?.layer.cornerRadius = (photoView?.frame.width ?? 0) / 2
+        photoView?.layer.cornerRadius = (photoView?.frame.width ?? 1) / 2
         
         setTheme()
         
@@ -39,7 +39,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
             } else {
                 textMessageLabel?.font = .none
                 textMessageLabel?.textColor = Theme.current.listText
-                unreadMessageMark.isHidden = true
+                unreadMessageMark?.isHidden = true
             }
             
             textMessageLabel?.text = model.message
@@ -50,7 +50,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         if model.isOnline{
             settingOnline()
         } else {
-            onlineMarkView.isHidden = true
+            onlineMarkView?.isHidden = true
         }
     }
     
@@ -71,7 +71,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         textMessageLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)
         textMessageLabel?.adjustsFontForContentSizeCategory = true
         
-        unreadMessageMark.isHidden = true
+        unreadMessageMark?.isHidden = true
         
         dateLabel?.text = ""
     }
@@ -79,16 +79,16 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
     private func settingUnreadMessage(){
         textMessageLabel?.font = .boldSystemFont(ofSize: 17)
         textMessageLabel?.textColor = Theme.current.listText
-        unreadMessageMark.isHidden = false
-        unreadMessageMark.layer.cornerRadius = unreadMessageMark.frame.width / 2
-        unreadMessageMark.backgroundColor = Theme.current.outputMessageBubbleColor
+        unreadMessageMark?.isHidden = false
+        unreadMessageMark?.layer.cornerRadius = (unreadMessageMark?.frame.width ?? 1) / 2
+        unreadMessageMark?.backgroundColor = Theme.current.outputMessageBubbleColor
     }
     
     private func settingOnline(){
-        onlineMarkView.backgroundColor = Theme.current.backgroundColor
-        onlineMarkView.isHidden = false
-        onlineMarkView.layer.cornerRadius = onlineMarkView.frame.width / 2
-        indicatorOnline.layer.cornerRadius = indicatorOnline.frame.width / 2
+        onlineMarkView?.backgroundColor = Theme.current.backgroundColor
+        onlineMarkView?.isHidden = false
+        onlineMarkView?.layer.cornerRadius = (onlineMarkView?.frame.width ?? 1) / 2
+        indicatorOnline?.layer.cornerRadius = (indicatorOnline?.frame.width ?? 1) / 2
     }
     
     private func setSymbolFromName(_ name: String) -> String{

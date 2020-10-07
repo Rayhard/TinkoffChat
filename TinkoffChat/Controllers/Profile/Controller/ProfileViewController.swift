@@ -18,8 +18,8 @@ class ProfileViewController: UIViewController{
     @IBOutlet weak var saveButton: UIButton?
     @IBOutlet weak var editButton: UIButton?
     @IBOutlet weak var profileImageView: UIImageView?
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerTitle: UILabel!
+    @IBOutlet weak var headerView: UIView?
+    @IBOutlet weak var headerTitle: UILabel?
     
     @IBAction func editButtonAction(_ sender: Any) {
         showActionSheet()
@@ -51,9 +51,9 @@ class ProfileViewController: UIViewController{
         
         LogManager.showMessage("viewDidLoad - Edit button frame:\n\t \(String(describing: editButton?.frame))")
         
-        circleView?.layer.cornerRadius = (circleView?.bounds.height ?? 0) / 2
-        saveButton?.layer.cornerRadius = (saveButton?.bounds.height ?? 0) / 3
-        profileImageView?.layer.cornerRadius = (profileImageView?.bounds.height ?? 0) / 2
+        circleView?.layer.cornerRadius = (circleView?.bounds.height ?? 1) / 2
+        saveButton?.layer.cornerRadius = (saveButton?.bounds.height ?? 1) / 3
+        profileImageView?.layer.cornerRadius = (profileImageView?.bounds.height ?? 1) / 2
         profileImageView?.clipsToBounds = true
         navigationController?.navigationBar.isHidden = true
         
@@ -106,9 +106,9 @@ class ProfileViewController: UIViewController{
         nameLabel?.textColor = Theme.current.textColor
         descriptionLabel?.textColor = Theme.current.textColor
         
-        headerTitle.textColor = Theme.current.textColor
+        headerTitle?.textColor = Theme.current.textColor
         saveButton?.backgroundColor = Theme.current.inputMessageBubbleColor
-        headerView.backgroundColor = Theme.current.inputMessageBubbleColor
+        headerView?.backgroundColor = Theme.current.inputMessageBubbleColor
     }
     
     // MARK: Function

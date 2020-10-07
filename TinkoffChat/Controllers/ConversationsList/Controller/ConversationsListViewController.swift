@@ -29,6 +29,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private let cellInditifier = String(describing: ConversationsListCell.self)
+    private let sectionTitle = ["Online", "History"]
     
     var conversationsListExample: [ConversationCellModel] = [
         ConversationCellModel(name: "Anastasia", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
@@ -72,8 +73,8 @@ class ConversationsListViewController: UIViewController {
         conversationsList = sortArray(array: conversationsListExample)
         configureTheme(Theme.current)
         
-        profileView?.layer.cornerRadius = (profileView?.frame.width ?? 0) / 2
-        profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 0) / 2
+        profileView?.layer.cornerRadius = (profileView?.frame.width ?? 1) / 2
+        profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 1) / 2
         profileImage?.clipsToBounds = true
         
         let openProfileGesture = UITapGestureRecognizer(target: self, action: #selector(openProfile))
@@ -116,11 +117,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0{
-            return "Online"
-        } else {
-            return "History"
-        }
+        return sectionTitle[section]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -149,6 +146,19 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         destinationController.name = name
         self.navigationController?.pushViewController(destinationController, animated: true)
         
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 30))
+        returnedView.backgroundColor = Theme.current.inputMessageBubbleColor
+
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.size.width, height: 30))
+        label.text = self.sectionTitle[section]
+        label.textColor = Theme.current.textColor
+        label.font = .boldSystemFont(ofSize: 17)
+        returnedView.addSubview(label)
+
+        return returnedView
     }
     
 }
