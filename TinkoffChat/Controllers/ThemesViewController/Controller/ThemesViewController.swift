@@ -23,6 +23,7 @@ class ThemesViewController: UIViewController {
     // Retain cycle может возникнуть если использовать сильные ссылки. При использовании ключевых слов weak, unowned, а так же конструкции [weak self] создается слабая ссылка, которая может быть удалена ARC.
     weak var delegate: ThemesPickerDelegate?
     var setTheme: ((ThemeModel) -> Void)?
+    let dataManager: GCDDataManager = GCDDataManager()
     
     @IBAction func setThemeAction(_ sender: UIButton) {
         switch sender {
@@ -70,6 +71,8 @@ class ThemesViewController: UIViewController {
         self.setTheme?(ClassicTheme())
         saveTheme(.classic)
         
+        dataManager.saveTheme("classic")
+        
         setupClassicView(border: 3, color: .systemBlue)
         setupDayView(border: 1, color: .gray)
         setupNightView(border: 1, color: .gray)
@@ -80,6 +83,8 @@ class ThemesViewController: UIViewController {
         self.setTheme?(DayTheme())
         saveTheme(.day)
         
+        dataManager.saveTheme("day")
+        
         setupDayView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
         setupNightView(border: 1, color: .gray)
@@ -89,6 +94,8 @@ class ThemesViewController: UIViewController {
         //            delegate?.setTheme(NightTheme())
         self.setTheme?(NightTheme())
         saveTheme(.night)
+        
+        dataManager.saveTheme("night")
         
         setupNightView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
