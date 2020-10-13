@@ -47,7 +47,6 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="IcX-YZ-2MB"/>
                                     <constraint firstItem="TCs-P3-pVI" firstAttribute="top" secondItem="REA-6n-dap" secondAttribute="top" id="InE-sd-gmQ"/>

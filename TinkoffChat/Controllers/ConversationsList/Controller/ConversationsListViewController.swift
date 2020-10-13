@@ -14,7 +14,22 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var profileImage: UIImageView?
     @IBOutlet weak var profileSymbol: UILabel?
     
+    @IBAction func openThemeViewAction(_ sender: Any) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "ThemesViewController", bundle:nil)
+        let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as? ThemesViewController
+        guard let destinationController = resultViewController else { return }
+        
+//        destinationController.delegate = self
+        destinationController.setTheme = { [weak self] theme in
+            Theme.current = theme
+            self?.configureTheme(theme)
+        }
+        
+        self.navigationController?.pushViewController(destinationController, animated: true)
+    }
+    
     private let cellInditifier = String(describing: ConversationsListCell.self)
+    private let sectionTitle = ["Online", "History"]
     
     var conversationsListExample: [ConversationCellModel] = [
         ConversationCellModel(name: "Anastasia", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
@@ -56,9 +71,10 @@ class ConversationsListViewController: UIViewController {
         super.viewDidLoad()
         
         conversationsList = sortArray(array: conversationsListExample)
+        configureTheme(Theme.current)
         
-        profileView?.layer.cornerRadius = (profileView?.frame.width ?? 0) / 2
-        profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 0) / 2
+        profileView?.layer.cornerRadius = (profileView?.frame.width ?? 1) / 2
+        profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 1) / 2
         profileImage?.clipsToBounds = true
         
         let openProfileGesture = UITapGestureRecognizer(target: self, action: #selector(openProfile))
@@ -79,19 +95,29 @@ class ConversationsListViewController: UIViewController {
         let profileVC = profileStoryboard.instantiateViewController(withIdentifier: "ProfileViewController")
         self.present(profileVC, animated: true)
     }
+    
+    //MARK: Theme
+    private func configureTheme(_ theme: ThemeModel){
+        UITableView.appearance().backgroundColor = theme.backgroundColor
+        UITableViewCell.appearance().backgroundColor = theme.backgroundColor
+
+        tableView?.reloadData()
+
+        self.navigationController?.navigationBar.barStyle = theme.navigationBarStyle
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.textColor]
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.textColor]
+        self.view.backgroundColor = theme.backgroundColor
+    }
 }
 
+//MARK: UITableView configure
 extension ConversationsListViewController: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0{
-            return "Online"
-        } else {
-            return "History"
-        }
+        return sectionTitle[section]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -122,4 +148,25 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 30))
+        returnedView.backgroundColor = Theme.current.inputMessageBubbleColor
+
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.size.width, height: 30))
+        label.text = self.sectionTitle[section]
+        label.textColor = Theme.current.textColor
+        label.font = .boldSystemFont(ofSize: 17)
+        returnedView.addSubview(label)
+
+        return returnedView
+    }
+    
 }
+
+//MARK: Method theme delegat
+//extension ConversationsListViewController: ThemesPickerDelegate{
+//    func setTheme(_ theme: ThemeModel) {
+//        Theme.current = theme
+//        configureTheme(theme)
+//    }
+//}

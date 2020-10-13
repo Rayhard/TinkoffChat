@@ -18,6 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
         
+        let userDefaults = UserDefaults.standard
+        let theme = userDefaults.string(forKey: "Theme")
+        
+        switch theme {
+        case "classic":
+            Theme.current = ClassicTheme()
+        case "day":
+            Theme.current = DayTheme()
+        case "night":
+            Theme.current = NightTheme()
+        default:
+            Theme.current = ClassicTheme()
+        }
+        
         return true
     }
     

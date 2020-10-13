@@ -16,17 +16,20 @@ class ConversationViewCell: UITableViewCell, ConfigurableView{
     @IBOutlet var leadingConstraint: NSLayoutConstraint?
     @IBOutlet var trailingConstraint: NSLayoutConstraint?
     
+    //MARK: Configure
     func configure(with model: ConfigurationModel) {
         messageBubbleView?.layer.cornerRadius = 10
         
         textMessageLabel?.text = model.text
         
         if model.isOutput{
-            messageBubbleView?.backgroundColor = UIColor(named: "LightGreen")
+            messageBubbleView?.backgroundColor = Theme.current.outputMessageBubbleColor
+            textMessageLabel?.textColor = Theme.current.outputText
             trailingConstraint?.isActive = true
             leadingConstraint?.isActive = false
         } else {
-            messageBubbleView?.backgroundColor = UIColor(named: "LightGray")
+            messageBubbleView?.backgroundColor = Theme.current.inputMessageBubbleColor
+            textMessageLabel?.textColor = Theme.current.inputText
             trailingConstraint?.isActive = false
             leadingConstraint?.isActive = true
         }
