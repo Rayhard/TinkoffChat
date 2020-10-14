@@ -88,7 +88,9 @@ class GCDDataManager: DataManagerProtocol{
                 
                 self.delegat?.complited()
             } catch {
-                AlertManager.showStaticAlert(withMessage: "Ошибка загрузки")
+                profileInfo.name = "Name Surname"
+                profileInfo.description = "You description"
+                self.delegat?.complited()
             }
         }
         return profileInfo

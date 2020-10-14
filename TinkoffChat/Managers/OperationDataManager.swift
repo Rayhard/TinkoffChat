@@ -44,14 +44,14 @@ class OperationDataManager: DataManagerProtocol{
             let photoFileURL = dir.appendingPathComponent(self.photoFile)
 
             let operationQueue = OperationQueue()
-            let operation = SaveOperation()
+            let operation = LoadOperation()
             operation.nameFileURL = nameFileURL
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
                 self.delegat?.complited()
             }
-            operationQueue.addOperation(operation)
+            operationQueue.addOperations([operation], waitUntilFinished: true)
             profileInfo = operation.profile ?? ProfileInfo()
         }
         return profileInfo
@@ -100,18 +100,23 @@ class LoadOperation: Operation{
     var photoFileURL: URL?
     
     override func main() {
-        var profile = ProfileInfo()
+        var loadProfile = ProfileInfo()
         do {
             guard let namePath = nameFileURL,
                   let descPath = descFileURL,
                   let photoPath = photoFileURL else { return }
-            profile.name = try String(contentsOf: namePath, encoding: .utf8)
-            profile.description = try String(contentsOf: descPath, encoding: .utf8)
+            
+            loadProfile.name = try String(contentsOf: namePath, encoding: .utf8)
+            loadProfile.description = try String(contentsOf: descPath, encoding: .utf8)
             
             let imageData = try Data(contentsOf: photoPath)
-            profile.photo = UIImage(data: imageData)
+            loadProfile.photo = UIImage(data: imageData)
+            
+            self.profile = loadProfile
         } catch {
-            AlertManager.showStaticAlert(withMessage: "Ошибка загрузки")
+            loadProfile.name = "Name Surname"
+            loadProfile.description = "You description"
+            self.profile = loadProfile
         }
     }
     

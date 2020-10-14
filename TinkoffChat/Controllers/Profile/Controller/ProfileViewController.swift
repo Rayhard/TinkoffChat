@@ -70,9 +70,6 @@ class ProfileViewController: UIViewController{
         profileImageView?.clipsToBounds = true
         navigationController?.navigationBar.isHidden = true
         
-        let editImageGesture = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
-        circleView?.addGestureRecognizer(editImageGesture)
-        
         loadProfileData()
         
         addKeyboardGesture()
@@ -200,9 +197,17 @@ class ProfileViewController: UIViewController{
         descriptionTextView?.isEditable = state
         descriptionTextView?.isSelectable = state
         editPhotoButton?.isHidden = !state
+        
+        let editImageGesture = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
+        if state {
+            circleView?.addGestureRecognizer(editImageGesture)
+        } else {
+            circleView?.removeGestureRecognizer(editImageGesture)
+        }
     }
     
     private func loadProfileData(){
+//        dataManager = OperationDataManager()
         dataManager = GCDDataManager()
         dataManager?.delegat = self
         let profileInfo = dataManager?.fetchData()
@@ -256,7 +261,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 // MARK: UITextViewDelegate
 extension ProfileViewController: UITextViewDelegate{
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         newProfileInfo.description = descriptionTextView?.text
         
         saveGCDButton?.isEnabled = true
