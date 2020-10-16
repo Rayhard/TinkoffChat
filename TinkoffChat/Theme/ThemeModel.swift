@@ -12,10 +12,8 @@ protocol ThemeModel {
     var backgroundColor: UIColor { get }
     var navigationBarStyle: UIBarStyle { get }
     var textColor: UIColor { get }
-    
     var inputMessageBubbleColor: UIColor { get }
     var outputMessageBubbleColor: UIColor { get }
-    
     var inputText: UIColor { get }
     var outputText: UIColor { get }
     var listText: UIColor { get }

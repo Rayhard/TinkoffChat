@@ -15,7 +15,7 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var profileSymbol: UILabel?
     
     @IBAction func openThemeViewAction(_ sender: Any) {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "ThemesViewController", bundle:nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "ThemesViewController", bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as? ThemesViewController
         guard let destinationController = resultViewController else { return }
         
@@ -31,34 +31,35 @@ class ConversationsListViewController: UIViewController {
     private let cellInditifier = String(describing: ConversationsListCell.self)
     private let sectionTitle = ["Online", "History"]
     
+    // Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
     var conversationsListExample: [ConversationCellModel] = [
         ConversationCellModel(name: "Anastasia", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Ekaterina", message: "123123123123", date: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), isOnline: true, hasUnreadMessages: true),
-        ConversationCellModel(name: "Aleksey", message: "asdasdasd", date: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Alexandr", message: "asdasdasd", date: Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date(), isOnline: true, hasUnreadMessages: true),
-        ConversationCellModel(name: "Человек с очень-очень длинным именем в этом чате, а может быть и на всей земле, и за всю историю", message: "И самым большим сообщением в этом разделе, где все пользователи online, а может и нет, кто знает?", date: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Еще один человек с большим именем, но не таким большим как у предыдущего человека, только он уже не онлайн", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Marina", message: "asdasdasd", date: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Maxim", message: "asdasdasd", date: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), isOnline: false, hasUnreadMessages: true),
-        ConversationCellModel(name: "Nikita", message: "", date: Calendar.current.date(byAdding: .day, value: -4, to: Date()) ?? Date(), isOnline: true, hasUnreadMessages: false),
+        ConversationCellModel(name: "Ekaterina", message: "123123123123", date: Date(), isOnline: true, hasUnreadMessages: true),
+        ConversationCellModel(name: "Aleksey", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
+        ConversationCellModel(name: "Alexandr", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: true),
+        ConversationCellModel(name: "Человек с очень-очень длинным именем", message: "И самым большим сообщением", date: Date(), isOnline: true, hasUnreadMessages: false),
+        ConversationCellModel(name: "Еще один человек с большим именем", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
+        ConversationCellModel(name: "Marina", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
+        ConversationCellModel(name: "Maxim", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
+        ConversationCellModel(name: "Nikita", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
         ConversationCellModel(name: "Rudolf", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
         ConversationCellModel(name: "Timur", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
         ConversationCellModel(name: "Victoria", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
         ConversationCellModel(name: "Vladimir", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Roman", message: "Hi", date: Calendar.current.date(byAdding: .day, value: -3, to: Date()) ?? Date(), isOnline: false, hasUnreadMessages: false),
+        ConversationCellModel(name: "Roman", message: "Hi", date: Date(), isOnline: false, hasUnreadMessages: false),
         ConversationCellModel(name: "Marat", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
         ConversationCellModel(name: "Elena", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Artur", message: "asdasdasd", date: Calendar.current.date(byAdding: .day, value: -20, to: Date()) ?? Date(), isOnline: false, hasUnreadMessages: true),
+        ConversationCellModel(name: "Artur", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
         ConversationCellModel(name: "Anton", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
         ConversationCellModel(name: "Nikolay", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Margarita", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: false),
+        ConversationCellModel(name: "Margarita", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: false)
     ]
     var conversationsList: [[ConversationCellModel]] = []
     
-    private func sortArray(array: [ConversationCellModel]) -> [[ConversationCellModel]]{
-        var sortedArray: [[ConversationCellModel]] = [[],[]]
-        for (index, item) in array.enumerated(){
-            if item.isOnline{
+    private func sortArray(array: [ConversationCellModel]) -> [[ConversationCellModel]] {
+        var sortedArray: [[ConversationCellModel]] = [[], []]
+        for (index, item) in array.enumerated() {
+            if item.isOnline {
                 sortedArray[0].append(array[index])
             } else {
                 sortedArray[1].append(array[index])
@@ -69,11 +70,6 @@ class ConversationsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let dataManager = OperationDataManager()
-////        let dataManager = GCDDataManager()
-//        let profile = dataManager.fetchData()
-//        profileImage?.image = profile.photo
         
         conversationsList = sortArray(array: conversationsListExample)
         configureTheme(Theme.current)
@@ -103,14 +99,14 @@ class ConversationsListViewController: UIViewController {
     }
     
     @objc
-    private func openProfile(){
+    private func openProfile() {
         let profileStoryboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
         let profileVC = profileStoryboard.instantiateViewController(withIdentifier: "ProfileViewController")
         self.present(profileVC, animated: true)
     }
     
-    //MARK: Theme
-    private func configureTheme(_ theme: ThemeModel){
+    // MARK: Theme
+    private func configureTheme(_ theme: ThemeModel) {
         UITableView.appearance().backgroundColor = theme.backgroundColor
         UITableViewCell.appearance().backgroundColor = theme.backgroundColor
 
@@ -123,8 +119,8 @@ class ConversationsListViewController: UIViewController {
     }
 }
 
-//MARK: UITableView configure
-extension ConversationsListViewController: UITableViewDelegate, UITableViewDataSource{
+// MARK: UITableView configure
+extension ConversationsListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -153,7 +149,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let name = conversationsList[indexPath.section][indexPath.row].name
         
-        let storyBoard : UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle:nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
         guard let destinationController = resultViewController else { return }
         destinationController.name = name
@@ -176,7 +172,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     
 }
 
-//MARK: Method theme delegat
+// MARK: Method theme delegat
 //extension ConversationsListViewController: ThemesPickerDelegate{
 //    func setTheme(_ theme: ThemeModel) {
 //        Theme.current = theme

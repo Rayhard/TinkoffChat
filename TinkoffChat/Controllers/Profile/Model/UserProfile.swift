@@ -16,5 +16,5 @@ final class UserProfile {
     var name: String = "Nikita Perezhogin"
     var symbols: String = "NP"
     var description: String = "iOS Developer, QA Engener\nMoscow, Russia"
-    var photo: UIImage? = nil
+    var photo: UIImage?
 }

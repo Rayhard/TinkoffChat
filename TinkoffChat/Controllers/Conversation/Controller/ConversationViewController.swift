@@ -17,11 +17,11 @@ class ConversationViewController: UIViewController {
     
     var messageExample: [MessageCellModel] = [
         MessageCellModel(text: "abcdsf", isOutput: true),
-        MessageCellModel(text: "MessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModel", isOutput: false),
+        MessageCellModel(text: "MessageCellModelMessageCell", isOutput: false),
         MessageCellModel(text: "MessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModel", isOutput: true),
         MessageCellModel(text: "abcdsfabcdsf", isOutput: true),
         MessageCellModel(text: "MessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModel", isOutput: false),
-        MessageCellModel(text: "MessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModel", isOutput: true)
+        MessageCellModel(text: "MessageCellModelMessageCellModel", isOutput: true)
     ]
 
     override func viewDidLoad() {
@@ -34,15 +34,15 @@ class ConversationViewController: UIViewController {
         tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
     }
     
-    //MARK: Theme
+    // MARK: Theme
     private func setTheme() {
         self.view.backgroundColor = Theme.current.backgroundColor
     }
 
 }
 
-//MARK: UITableView configure
-extension ConversationViewController: UITableViewDelegate, UITableViewDataSource{
+// MARK: UITableView configure
+extension ConversationViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messageExample.count
     }
@@ -55,6 +55,5 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
         
         return cell
     }
-    
     
 }

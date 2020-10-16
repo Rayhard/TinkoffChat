@@ -20,7 +20,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
     @IBOutlet weak var indicatorOnline: UIView?
     @IBOutlet weak var unreadMessageMark: UIView?
     
-    //MARK: Configure
+    // MARK: Configure
     func configure(with model: ConfigurationModel) {
         self.selectionStyle = .none
         photoView?.layer.cornerRadius = (photoView?.frame.width ?? 1) / 2
@@ -34,7 +34,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         if model.message == ""{
             settingNilMessage()
         } else {
-            if model.hasUnreadMessages{
+            if model.hasUnreadMessages {
                 settingUnreadMessage()
             } else {
                 textMessageLabel?.font = .none
@@ -47,25 +47,25 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
             dateLabel?.text = formDate(model.date)
         }
         
-        if model.isOnline{
+        if model.isOnline {
             settingOnline()
         } else {
             onlineMarkView?.isHidden = true
         }
     }
     
-    //MARK: Theme
-    private func setTheme(){
+    // MARK: Theme
+    private func setTheme() {
         nameLabel?.textColor = Theme.current.textColor
         dateLabel?.textColor = Theme.current.listText
     }
     
-    //MARK: Setting cell
-    private func settingNilMessage(){
+    // MARK: Setting cell
+    private func settingNilMessage() {
         textMessageLabel?.text = "No messages yet"
         textMessageLabel?.textColor = Theme.current.listText
         guard let customFont = UIFont(name: "BlackHole-Italic", size: UIFont.labelFontSize) else {
-            AlertManager.showStaticAlert(withMessage: "Failed to load the \"BlackHole_Italic\" font.Make sure the font file is included in the project and the font name is spelled correctly.")
+            AlertManager.showStaticAlert(withMessage: "Failed to load the \"BlackHole_Italic\" font.")
             return
         }
         textMessageLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)
@@ -76,7 +76,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         dateLabel?.text = ""
     }
     
-    private func settingUnreadMessage(){
+    private func settingUnreadMessage() {
         textMessageLabel?.font = .boldSystemFont(ofSize: 17)
         textMessageLabel?.textColor = Theme.current.listText
         unreadMessageMark?.isHidden = false
@@ -84,20 +84,20 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         unreadMessageMark?.backgroundColor = Theme.current.outputMessageBubbleColor
     }
     
-    private func settingOnline(){
+    private func settingOnline() {
         onlineMarkView?.backgroundColor = Theme.current.backgroundColor
         onlineMarkView?.isHidden = false
         onlineMarkView?.layer.cornerRadius = (onlineMarkView?.frame.width ?? 1) / 2
         indicatorOnline?.layer.cornerRadius = (indicatorOnline?.frame.width ?? 1) / 2
     }
     
-    private func setSymbolFromName(_ name: String) -> String{
+    private func setSymbolFromName(_ name: String) -> String {
         return String(name.prefix(1))
     }
     
     private func formDate(_ date: Date) -> String {
         let calendar = Calendar(identifier: .gregorian)
-        if calendar.isDateInToday(date){
+        if calendar.isDateInToday(date) {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
             let localDate = dateFormatter.string(from: date)

@@ -35,7 +35,7 @@ final class AlertManager {
             
             let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            let repeatAction = UIAlertAction(title: "Повторить", style: .default){ _ in
+            let repeatAction = UIAlertAction(title: "Повторить", style: .default) { _ in
                 closure(ProfileInfo())
             }
             alertController.addAction(okAction)

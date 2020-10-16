@@ -8,14 +8,13 @@
 
 import UIKit
 
-class OperationDataManager: DataManagerProtocol{
+class OperationDataManager: DataManagerProtocol {
     weak var delegat: DataManagerDelegate?
-    
     private let nameFile = "name.txt"
     private let descriptionFile = "description.txt"
     private let photoFile = "photo.png"
     
-    func saveData(_ info: ProfileInfo){
+    func saveData(_ info: ProfileInfo) {
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let nameFileURL = dir.appendingPathComponent(self.nameFile)
             let descFileURL = dir.appendingPathComponent(self.descriptionFile)
@@ -32,11 +31,9 @@ class OperationDataManager: DataManagerProtocol{
             }
             operationQueue.addOperation(operation)
         }
-        
     }
     
-    
-    func fetchData() -> ProfileInfo{
+    func fetchData() -> ProfileInfo {
         var profileInfo = ProfileInfo()
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let nameFileURL = dir.appendingPathComponent(self.nameFile)
@@ -58,47 +55,43 @@ class OperationDataManager: DataManagerProtocol{
     }
 }
 
-
-class SaveOperation: Operation{
+class SaveOperation: Operation {
     var profile: ProfileInfo?
     var nameFileURL: URL?
     var descFileURL: URL?
     var photoFileURL: URL?
-    
     override func main() {
-        do{
-            if let name = profile?.name{
+        do {
+            if let name = profile?.name {
                 guard let path = nameFileURL else { return }
                 try name.write(to: path, atomically: false, encoding: .utf8)
             }
             
-            if let desc = profile?.description{
+            if let desc = profile?.description {
                 guard let path = descFileURL else { return }
                 try desc.write(to: path, atomically: false, encoding: .utf8)
             }
             
-            if let photo = profile?.photo{
+            if let photo = profile?.photo {
                 if let data = photo.pngData() {
                     guard let path = photoFileURL else { return }
                     try data.write(to: path)
                 }
             }
-            
             AlertManager.showStaticAlert(withMessage: "Данные сохранены")
         } catch {
-            AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { profile in
+            AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { _ in
                 self.main()
             }
         }
     }
 }
 
-class LoadOperation: Operation{
+class LoadOperation: Operation {
     var profile: ProfileInfo?
     var nameFileURL: URL?
     var descFileURL: URL?
     var photoFileURL: URL?
-    
     override func main() {
         var loadProfile = ProfileInfo()
         do {
@@ -108,10 +101,8 @@ class LoadOperation: Operation{
             
             loadProfile.name = try String(contentsOf: namePath, encoding: .utf8)
             loadProfile.description = try String(contentsOf: descPath, encoding: .utf8)
-            
             let imageData = try Data(contentsOf: photoPath)
             loadProfile.photo = UIImage(data: imageData)
-            
             self.profile = loadProfile
         } catch {
             loadProfile.name = "Name Surname"
@@ -119,5 +110,4 @@ class LoadOperation: Operation{
             self.profile = loadProfile
         }
     }
-    
 }

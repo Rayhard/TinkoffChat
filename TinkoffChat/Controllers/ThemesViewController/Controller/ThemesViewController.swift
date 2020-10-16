@@ -20,7 +20,6 @@ class ThemesViewController: UIViewController {
     @IBOutlet weak var dayMessageView: UIView?
     @IBOutlet weak var nightMessageView: UIView?
     
-    // Retain cycle может возникнуть если использовать сильные ссылки. При использовании ключевых слов weak, unowned, а так же конструкции [weak self] создается слабая ссылка, которая может быть удалена ARC.
     weak var delegate: ThemesPickerDelegate?
     var setTheme: ((ThemeModel) -> Void)?
     let dataManager: GCDDataManager = GCDDataManager()
@@ -47,7 +46,7 @@ class ThemesViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         
         guard let viewArray = bubbleViews else { return }
-        for view in viewArray{
+        for view in viewArray {
             view.layer.cornerRadius = view.frame.height / 6
         }
         
@@ -62,11 +61,10 @@ class ThemesViewController: UIViewController {
         dayMessageView?.addGestureRecognizer(dayGesture)
         nightMessageView?.addGestureRecognizer(nightGesture)
         
-        
         configureTheme()
     }
     
-    @objc private func setClassicTheme(){
+    @objc private func setClassicTheme() {
         //            delegate?.setTheme(ClassicTheme())
         self.setTheme?(ClassicTheme())
         saveTheme(.classic)
@@ -78,7 +76,7 @@ class ThemesViewController: UIViewController {
         setupNightView(border: 1, color: .gray)
     }
     
-    @objc private func setDayTheme(){
+    @objc private func setDayTheme() {
         //            delegate?.setTheme(DayTheme())
         self.setTheme?(DayTheme())
         saveTheme(.day)
@@ -90,7 +88,7 @@ class ThemesViewController: UIViewController {
         setupNightView(border: 1, color: .gray)
     }
     
-    @objc private func setNightTheme(){
+    @objc private func setNightTheme() {
         //            delegate?.setTheme(NightTheme())
         self.setTheme?(NightTheme())
         saveTheme(.night)
@@ -102,23 +100,23 @@ class ThemesViewController: UIViewController {
         setupDayView(border: 1, color: .gray)
     }
     
-    private func setupClassicView(border: CGFloat, color: UIColor){
+    private func setupClassicView(border: CGFloat, color: UIColor) {
         classicMessageView?.layer.borderWidth = border
         classicMessageView?.layer.borderColor = color.cgColor
     }
     
-    private func setupDayView(border: CGFloat, color: UIColor){
+    private func setupDayView(border: CGFloat, color: UIColor) {
         dayMessageView?.layer.borderWidth = border
         dayMessageView?.layer.borderColor = color.cgColor
     }
     
-    private func setupNightView(border: CGFloat, color: UIColor){
+    private func setupNightView(border: CGFloat, color: UIColor) {
         nightMessageView?.layer.borderWidth = border
         nightMessageView?.layer.borderColor = color.cgColor
         
     }
     
-    private func saveTheme(_ theme: CurrentTheme){
+    private func saveTheme(_ theme: CurrentTheme) {
         let userDefaults = UserDefaults.standard
         userDefaults.set(theme.rawValue, forKey: "Theme")
         
@@ -153,7 +151,7 @@ class ThemesViewController: UIViewController {
 }
 
 enum CurrentTheme: String {
-    case classic = "classic"
-    case day = "day"
-    case night = "night"
+    case classic
+    case day
+    case night
 }

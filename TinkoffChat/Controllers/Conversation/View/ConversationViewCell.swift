@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationViewCell: UITableViewCell, ConfigurableView{
+class ConversationViewCell: UITableViewCell, ConfigurableView {
     typealias ConfigurationModel = MessageCellModel
     
     @IBOutlet weak var messageBubbleView: UIView?
@@ -16,13 +16,13 @@ class ConversationViewCell: UITableViewCell, ConfigurableView{
     @IBOutlet var leadingConstraint: NSLayoutConstraint?
     @IBOutlet var trailingConstraint: NSLayoutConstraint?
     
-    //MARK: Configure
+    // MARK: Configure
     func configure(with model: ConfigurationModel) {
         messageBubbleView?.layer.cornerRadius = 10
         
         textMessageLabel?.text = model.text
         
-        if model.isOutput{
+        if model.isOutput {
             messageBubbleView?.backgroundColor = Theme.current.outputMessageBubbleColor
             textMessageLabel?.textColor = Theme.current.outputText
             trailingConstraint?.isActive = true

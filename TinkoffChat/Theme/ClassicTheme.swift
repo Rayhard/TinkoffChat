@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ClassicTheme: ThemeModel{
+final class ClassicTheme: ThemeModel {
     var backgroundColor: UIColor = .white
     var textColor: UIColor = .black
     var navigationBarStyle: UIBarStyle = .default
