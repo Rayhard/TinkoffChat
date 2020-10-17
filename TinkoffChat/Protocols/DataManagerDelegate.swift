@@ -9,5 +9,6 @@
 import Foundation
 
 protocol DataManagerDelegate: class {
-    func complited()
+    func saveComplited()
+    func loadComplited()
 }

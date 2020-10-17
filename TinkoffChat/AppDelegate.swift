@@ -21,6 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
         
         let userDefaults = UserDefaults.standard
+        let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
+        if !launchedBefore {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            
+            let profile = ProfileInfo(name: "You Name",
+                                      description: "You description",
+                                      photo: UIImage(named: "clearFile"))
+            let dataManager = GCDDataManager()
+            dataManager.saveData(profile)
+        }
+        
         let theme = userDefaults.string(forKey: "Theme")
         
         switch theme {

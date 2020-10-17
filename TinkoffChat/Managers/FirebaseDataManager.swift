@@ -15,26 +15,26 @@ class FirebaseDataManager {
     private lazy var reference = db.collection("channels")
     
     func getChannels(completion: @escaping ([Channel]) -> Void) {
-        reference.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let channels = querySnapshot else { return }
-                var channelsArray: [Channel] = []
-                
-                for document in channels.documents {
-                    let dataFile = document.data()
-                    let channel = Channel(indetifier: document.documentID,
-                                          name: dataFile["name"] as? String ?? "none",
-                                          lastMessage: dataFile["lastMessage"] as? String ?? "",
-                                          lastActivity: self.getDataFromTimestamp(dataFile["lastActivity"]))
-                    
-                    channelsArray.append(channel)
-                }
-                
-                completion(channelsArray)
-            }
-        }
+//        reference.getDocuments { (querySnapshot, error) in
+//            if let error = error {
+//                print("Error getting documents: \(error)")
+//            } else {
+//                guard let channels = querySnapshot else { return }
+//                var channelsArray: [Channel] = []
+//
+//                for document in channels.documents {
+//                    let dataFile = document.data()
+//                    let channel = Channel(indetifier: document.documentID,
+//                                          name: dataFile["name"] as? String ?? "none",
+//                                          lastMessage: dataFile["lastMessage"] as? String ?? "",
+//                                          lastActivity: self.getDataFromTimestamp(dataFile["lastActivity"]))
+//
+//                    channelsArray.append(channel)
+//                }
+//
+//                completion(channelsArray)
+//            }
+//        }
     }
     
     func createNewChannel(name: String) {

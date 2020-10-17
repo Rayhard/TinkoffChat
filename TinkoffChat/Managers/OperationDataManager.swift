@@ -27,7 +27,7 @@ class OperationDataManager: DataManagerProtocol {
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
-                self.delegat?.complited()
+                self.delegat?.saveComplited()
             }
             operationQueue.addOperation(operation)
         }
@@ -46,7 +46,7 @@ class OperationDataManager: DataManagerProtocol {
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
-                self.delegat?.complited()
+                self.delegat?.loadComplited()
             }
             operationQueue.addOperations([operation], waitUntilFinished: true)
             profileInfo = operation.profile ?? ProfileInfo()
@@ -78,7 +78,7 @@ class SaveOperation: Operation {
                     try data.write(to: path)
                 }
             }
-            AlertManager.showStaticAlert(withMessage: "Данные сохранены")
+//            AlertManager.showStaticAlert(withMessage: "Данные сохранены")
         } catch {
             AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { _ in
                 self.main()

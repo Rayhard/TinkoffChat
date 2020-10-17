@@ -41,9 +41,7 @@ class GCDDataManager: DataManagerProtocol {
                         }
                     }
                     
-                    AlertManager.showStaticAlert(withMessage: "Данные сохранены")
-                    
-                    self.delegat?.complited()
+                    self.delegat?.saveComplited()
                     
                 } catch {
                     AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { profile in
@@ -85,11 +83,11 @@ class GCDDataManager: DataManagerProtocol {
                 let imageData = try Data(contentsOf: photoFileURL)
                 profileInfo.photo = UIImage(data: imageData)
                 
-                self.delegat?.complited()
+                self.delegat?.loadComplited()
             } catch {
                 profileInfo.name = "Name Surname"
                 profileInfo.description = "You description"
-                self.delegat?.complited()
+//                self.delegat?.complited()
             }
         }
         return profileInfo

@@ -208,8 +208,8 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadProfileData() {
-//        dataManager = OperationDataManager()
-        dataManager = GCDDataManager()
+        dataManager = OperationDataManager()
+//        dataManager = GCDDataManager()
         dataManager?.delegat = self
         let profileInfo = dataManager?.fetchData()
         nameTextField?.text = profileInfo?.name
@@ -307,7 +307,18 @@ extension ProfileViewController {
 
 // MARK: DataManagerDelegate
 extension ProfileViewController: DataManagerDelegate {
-    func complited() {
+    func saveComplited() {
+        DispatchQueue.main.async {
+            self.isEdited(false)
+            self.activityIndicator?.isHidden = true
+            self.saveGCDButton?.isEnabled = false
+            self.saveOperationButton?.isEnabled = false
+            
+            AlertManager.showStaticAlert(withMessage: "Данные сохранены")
+        }
+    }
+    
+    func loadComplited() {
         DispatchQueue.main.async {
             self.isEdited(false)
             self.activityIndicator?.isHidden = true
