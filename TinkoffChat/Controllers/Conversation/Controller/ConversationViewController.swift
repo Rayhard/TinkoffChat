@@ -11,6 +11,7 @@ import UIKit
 class ConversationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var messageTextView: UITextView?
+    @IBOutlet weak var inputViewHight: NSLayoutConstraint?
     
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
@@ -34,11 +35,23 @@ class ConversationViewController: UIViewController {
         setTheme()
         loadData()
         
+        messageTextView?.delegate = self
         messageTextView?.layer.cornerRadius = (messageTextView?.frame.height ?? 0) / 4
 
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addKeyboardObserver()
+        addKeyboardGesture()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObserver()
     }
     
     private func loadData() {
@@ -72,4 +85,54 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
         return cell
     }
     
+}
+
+// MARK: UITextViewDelegate
+extension ConversationViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.contentSize.height > 50,
+           textView.contentSize.height < 200 {
+            inputViewHight?.constant = textView.contentSize.height + 16
+        }
+        
+        if textView.text == "" {
+            self.sendMessageButton?.isEnabled = false
+        } else {
+            self.sendMessageButton?.isEnabled = true
+        }
+    }
+}
+
+// MARK: Keyboard settings
+extension ConversationViewController {
+    private func addKeyboardGesture() {
+        let keyboardHideGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        keyboardHideGesture.cancelsTouchesInView = false
+        self.view?.addGestureRecognizer(keyboardHideGesture)
+    }
+
+    private func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    private func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc private func keyboardWillShow(notification: Notification) {
+        let info = notification.userInfo as NSDictionary?
+        let size = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
+
+        self.view.frame.origin.y = -(size?.height ?? 0)
+    }
+
+    @objc private func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = 0
+    }
+
+    @objc private func hideKeyboard() {
+        self.messageTextView?.endEditing(true)
+    }
 }

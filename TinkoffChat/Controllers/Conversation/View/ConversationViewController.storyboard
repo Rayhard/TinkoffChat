@@ -24,10 +24,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="REA-6n-dap">
                                 <rect key="frame" x="0.0" y="792" width="414" height="70"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7j-Ns-347">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7j-Ns-347">
                                         <rect key="frame" x="362" y="18" width="44" height="44"/>
                                         <inset key="imageEdgeInsets" minX="5" minY="10" maxX="5" maxY="0.0"/>
-                                        <state key="normal" image="SF_arrow_up_bin_fill"/>
+                                        <state key="normal" image="SF_arrow_up_bin_fill">
+                                            <color key="titleColor" systemColor="linkColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="sendMessageAction:" destination="hKW-ET-Q1b" eventType="touchUpInside" id="740-HT-Nc0"/>
                                         </connections>
@@ -65,6 +67,7 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="8gP-RJ-ew9"/>
                     <connections>
+                        <outlet property="inputViewHight" destination="kqr-BL-qEf" id="uyp-rw-yJi"/>
                         <outlet property="messageTextView" destination="FJI-0d-QRL" id="Ep9-xs-uYC"/>
                         <outlet property="sendMessageButton" destination="L7j-Ns-347" id="QXv-UO-8qq"/>
                         <outlet property="tableView" destination="KyD-EP-DRM" id="gfA-fA-ORG"/>
@@ -79,6 +82,9 @@
         <image name="SF_arrow_up_bin_fill" width="44" height="44"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
