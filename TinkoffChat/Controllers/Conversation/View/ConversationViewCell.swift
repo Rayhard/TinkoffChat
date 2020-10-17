@@ -9,29 +9,37 @@
 import UIKit
 
 class ConversationViewCell: UITableViewCell, ConfigurableView {
-    typealias ConfigurationModel = MessageCellModel
+    typealias ConfigurationModel = Message
     
     @IBOutlet weak var messageBubbleView: UIView?
     @IBOutlet weak var textMessageLabel: UILabel?
     @IBOutlet var leadingConstraint: NSLayoutConstraint?
     @IBOutlet var trailingConstraint: NSLayoutConstraint?
+    @IBOutlet weak var nameLabel: UILabel?
     
     // MARK: Configure
     func configure(with model: ConfigurationModel) {
         messageBubbleView?.layer.cornerRadius = 10
         
-        textMessageLabel?.text = model.text
+        setTheme()
         
-        if model.isOutput {
-            messageBubbleView?.backgroundColor = Theme.current.outputMessageBubbleColor
-            textMessageLabel?.textColor = Theme.current.outputText
+        textMessageLabel?.text = model.content
+        nameLabel?.text = model.senderName
+        
+        if model.senderId == UserProfile.shared.symbols {
             trailingConstraint?.isActive = true
             leadingConstraint?.isActive = false
+            nameLabel?.textAlignment = .right
         } else {
-            messageBubbleView?.backgroundColor = Theme.current.inputMessageBubbleColor
-            textMessageLabel?.textColor = Theme.current.inputText
             trailingConstraint?.isActive = false
             leadingConstraint?.isActive = true
+            nameLabel?.textAlignment = .left
         }
+    }
+    
+    private func setTheme() {
+        messageBubbleView?.backgroundColor = Theme.current.inputMessageBubbleColor
+        textMessageLabel?.textColor = Theme.current.inputText
+        nameLabel?.textColor = Theme.current.inputText
     }
 }

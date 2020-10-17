@@ -22,22 +22,34 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zIp-JU-VFA">
+                                <rect key="frame" x="197" y="491" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1XZ-vB-SZe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="0gL-6p-bty" firstAttribute="trailing" secondItem="1XZ-vB-SZe" secondAttribute="trailing" id="3x0-YP-YSt"/>
                             <constraint firstItem="0gL-6p-bty" firstAttribute="leading" secondItem="1XZ-vB-SZe" secondAttribute="leading" id="ADT-7O-gUO"/>
+                            <constraint firstItem="zIp-JU-VFA" firstAttribute="centerX" secondItem="1XZ-vB-SZe" secondAttribute="centerX" id="Fyq-al-ER2"/>
                             <constraint firstItem="0gL-6p-bty" firstAttribute="top" secondItem="1XZ-vB-SZe" secondAttribute="top" id="eOc-zH-gvf"/>
+                            <constraint firstItem="zIp-JU-VFA" firstAttribute="centerY" secondItem="1XZ-vB-SZe" secondAttribute="centerY" id="ms1-yw-hSl"/>
                             <constraint firstItem="0gL-6p-bty" firstAttribute="bottom" secondItem="1XZ-vB-SZe" secondAttribute="bottom" id="qCL-y9-vo4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Channels" largeTitleDisplayMode="always" id="5z4-Pv-MLC">
-                        <barButtonItem key="leftBarButtonItem" image="Settings" id="ZYa-eU-lGh">
-                            <connections>
-                                <action selector="openThemeViewAction:" destination="LwF-fI-iRC" id="N3w-zq-pj9"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem image="Settings" id="ZYa-eU-lGh">
+                                <connections>
+                                    <action selector="openThemeViewAction:" destination="LwF-fI-iRC" id="N3w-zq-pj9"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="compose" id="hFI-TB-JHG">
+                                <connections>
+                                    <action selector="createNewChannelAction:" destination="LwF-fI-iRC" id="Pj1-9h-K7S"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" id="Emk-u1-3e2">
                             <view key="customView" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9Ui-SV-HH1">
                                 <rect key="frame" x="354" y="2" width="40" height="40"/>
@@ -72,6 +84,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="zIp-JU-VFA" id="FEL-ui-GiI"/>
                         <outlet property="profileImage" destination="vbw-jb-AE5" id="rqB-jE-s84"/>
                         <outlet property="profileSymbol" destination="PGq-Iv-I1h" id="Wr0-eI-zsw"/>
                         <outlet property="profileView" destination="9Ui-SV-HH1" id="pqM-Op-z1e"/>

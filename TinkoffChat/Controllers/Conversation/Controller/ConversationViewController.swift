@@ -14,24 +14,26 @@ class ConversationViewController: UIViewController {
     private let cellInditifier = String(describing: ConversationViewCell.self)
     
     var name: String = ""
-    
-    var messageExample: [MessageCellModel] = [
-        MessageCellModel(text: "abcdsf", isOutput: true),
-        MessageCellModel(text: "MessageCellModelMessageCell", isOutput: false),
-        MessageCellModel(text: "MessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModel", isOutput: true),
-        MessageCellModel(text: "abcdsfabcdsf", isOutput: true),
-        MessageCellModel(text: "MessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModelMessageCellModel", isOutput: false),
-        MessageCellModel(text: "MessageCellModelMessageCellModel", isOutput: true)
-    ]
+    var channelId: String = ""
+    var messageArray: [Message] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = name
         setTheme()
+        loadData()
 
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
+    }
+    
+    private func loadData() {
+        let dataManager = FirebaseDataManager()
+        dataManager.getMessages(channelId: channelId) { [weak self] messages in
+            self?.messageArray = messages
+            self?.tableView?.reloadData()
+        }
     }
     
     // MARK: Theme
@@ -44,13 +46,13 @@ class ConversationViewController: UIViewController {
 // MARK: UITableView configure
 extension ConversationViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messageExample.count
+        return messageArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationViewCell else { return UITableViewCell() }
         
-        let message = messageExample[indexPath.row]
+        let message = messageArray[indexPath.row]
         cell.configure(with: message)
         
         return cell

@@ -13,6 +13,7 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var profileView: UIView?
     @IBOutlet weak var profileImage: UIImageView?
     @IBOutlet weak var profileSymbol: UILabel?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     @IBAction func openThemeViewAction(_ sender: Any) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "ThemesViewController", bundle: nil)
@@ -28,51 +29,21 @@ class ConversationsListViewController: UIViewController {
         self.navigationController?.pushViewController(destinationController, animated: true)
     }
     
-    private let cellInditifier = String(describing: ConversationsListCell.self)
-    private let sectionTitle = ["Online", "History"]
-    
-    // Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
-    var conversationsListExample: [ConversationCellModel] = [
-        ConversationCellModel(name: "Anastasia", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Ekaterina", message: "123123123123", date: Date(), isOnline: true, hasUnreadMessages: true),
-        ConversationCellModel(name: "Aleksey", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Alexandr", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: true),
-        ConversationCellModel(name: "Человек с очень-очень длинным именем", message: "И самым большим сообщением", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Еще один человек с большим именем", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Marina", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Maxim", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
-        ConversationCellModel(name: "Nikita", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Rudolf", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
-        ConversationCellModel(name: "Timur", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Victoria", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Vladimir", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Roman", message: "Hi", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Marat", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
-        ConversationCellModel(name: "Elena", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Artur", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: true),
-        ConversationCellModel(name: "Anton", message: "asdasdasd", date: Date(), isOnline: false, hasUnreadMessages: false),
-        ConversationCellModel(name: "Nikolay", message: "", date: Date(), isOnline: true, hasUnreadMessages: false),
-        ConversationCellModel(name: "Margarita", message: "asdasdasd", date: Date(), isOnline: true, hasUnreadMessages: false)
-    ]
-    var conversationsList: [[ConversationCellModel]] = []
-    
-    private func sortArray(array: [ConversationCellModel]) -> [[ConversationCellModel]] {
-        var sortedArray: [[ConversationCellModel]] = [[], []]
-        for (index, item) in array.enumerated() {
-            if item.isOnline {
-                sortedArray[0].append(array[index])
-            } else {
-                sortedArray[1].append(array[index])
-            }
-        }
-        return sortedArray
+    @IBAction func createNewChannelAction(_ sender: Any) {
+        AlertManager.showTextFieldAlert(message: "Создать новый канал?")
     }
+    
+    private let cellInditifier = String(describing: ConversationsListCell.self)
+
+    var channelsArray: [Channel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        conversationsList = sortArray(array: conversationsListExample)
         configureTheme(Theme.current)
+        loadData()
+        
+        activityIndicator?.isHidden = false
         
         profileView?.layer.cornerRadius = (profileView?.frame.width ?? 1) / 2
         profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 1) / 2
@@ -105,6 +76,15 @@ class ConversationsListViewController: UIViewController {
         self.present(profileVC, animated: true)
     }
     
+    private func loadData() {
+        let dataMan = FirebaseDataManager()
+        dataMan.getChannels(completion: { [weak self] channels in
+            self?.channelsArray = channels
+            self?.tableView?.reloadData()
+            self?.activityIndicator?.isHidden = true
+        })
+    }
+    
     // MARK: Theme
     private func configureTheme(_ theme: ThemeModel) {
         UITableView.appearance().backgroundColor = theme.backgroundColor
@@ -121,55 +101,39 @@ class ConversationsListViewController: UIViewController {
 
 // MARK: UITableView configure
 extension ConversationsListViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionTitle[section]
-    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 89
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversationsList[section].count
+        return channelsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationsListCell else { return UITableViewCell()}
         
-        let item = conversationsList[indexPath.section][indexPath.row]
+        let item = channelsArray[indexPath.row]
         cell.configure(with: item)
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let name = conversationsList[indexPath.section][indexPath.row].name
-        
+        let channel = channelsArray[indexPath.row]
+
         let storyBoard: UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
         guard let destinationController = resultViewController else { return }
-        destinationController.name = name
+        destinationController.name = channel.name
+        destinationController.channelId = channel.indetifier
         self.navigationController?.pushViewController(destinationController, animated: true)
-        
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 30))
-        returnedView.backgroundColor = Theme.current.inputMessageBubbleColor
 
-        let label = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.size.width, height: 30))
-        label.text = self.sectionTitle[section]
-        label.textColor = Theme.current.textColor
-        label.font = .boldSystemFont(ofSize: 17)
-        returnedView.addSubview(label)
-
-        return returnedView
     }
-    
 }
 
 // MARK: Method theme delegat

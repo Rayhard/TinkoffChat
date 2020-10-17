@@ -11,7 +11,7 @@ import AVFoundation
 
 class ProfileViewController: UIViewController {
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView?
     @IBOutlet weak var circleView: UIView?
     @IBOutlet weak var nameSymbolsLabel: UILabel?
     @IBOutlet weak var nameTextField: UITextField?
@@ -274,7 +274,7 @@ extension ProfileViewController {
     private func addKeyboardGesture() {
         let keyboardHideGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         keyboardHideGesture.cancelsTouchesInView = false
-        self.scrollView.addGestureRecognizer(keyboardHideGesture)
+        self.scrollView?.addGestureRecognizer(keyboardHideGesture)
     }
     
     private func addKeyboardObserver() {
@@ -288,20 +288,20 @@ extension ProfileViewController {
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
-        let info = notification.userInfo! as NSDictionary
-        let size = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
+        let info = notification.userInfo as NSDictionary?
+        let size = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
         
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: size?.height ?? 0, right: 0)
         self.scrollView?.contentInset = contentInsets
-        self.scrollView.scrollIndicatorInsets = contentInsets
+        self.scrollView?.scrollIndicatorInsets = contentInsets
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
-        scrollView.contentInset = .zero
+        scrollView?.contentInset = .zero
     }
     
     @objc private func hideKeyboard() {
-        self.scrollView.endEditing(true)
+        self.scrollView?.endEditing(true)
     }
 }
 
