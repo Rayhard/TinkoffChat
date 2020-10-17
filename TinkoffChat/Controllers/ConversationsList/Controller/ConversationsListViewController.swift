@@ -30,7 +30,10 @@ class ConversationsListViewController: UIViewController {
     }
     
     @IBAction func createNewChannelAction(_ sender: Any) {
-        AlertManager.showTextFieldAlert(message: "Создать новый канал?")
+        AlertManager.showTextFieldAlert(message: "Создать новый канал?") { (name) in
+            let dataManager = FirebaseDataManager()
+            dataManager.createNewChannel(name: name)
+        }
     }
     
     private let cellInditifier = String(describing: ConversationsListCell.self)

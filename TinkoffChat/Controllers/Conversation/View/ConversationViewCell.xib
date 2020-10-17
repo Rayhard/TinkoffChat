@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iyz-k3-mpB">
-                        <rect key="frame" x="4" y="4" width="310.5" height="55.5"/>
+                        <rect key="frame" x="4" y="4" width="310.5" height="72"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5a-bh-10S">
                                 <rect key="frame" x="6" y="30" width="298.5" height="19.5"/>
@@ -32,15 +32,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSc-8G-BWX">
+                                <rect key="frame" x="276.5" y="53.5" width="28" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <constraints>
                             <constraint firstItem="Kqf-A9-ewa" firstAttribute="leading" secondItem="Iyz-k3-mpB" secondAttribute="leading" constant="8" id="0fb-GE-LdP"/>
                             <constraint firstItem="Kqf-A9-ewa" firstAttribute="top" secondItem="Iyz-k3-mpB" secondAttribute="top" constant="2" id="GSg-3c-amd"/>
                             <constraint firstAttribute="trailing" secondItem="Kqf-A9-ewa" secondAttribute="trailing" constant="8" id="ML5-H4-5ga"/>
+                            <constraint firstAttribute="trailing" secondItem="RSc-8G-BWX" secondAttribute="trailing" constant="6" id="UAy-OH-6f4"/>
                             <constraint firstItem="a5a-bh-10S" firstAttribute="top" secondItem="Kqf-A9-ewa" secondAttribute="bottom" constant="8" symbolic="YES" id="bI1-kU-a8t"/>
-                            <constraint firstAttribute="bottom" secondItem="a5a-bh-10S" secondAttribute="bottom" constant="6" id="bjb-tc-BkN"/>
                             <constraint firstAttribute="trailing" secondItem="a5a-bh-10S" secondAttribute="trailing" constant="6" id="lp1-La-INr"/>
+                            <constraint firstItem="RSc-8G-BWX" firstAttribute="top" secondItem="a5a-bh-10S" secondAttribute="bottom" constant="4" id="pqs-m6-71o"/>
+                            <constraint firstAttribute="bottom" secondItem="RSc-8G-BWX" secondAttribute="bottom" constant="4" id="vJU-UO-vwA"/>
                             <constraint firstItem="a5a-bh-10S" firstAttribute="leading" secondItem="Iyz-k3-mpB" secondAttribute="leading" constant="6" id="vPQ-KQ-AQC"/>
                         </constraints>
                     </view>
@@ -58,6 +66,7 @@
                 <outlet property="messageBubbleView" destination="Iyz-k3-mpB" id="Nav-7a-tMf"/>
                 <outlet property="nameLabel" destination="Kqf-A9-ewa" id="0Dx-bt-Eat"/>
                 <outlet property="textMessageLabel" destination="a5a-bh-10S" id="QnD-Q9-qLR"/>
+                <outlet property="timeLabel" destination="RSc-8G-BWX" id="Y0e-Q7-cjx"/>
                 <outlet property="trailingConstraint" destination="8B1-HK-Zfa" id="CyW-Dk-gzP"/>
             </connections>
             <point key="canvasLocation" x="-100.00000000000001" y="132.58928571428572"/>

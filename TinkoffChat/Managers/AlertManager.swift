@@ -53,12 +53,20 @@ final class AlertManager {
         }
     }
     
-    static func showTextFieldAlert(message: String) {
+    static func showTextFieldAlert(message: String, closure: @escaping (String) -> Void) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
             let chancelAction = UIAlertAction(title: "Отмена", style: .default, handler: nil)
             let createAction = UIAlertAction(title: "Создать", style: .default) { _ in
-//                closure()
+                let nameChannel = alertController.textFields?[0]
+                guard
+                    let name = nameChannel?.text,
+                    name != ""
+                else {
+                    self.showStaticAlert(withMessage: "Невозможно создать канал без имени")
+                    return
+                }
+                closure(name)
             }
             
             alertController.addTextField { (textField: UITextField?) in

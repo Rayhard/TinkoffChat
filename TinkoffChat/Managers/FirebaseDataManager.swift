@@ -26,7 +26,7 @@ class FirebaseDataManager {
                     let dataFile = document.data()
                     let channel = Channel(indetifier: document.documentID,
                                           name: dataFile["name"] as? String ?? "none",
-                                          lastMessage: dataFile["lastMessage"] as? String ?? "none",
+                                          lastMessage: dataFile["lastMessage"] as? String ?? "",
                                           lastActivity: self.getDataFromTimestamp(dataFile["lastActivity"]))
                     
                     channelsArray.append(channel)
@@ -37,8 +37,25 @@ class FirebaseDataManager {
         }
     }
     
-    func createNewChannel() {
+    func createNewChannel(name: String) {
+        let userName = UserProfile.shared.name
+        let message = "\(userName) создал канал \(name)"
+        let time = Timestamp(date: Date())
         
+        let ref = reference.document()
+        let id = ref.documentID
+        ref.setData([
+            "name": name,
+            "lastMessage": message,
+            "lastActivity": time
+        ])
+        
+        reference.document(id).collection("messages").addDocument(data: [
+            "content": message,
+            "senderId": "",
+            "senderName": "",
+            "created": time
+        ])
     }
     
     func getMessages(channelId: String, completion: @escaping ([Message]) -> Void) {
