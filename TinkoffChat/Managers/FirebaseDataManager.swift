@@ -15,26 +15,27 @@ class FirebaseDataManager {
     private lazy var reference = db.collection("channels")
     
     func getChannels(completion: @escaping ([Channel]) -> Void) {
-//        reference.getDocuments { (querySnapshot, error) in
-//            if let error = error {
-//                print("Error getting documents: \(error)")
-//            } else {
-//                guard let channels = querySnapshot else { return }
-//                var channelsArray: [Channel] = []
-//
-//                for document in channels.documents {
-//                    let dataFile = document.data()
-//                    let channel = Channel(indetifier: document.documentID,
-//                                          name: dataFile["name"] as? String ?? "none",
-//                                          lastMessage: dataFile["lastMessage"] as? String ?? "",
-//                                          lastActivity: self.getDataFromTimestamp(dataFile["lastActivity"]))
-//
-//                    channelsArray.append(channel)
-//                }
-//
-//                completion(channelsArray)
-//            }
-//        }
+        
+        reference.addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let channels = querySnapshot else { return }
+                var channelsArray: [Channel] = []
+
+                for document in channels.documents {
+                    let dataFile = document.data()
+                    let channel = Channel(indetifier: document.documentID,
+                                          name: dataFile["name"] as? String ?? "none",
+                                          lastMessage: dataFile["lastMessage"] as? String ?? "",
+                                          lastActivity: self.getDataFromTimestamp(dataFile["lastActivity"]))
+
+                    channelsArray.append(channel)
+                }
+
+                completion(channelsArray)
+            }
+        }
     }
     
     func createNewChannel(name: String) {
@@ -61,7 +62,7 @@ class FirebaseDataManager {
     func getMessages(channelId: String, completion: @escaping ([Message]) -> Void) {
         let messageRef = reference.document(channelId).collection("messages")
         
-        messageRef.getDocuments { (querySnapshot, error) in
+        messageRef.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents: \(error)")
             } else {
@@ -70,19 +71,32 @@ class FirebaseDataManager {
                 
                 for message in messages.documents {
                     let newMessage = Message(content: message["content"] as? String ?? "none",
-                                       created: self.getDataFromTimestamp(message["created"]),
-                                       senderId: message["senderId"] as? String ?? "none",
-                                       senderName: message["senderName"] as? String ?? "none")
+                                             created: self.getDataFromTimestamp(message["created"]),
+                                             senderId: message["senderId"] as? String ?? "none",
+                                             senderName: message["senderName"] as? String ?? "none")
                     
                     messagesArray.append(newMessage)
                 }
                 completion(messagesArray)
             }
         }
-        
     }
     
-    func sendMessage() {
+    func sendMessage(channelId: String, message: String) {
+        let messageRef = reference.document(channelId).collection("messages")
+        let time = Timestamp(date: Date())
+        
+        messageRef.addDocument(data: [
+            "content": message,
+            "created": time,
+            "senderId": UserProfile.shared.senderId,
+            "senderName": UserProfile.shared.name
+        ])
+        
+        reference.document(channelId).updateData([
+            "lastMessage": message,
+            "lastActivity": time
+        ])
         
     }
     

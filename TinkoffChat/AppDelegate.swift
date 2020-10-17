@@ -23,7 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userDefaults = UserDefaults.standard
         let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
         if !launchedBefore {
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            userDefaults.set(true, forKey: "launchedBefore")
+            
+            let senderId = "\(UUID())"
+            userDefaults.set(senderId, forKey: "senderId")
             
             let profile = ProfileInfo(name: "You Name",
                                       description: "You description",
@@ -31,9 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let dataManager = GCDDataManager()
             dataManager.saveData(profile)
         }
+        //667272DE-F122-45EB-89E3-E850DEDB85B1
+        //22D97D4C-296F-4AB9-BC6E-182A1A93E6B0
+//        let id = UUID()
+//        print(id)
         
         let theme = userDefaults.string(forKey: "Theme")
-        
         switch theme {
         case "classic":
             Theme.current = ClassicTheme()

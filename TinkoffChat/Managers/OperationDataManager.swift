@@ -78,6 +78,7 @@ class SaveOperation: Operation {
                     try data.write(to: path)
                 }
             }
+            UserProfile.shared.name = profile?.name ?? "You name"
 //            AlertManager.showStaticAlert(withMessage: "Данные сохранены")
         } catch {
             AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { _ in
@@ -103,6 +104,9 @@ class LoadOperation: Operation {
             loadProfile.description = try String(contentsOf: descPath, encoding: .utf8)
             let imageData = try Data(contentsOf: photoPath)
             loadProfile.photo = UIImage(data: imageData)
+            
+            UserProfile.shared.name = loadProfile.name ?? "You name"
+            
             self.profile = loadProfile
         } catch {
             loadProfile.name = "Name Surname"

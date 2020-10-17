@@ -82,6 +82,7 @@ class ConversationsListViewController: UIViewController {
     private func loadData() {
         let dataMan = FirebaseDataManager()
         dataMan.getChannels(completion: { [weak self] channels in
+//            let sortedArray = channels.sorted(by: {$0.lastActivity < $1.lastActivity})
             self?.channelsArray = channels
             self?.tableView?.reloadData()
             self?.activityIndicator?.isHidden = true

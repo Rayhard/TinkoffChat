@@ -41,6 +41,8 @@ class GCDDataManager: DataManagerProtocol {
                         }
                     }
                     
+                    UserProfile.shared.name = info.name ?? "You name"
+                    
                     self.delegat?.saveComplited()
                     
                 } catch {
@@ -82,6 +84,8 @@ class GCDDataManager: DataManagerProtocol {
 
                 let imageData = try Data(contentsOf: photoFileURL)
                 profileInfo.photo = UIImage(data: imageData)
+                
+                UserProfile.shared.name = profileInfo.name ?? "You name"
                 
                 self.delegat?.loadComplited()
             } catch {

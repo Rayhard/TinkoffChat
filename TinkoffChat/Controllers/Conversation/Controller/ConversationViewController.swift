@@ -10,6 +10,17 @@ import UIKit
 
 class ConversationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
+    @IBOutlet weak var messageTextView: UITextView?
+    
+    @IBOutlet weak var sendMessageButton: UIButton?
+    @IBAction func sendMessageAction(_ sender: Any) {
+        guard let message = messageTextView?.text,
+              message != "" else { return }
+        let dataManager = FirebaseDataManager()
+        dataManager.sendMessage(channelId: channelId, message: message)
+        
+        messageTextView?.text = ""
+    }
     
     private let cellInditifier = String(describing: ConversationViewCell.self)
     
@@ -22,6 +33,8 @@ class ConversationViewController: UIViewController {
         self.title = name
         setTheme()
         loadData()
+        
+        messageTextView?.layer.cornerRadius = (messageTextView?.frame.height ?? 0) / 4
 
         tableView?.delegate = self
         tableView?.dataSource = self
@@ -31,7 +44,8 @@ class ConversationViewController: UIViewController {
     private func loadData() {
         let dataManager = FirebaseDataManager()
         dataManager.getMessages(channelId: channelId) { [weak self] messages in
-            self?.messageArray = messages
+            let sortedArray = messages.sorted(by: {$0.created < $1.created})
+            self?.messageArray = sortedArray
             self?.tableView?.reloadData()
         }
     }

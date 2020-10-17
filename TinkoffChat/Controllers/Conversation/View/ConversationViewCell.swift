@@ -22,28 +22,27 @@ class ConversationViewCell: UITableViewCell, ConfigurableView {
     func configure(with model: ConfigurationModel) {
         messageBubbleView?.layer.cornerRadius = 10
         
-        setTheme()
-        
         textMessageLabel?.text = model.content
         nameLabel?.text = model.senderName
         timeLabel?.text = formDate(model.created)
         
-        if model.senderId == UserProfile.shared.symbols {
+        if model.senderId == UserProfile.shared.senderId {
+            messageBubbleView?.backgroundColor = Theme.current.outputMessageBubbleColor
+            textMessageLabel?.textColor = Theme.current.outputText
+            nameLabel?.textColor = Theme.current.outputText
+            timeLabel?.textColor = Theme.current.outputText
             trailingConstraint?.isActive = true
             leadingConstraint?.isActive = false
             nameLabel?.textAlignment = .right
         } else {
+            messageBubbleView?.backgroundColor = Theme.current.inputMessageBubbleColor
+            textMessageLabel?.textColor = Theme.current.inputText
+            nameLabel?.textColor = Theme.current.inputText
+            timeLabel?.textColor = Theme.current.inputText
             trailingConstraint?.isActive = false
             leadingConstraint?.isActive = true
             nameLabel?.textAlignment = .left
         }
-    }
-    
-    private func setTheme() {
-        messageBubbleView?.backgroundColor = Theme.current.inputMessageBubbleColor
-        textMessageLabel?.textColor = Theme.current.inputText
-        nameLabel?.textColor = Theme.current.inputText
-        timeLabel?.textColor = Theme.current.inputText
     }
     
     private func formDate(_ date: Date) -> String {
