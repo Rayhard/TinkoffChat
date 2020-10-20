@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let userDefaults = UserDefaults.standard
         let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
-        if !launchedBefore {
+        if launchedBefore == false {
             userDefaults.set(true, forKey: "launchedBefore")
             
             let senderId = "\(UUID())"

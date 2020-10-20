@@ -14,26 +14,18 @@ class FirebaseDataManager {
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     
+    private lazy var parseManager = FirebaseParseManager()
+    
     func getChannels(completion: @escaping ([Channel]) -> Void) {
         
-        reference.addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let channels = querySnapshot else { return }
-                var channelsArray: [Channel] = []
-
-                for document in channels.documents {
-                    let dataFile = document.data()
-                    let channel = Channel(indetifier: document.documentID,
-                                          name: dataFile["name"] as? String ?? "none",
-                                          lastMessage: dataFile["lastMessage"] as? String ?? "",
-                                          lastActivity: self.getDataFromTimestamp(dataFile["lastActivity"]))
-
-                    channelsArray.append(channel)
+        DispatchQueue.global().async {
+            self.reference.addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    let channelsArray = self.parseManager.parseChannel(querySnapshot)
+                    completion(channelsArray)
                 }
-
-                completion(channelsArray)
             }
         }
     }
@@ -62,22 +54,14 @@ class FirebaseDataManager {
     func getMessages(channelId: String, completion: @escaping ([Message]) -> Void) {
         let messageRef = reference.document(channelId).collection("messages")
         
-        messageRef.addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let messages = querySnapshot else { return }
-                var messagesArray: [Message] = []
-                
-                for message in messages.documents {
-                    let newMessage = Message(content: message["content"] as? String ?? "none",
-                                             created: self.getDataFromTimestamp(message["created"]),
-                                             senderId: message["senderId"] as? String ?? "none",
-                                             senderName: message["senderName"] as? String ?? "none")
-                    
-                    messagesArray.append(newMessage)
+        DispatchQueue.global().async {
+            messageRef.addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    let messagesArray = self.parseManager.parseMessage(querySnapshot)
+                    completion(messagesArray)
                 }
-                completion(messagesArray)
             }
         }
     }
@@ -92,17 +76,5 @@ class FirebaseDataManager {
             "senderId": UserProfile.shared.senderId,
             "senderName": UserProfile.shared.name
         ])
-        
-        reference.document(channelId).updateData([
-            "lastMessage": message,
-            "lastActivity": time
-        ])
-        
-    }
-    
-    private func getDataFromTimestamp(_ timestamp: Any?) -> Date {
-        let dateTimeStamp: Timestamp = timestamp as? Timestamp ?? Timestamp()
-        let date: Date = dateTimeStamp.dateValue()
-        return date
     }
 }

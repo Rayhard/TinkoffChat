@@ -59,10 +59,9 @@ final class AlertManager {
             let chancelAction = UIAlertAction(title: "Отмена", style: .default, handler: nil)
             let createAction = UIAlertAction(title: "Создать", style: .default) { _ in
                 let nameChannel = alertController.textFields?[0]
-                guard
-                    let name = nameChannel?.text,
-                    name != ""
-                else {
+                
+                guard let name = nameChannel?.text else { return }
+                guard name.trimmingCharacters(in: .whitespaces).isEmpty == false else {
                     self.showStaticAlert(withMessage: "Невозможно создать канал без имени")
                     return
                 }

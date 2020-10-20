@@ -15,8 +15,7 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
-        guard let message = messageTextView?.text,
-              message != "" else { return }
+        guard let message = messageTextView?.text else { return }
         let dataManager = FirebaseDataManager()
         dataManager.sendMessage(channelId: channelId, message: message)
         
@@ -40,6 +39,7 @@ class ConversationViewController: UIViewController {
 
         tableView?.delegate = self
         tableView?.dataSource = self
+        tableView?.transform = CGAffineTransform(scaleX: 1, y: -1)
         tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
     }
     
@@ -58,7 +58,7 @@ class ConversationViewController: UIViewController {
         let dataManager = FirebaseDataManager()
         dataManager.getMessages(channelId: channelId) { [weak self] messages in
             let sortedArray = messages.sorted(by: {$0.created < $1.created})
-            self?.messageArray = sortedArray
+            self?.messageArray = sortedArray.reversed()
             self?.tableView?.reloadData()
         }
     }
@@ -80,6 +80,7 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationViewCell else { return UITableViewCell() }
         
         let message = messageArray[indexPath.row]
+        cell.transform = CGAffineTransform(scaleX: 1, y: -1)
         cell.configure(with: message)
         
         return cell
@@ -95,7 +96,7 @@ extension ConversationViewController: UITextViewDelegate {
             inputViewHight?.constant = textView.contentSize.height + 16
         }
         
-        if textView.text == "" {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             self.sendMessageButton?.isEnabled = false
         } else {
             self.sendMessageButton?.isEnabled = true
