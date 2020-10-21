@@ -65,7 +65,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         textMessageLabel?.text = "No messages yet"
         textMessageLabel?.textColor = Theme.current.listText
         guard let customFont = UIFont(name: "BlackHole-Italic", size: UIFont.labelFontSize) else {
-            AlertManager.showAlert(withMessage: "Failed to load the \"BlackHole_Italic\" font.Make sure the font file is included in the project and the font name is spelled correctly.")
+            AlertManager.showStaticAlert(withMessage: "Failed to load the \"BlackHole_Italic\" font.Make sure the font file is included in the project and the font name is spelled correctly.")
             return
         }
         textMessageLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)

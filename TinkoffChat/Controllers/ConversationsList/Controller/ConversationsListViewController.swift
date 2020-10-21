@@ -70,6 +70,11 @@ class ConversationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        let dataManager = OperationDataManager()
+////        let dataManager = GCDDataManager()
+//        let profile = dataManager.fetchData()
+//        profileImage?.image = profile.photo
+        
         conversationsList = sortArray(array: conversationsListExample)
         configureTheme(Theme.current)
         
@@ -87,6 +92,14 @@ class ConversationsListViewController: UIViewController {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let dataManager = OperationDataManager()
+//        let dataManager = GCDDataManager()
+        let profile = dataManager.fetchData()
+        profileImage?.image = profile.photo
     }
     
     @objc
