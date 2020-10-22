@@ -54,7 +54,7 @@ class ProfileViewController: UIViewController {
     var newProfileInfo: ProfileInfo = ProfileInfo()
     var dataManager: DataManagerProtocol?
     
-    // MARK: Lyfestyle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         descriptionTextView?.delegate = self
@@ -81,9 +81,14 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func nameEditing() {
-        newProfileInfo.name = nameTextField?.text
-        saveGCDButton?.isEnabled = true
-        saveOperationButton?.isEnabled = true
+        if nameTextField?.text == UserProfile.shared.name {
+            saveGCDButton?.isEnabled = false
+            saveOperationButton?.isEnabled = false
+        } else {
+            newProfileInfo.name = nameTextField?.text
+            saveGCDButton?.isEnabled = true
+            saveOperationButton?.isEnabled = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,33 +97,9 @@ class ProfileViewController: UIViewController {
         LogManager.showMessage(#function)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // Размер кнопки Edit изменился из-за того что viewDidAppear вызывается после viewWillLayoutSubviews и
-        //viewDidLayoutSubviews, где происходит установка констрейнов под размер экрана
-        LogManager.showMessage("viewDidAppear - Edit button frame:\n\t \(String(describing: editPhotoButton?.frame))")
-        LogManager.showMessage(#function)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        LogManager.showMessage(#function)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        LogManager.showMessage(#function)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObserver()
-        LogManager.showMessage(#function)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
         LogManager.showMessage(#function)
     }
     
@@ -208,8 +189,8 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadProfileData() {
-        dataManager = OperationDataManager()
-//        dataManager = GCDDataManager()
+//        dataManager = OperationDataManager()
+        dataManager = GCDDataManager()
         dataManager?.delegat = self
         let profileInfo = dataManager?.fetchData()
         nameTextField?.text = profileInfo?.name
@@ -262,10 +243,15 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 // MARK: UITextViewDelegate
 extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        newProfileInfo.description = descriptionTextView?.text
-        
-        saveGCDButton?.isEnabled = true
-        saveOperationButton?.isEnabled = true
+        if descriptionTextView?.text == UserProfile.shared.description {
+            saveGCDButton?.isEnabled = false
+            saveOperationButton?.isEnabled = false
+        } else {
+            newProfileInfo.description = descriptionTextView?.text
+            
+            saveGCDButton?.isEnabled = true
+            saveOperationButton?.isEnabled = true
+        }
     }
 }
 

@@ -60,26 +60,28 @@ class SaveOperation: Operation {
     var nameFileURL: URL?
     var descFileURL: URL?
     var photoFileURL: URL?
+    
     override func main() {
         do {
-            if let name = profile?.name {
+            if let name = profile?.name, name != UserProfile.shared.name {
                 guard let path = nameFileURL else { return }
                 try name.write(to: path, atomically: false, encoding: .utf8)
+                UserProfile.shared.name = name
             }
             
-            if let desc = profile?.description {
+            if let desc = profile?.description, desc != UserProfile.shared.description {
                 guard let path = descFileURL else { return }
                 try desc.write(to: path, atomically: false, encoding: .utf8)
+                UserProfile.shared.description = desc
             }
             
-            if let photo = profile?.photo {
+            if let photo = profile?.photo, photo != UserProfile.shared.photo {
                 if let data = photo.pngData() {
                     guard let path = photoFileURL else { return }
                     try data.write(to: path)
+                    UserProfile.shared.photo = photo
                 }
             }
-            UserProfile.shared.name = profile?.name ?? "You name"
-//            AlertManager.showStaticAlert(withMessage: "Данные сохранены")
         } catch {
             AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { _ in
                 self.main()
@@ -93,6 +95,7 @@ class LoadOperation: Operation {
     var nameFileURL: URL?
     var descFileURL: URL?
     var photoFileURL: URL?
+    
     override func main() {
         var loadProfile = ProfileInfo()
         do {
@@ -105,12 +108,15 @@ class LoadOperation: Operation {
             let imageData = try Data(contentsOf: photoPath)
             loadProfile.photo = UIImage(data: imageData)
             
-            UserProfile.shared.name = loadProfile.name ?? "You name"
+            UserProfile.shared.name = loadProfile.name ?? "Name Surname"
+            UserProfile.shared.description = loadProfile.description ?? "You description"
+            UserProfile.shared.photo = loadProfile.photo ?? UIImage(named: "clearFile")
             
             self.profile = loadProfile
         } catch {
             loadProfile.name = "Name Surname"
             loadProfile.description = "You description"
+            loadProfile.photo = UIImage(named: "clearFile")
             self.profile = loadProfile
         }
     }

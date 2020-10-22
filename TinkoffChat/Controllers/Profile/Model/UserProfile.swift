@@ -19,6 +19,6 @@ final class UserProfile {
         return userDefaults.string(forKey: "senderId") ?? ""
     }
     var symbols: String = "NP"
-    var description: String = "You description"
+    var description: String = "You description1"
     var photo: UIImage?
 }
