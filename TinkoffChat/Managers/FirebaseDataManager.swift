@@ -16,6 +16,12 @@ class FirebaseDataManager {
     
     private lazy var parseManager = FirebaseParseManager()
     
+    let coreDataStack: CoreDataStack
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
+    
     func getChannels(completion: @escaping ([Channel]) -> Void) {
         
         DispatchQueue.global().async {
@@ -24,6 +30,16 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let channelsArray = self.parseManager.parseChannel(querySnapshot)
+                    
+                    self.coreDataStack.performSave { context in
+                        channelsArray.forEach { channel in
+                            let dbChannel = Channel_db(identifier: channel.indetifier,
+                                                       name: channel.name,
+                                                       lastMessage: channel.lastMessage,
+                                                       lastActivity: channel.lastActivity,
+                                                       in: context)
+                        }
+                    }
                     completion(channelsArray)
                 }
             }
@@ -60,6 +76,15 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let messagesArray = self.parseManager.parseMessage(querySnapshot)
+                    self.coreDataStack.performSave { context in
+                        messagesArray.forEach { message in
+                            let dbMessage = Message_db(senderId: message.senderId,
+                                                       senderName: message.senderName,
+                                                       content: message.content,
+                                                       created: message.created,
+                                                       in: context)
+                        }
+                    }
                     completion(messagesArray)
                 }
             }

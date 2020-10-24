@@ -31,12 +31,18 @@ class ConversationsListViewController: UIViewController {
     
     @IBAction func createNewChannelAction(_ sender: Any) {
         AlertManager.showTextFieldAlert(message: "Создать новый канал?") { (name) in
-            let dataManager = FirebaseDataManager()
-            dataManager.createNewChannel(name: name)
+            self.dataManager.createNewChannel(name: name)
         }
     }
     
     private let cellInditifier = String(describing: ConversationsListCell.self)
+    
+    private let dataStack: CoreDataStack = {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let delegate = appDelegate else { return CoreDataStack()}
+        return delegate.coreDataStack
+    }()
+    lazy var dataManager = FirebaseDataManager(coreDataStack: dataStack)
 
     var channelsArray: [Channel] = []
     
@@ -80,8 +86,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func loadData() {
-        let dataMan = FirebaseDataManager()
-        dataMan.getChannels(completion: { [weak self] channels in
+        dataManager.getChannels(completion: { [weak self] channels in
             let sortedArray = channels.sorted(by: {($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date())})
             self?.channelsArray = sortedArray
             self?.tableView?.reloadData()
@@ -133,8 +138,9 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         let storyBoard: UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
         guard let destinationController = resultViewController else { return }
-        destinationController.name = channel.name
         destinationController.channelId = channel.indetifier
+        destinationController.channel = channel
+        destinationController.dataManager = self.dataManager
         self.navigationController?.pushViewController(destinationController, animated: true)
 
     }

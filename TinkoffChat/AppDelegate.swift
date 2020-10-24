@@ -14,13 +14,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    var coreDataStack = CoreDataStack()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
         LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
         
+        setCoreData()
+        
         let userDefaults = UserDefaults.standard
+        setUserProfile(userDefaults: userDefaults)
+        setTheme(userDefaults: userDefaults)
+        
+        return true
+    }
+    
+    private func setTheme(userDefaults: UserDefaults) {
+        let theme = userDefaults.string(forKey: "Theme")
+        switch theme {
+        case "classic":
+            Theme.current = ClassicTheme()
+        case "day":
+            Theme.current = DayTheme()
+        case "night":
+            Theme.current = NightTheme()
+        default:
+            Theme.current = ClassicTheme()
+        }
+    }
+    
+    private func setUserProfile(userDefaults: UserDefaults) {
         let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
         if launchedBefore == false {
             userDefaults.set(true, forKey: "launchedBefore")
@@ -34,20 +59,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let dataManager = GCDDataManager()
             dataManager.saveData(profile)
         }
-        
-        let theme = userDefaults.string(forKey: "Theme")
-        switch theme {
-        case "classic":
-            Theme.current = ClassicTheme()
-        case "day":
-            Theme.current = DayTheme()
-        case "night":
-            Theme.current = NightTheme()
-        default:
-            Theme.current = ClassicTheme()
+    }
+    
+    private func setCoreData() {
+        coreDataStack.didUpdateDatease = { stack in
+            stack.printDataBaseStats()
         }
         
-        return true
+        coreDataStack.enableObservers()
+        
+//        let chatRequest = ChatRequest(coreDataStack: coreDataStack)
+//        chatRequest.makeRequest()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
