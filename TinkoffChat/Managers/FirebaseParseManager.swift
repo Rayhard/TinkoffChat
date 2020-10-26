@@ -22,7 +22,7 @@ class FirebaseParseManager {
                   let lastActivity = channel["lastActivity"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
             else { continue }
             
-            let newChannel = Channel(indetifier: document.documentID,
+            let newChannel = Channel(identifier: document.documentID,
                                   name: name,
                                   lastMessage: lastMessage,
                                   lastActivity: lastActivity.dateValue())

@@ -15,6 +15,9 @@ class FirebaseDataManager {
     private lazy var reference = db.collection("channels")
     
     private lazy var parseManager = FirebaseParseManager()
+    private lazy var coreDataManager = CoreDataManager()
+    
+    private let saveDBQueue = DispatchQueue(label: "FirebaseDataManager", qos: .userInitiated, attributes: .concurrent)
     
     let coreDataStack: CoreDataStack
     
@@ -29,17 +32,25 @@ class FirebaseDataManager {
                 if let error = error {
                     print("Error getting documents: \(error)")
                 } else {
-                    let channelsArray = self.parseManager.parseChannel(querySnapshot)
+                    let group = DispatchGroup()
+                    var channelsArray: [Channel] = []
                     
-                    self.coreDataStack.performSave { context in
-                        channelsArray.forEach { channel in
-                            let dbChannel = Channel_db(identifier: channel.indetifier,
-                                                       name: channel.name,
-                                                       lastMessage: channel.lastMessage,
-                                                       lastActivity: channel.lastActivity,
-                                                       in: context)
-                        }
+                    group.enter()
+                    self.saveDBQueue.async {
+                        channelsArray = self.parseManager.parseChannel(querySnapshot)
+                        group.leave()
                     }
+                    
+                    group.enter()
+                    self.saveDBQueue.async {
+                        self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
+                        group.leave()
+                    }
+                    
+                    group.wait()
+//                    let channelsArray = self.parseManager.parseChannel(querySnapshot)
+//                    self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
+                    
                     completion(channelsArray)
                 }
             }
@@ -76,15 +87,9 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let messagesArray = self.parseManager.parseMessage(querySnapshot)
-                    self.coreDataStack.performSave { context in
-                        messagesArray.forEach { message in
-                            let dbMessage = Message_db(senderId: message.senderId,
-                                                       senderName: message.senderName,
-                                                       content: message.content,
-                                                       created: message.created,
-                                                       in: context)
-                        }
-                    }
+                    self.coreDataManager.saveMessages(id: channelId, array: messagesArray, in: self.coreDataStack)
+//                    self.coreDataManager.saveMessages(array: messagesArray, in: self.coreDataStack)
+                    
                     completion(messagesArray)
                 }
             }

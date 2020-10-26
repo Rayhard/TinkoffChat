@@ -16,16 +16,14 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
         guard let message = messageTextView?.text,
-              let id = channel?.indetifier else { return }
+              let id = channel?.identifier else { return }
         dataManager?.sendMessage(channelId: id, message: message)
         
         messageTextView?.text = ""
     }
     
     private let cellInditifier = String(describing: ConversationViewCell.self)
-    
-    var channelId: String = ""
-    
+
     var channel: Channel?
     var messageArray: [Message] = []
     var dataManager: FirebaseDataManager?
@@ -57,7 +55,8 @@ class ConversationViewController: UIViewController {
     }
     
     private func loadData() {
-        dataManager?.getMessages(channelId: channelId) { [weak self] messages in
+        guard let id = channel?.identifier else { return }
+        dataManager?.getMessages(channelId: id) { [weak self] messages in
             let sortedArray = messages.sorted(by: {$0.created < $1.created})
             self?.messageArray = sortedArray.reversed()
             self?.tableView?.reloadData()

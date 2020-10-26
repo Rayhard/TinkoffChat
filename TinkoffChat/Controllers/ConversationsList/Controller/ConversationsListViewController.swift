@@ -138,7 +138,6 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         let storyBoard: UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
         guard let destinationController = resultViewController else { return }
-        destinationController.channelId = channel.indetifier
         destinationController.channel = channel
         destinationController.dataManager = self.dataManager
         self.navigationController?.pushViewController(destinationController, animated: true)

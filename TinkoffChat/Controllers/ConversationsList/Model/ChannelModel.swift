@@ -9,7 +9,7 @@
 import Foundation
 
 struct Channel {
-    let indetifier: String
+    let identifier: String
     let name: String
     let lastMessage: String?
     let lastActivity: Date?
