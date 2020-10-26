@@ -12,6 +12,7 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var messageTextView: UITextView?
     @IBOutlet weak var inputViewHight: NSLayoutConstraint?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
@@ -31,6 +32,7 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = channel?.name
+        activityIndicator?.isHidden = false
         setTheme()
         loadData()
         
@@ -58,6 +60,7 @@ class ConversationViewController: UIViewController {
         guard let id = channel?.identifier else { return }
         dataManager?.getMessages(channelId: id) { [weak self] messages in
             let sortedArray = messages.sorted(by: {$0.created < $1.created})
+            self?.activityIndicator?.isHidden = true
             self?.messageArray = sortedArray.reversed()
             self?.tableView?.reloadData()
         }

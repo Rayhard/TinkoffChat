@@ -32,24 +32,11 @@ class FirebaseDataManager {
                 if let error = error {
                     print("Error getting documents: \(error)")
                 } else {
-                    let group = DispatchGroup()
                     var channelsArray: [Channel] = []
                     
-                    group.enter()
-                    self.saveDBQueue.async {
-                        channelsArray = self.parseManager.parseChannel(querySnapshot)
-                        group.leave()
-                    }
+                    channelsArray = self.parseManager.parseChannel(querySnapshot)
                     
-                    group.enter()
-                    self.saveDBQueue.async {
-                        self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
-                        group.leave()
-                    }
-                    
-                    group.wait()
-//                    let channelsArray = self.parseManager.parseChannel(querySnapshot)
-//                    self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
+                    self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
                     
                     completion(channelsArray)
                 }

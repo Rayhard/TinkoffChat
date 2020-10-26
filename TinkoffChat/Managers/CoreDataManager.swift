@@ -16,11 +16,11 @@ class CoreDataManager {
         saveCDQueue.async {
             coreDataStack.performSave { context in
                 channelsArray.forEach { channel in
-                    let channel = Channel_db(identifier: channel.identifier,
-                                               name: channel.name,
-                                               lastMessage: channel.lastMessage,
-                                               lastActivity: channel.lastActivity,
-                                               in: context)
+                    _ = Channel_db(identifier: channel.identifier,
+                                   name: channel.name,
+                                   lastMessage: channel.lastMessage,
+                                   lastActivity: channel.lastActivity,
+                                   in: context)
                 }
             }
         }
@@ -29,12 +29,25 @@ class CoreDataManager {
     func saveMessages(id channelId: String, array messagesArray: [Message], in coreDataStack: CoreDataStack) {
         saveCDQueue.async {
             coreDataStack.performSave { context in
-                messagesArray.forEach { message in
-                    let dbMessage = Message_db(senderId: message.senderId,
-                                               senderName: message.senderName,
-                                               content: message.content,
-                                               created: message.created,
-                                               in: context)
+                let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+                
+                let result = try? context.fetch(fetchRequest)
+                if let channel = result?.first {
+                    var mesDB: [Message_db] = []
+                    messagesArray.forEach { message in
+                        let dbMessage = Message_db(senderId: message.senderId,
+                                                   senderName: message.senderName,
+                                                   content: message.content,
+                                                   created: message.created,
+                                                   in: context)
+                        mesDB.append(dbMessage)
+                    }
+                    
+                    mesDB.forEach { message in
+                        channel.addToMessages(message)
+                    }
+                    
                 }
             }
         }
