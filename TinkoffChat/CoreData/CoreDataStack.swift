@@ -17,7 +17,6 @@ class CoreDataStack {
                                                           in: .userDomainMask).last else {
             fatalError("document path not found")
         }
-        print(documentsUrl)
         return documentsUrl.appendingPathComponent("Chat.sqlite")
     }()
     
@@ -42,15 +41,16 @@ class CoreDataStack {
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        //MARK: На отдельную очередь
-        do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                               configurationName: nil,
-                                               at: self.storeUrl,
-                                               options: nil)
-            
-        } catch {
-            fatalError(error.localizedDescription)
+        DispatchQueue.global(qos: .background).async {
+            do {
+                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
+                                                   configurationName: nil,
+                                                   at: self.storeUrl,
+                                                   options: nil)
+                
+            } catch {
+                fatalError(error.localizedDescription)
+            }
         }
         return coordinator
     }()
@@ -87,19 +87,20 @@ class CoreDataStack {
         context.performAndWait {
             block(context)
             if context.hasChanges {
-                
-                do {
-                    try performSave(in: context)
-                } catch { assertionFailure(error.localizedDescription) }
+                performSave(in: context)
             }
         }
     }
     
-    private func performSave(in context: NSManagedObjectContext) throws {
-        try context.save()
-        if let parent = context.parent {
-            try performSave(in: parent)
+    private func performSave(in context: NSManagedObjectContext) {
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch {
+                assertionFailure(error.localizedDescription)
+            }
         }
+        if let parent = context.parent { performSave(in: parent) }
     }
     
     // MARK: - CoreData Observers
@@ -141,18 +142,9 @@ class CoreDataStack {
                 let count = try self.mainContext.count(for: Channel_db.fetchRequest())
                 print("\(count) Чатов")
                 
-//                let array = try self.mainContext.fetch(Channel_db.fetchRequest()) as? [Channel_db] ?? []
-//                array.forEach {
-//                    print("\(String(describing: $0.name))")
-//                }
-                
                 let countMes = try self.mainContext.count(for: Message_db.fetchRequest())
                 print("\(countMes) Сообщений")
-                
-//                let arrayMes = try self.mainContext.fetch(Message_db.fetchRequest()) as? [Message_db] ?? []
-//                arrayMes.forEach {
-//                    print("\(String(describing: $0.senderName))")
-//                }
+
             } catch {
                 
             }

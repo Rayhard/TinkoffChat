@@ -10,14 +10,13 @@ import UIKit
 import Firebase
 
 class FirebaseDataManager {
-    
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     
     private lazy var parseManager = FirebaseParseManager()
     private lazy var coreDataManager = CoreDataManager()
     
-    private let saveDBQueue = DispatchQueue(label: "FirebaseDataManager", qos: .userInitiated, attributes: .concurrent)
+    private let saveCDQueue = DispatchQueue(label: "CoreDataManager_Save", qos: .default, attributes: .concurrent)
     
     let coreDataStack: CoreDataStack
     
@@ -35,7 +34,6 @@ class FirebaseDataManager {
                     var channelsArray: [Channel] = []
                     
                     channelsArray = self.parseManager.parseChannel(querySnapshot)
-                    
                     self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
                     
                     completion(channelsArray)
@@ -75,7 +73,6 @@ class FirebaseDataManager {
                 } else {
                     let messagesArray = self.parseManager.parseMessage(querySnapshot)
                     self.coreDataManager.saveMessages(id: channelId, array: messagesArray, in: self.coreDataStack)
-//                    self.coreDataManager.saveMessages(array: messagesArray, in: self.coreDataStack)
                     
                     completion(messagesArray)
                 }

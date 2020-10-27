@@ -21,9 +21,10 @@ extension Channel_db {
 }
 
 extension Message_db {
-    convenience init(senderId: String, senderName: String, content: String, created: Date,
+    convenience init(identifier: String, senderId: String, senderName: String, content: String, created: Date,
                      in context: NSManagedObjectContext) {
         self.init(context: context)
+        self.identifier = identifier
         self.senderId = senderId
         self.senderName = senderName
         self.content = content

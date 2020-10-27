@@ -36,7 +36,8 @@ class CoreDataManager {
                 if let channel = result?.first {
                     var mesDB: [Message_db] = []
                     messagesArray.forEach { message in
-                        let dbMessage = Message_db(senderId: message.senderId,
+                        let dbMessage = Message_db(identifier: message.identifier,
+                                                   senderId: message.senderId,
                                                    senderName: message.senderName,
                                                    content: message.content,
                                                    created: message.created,

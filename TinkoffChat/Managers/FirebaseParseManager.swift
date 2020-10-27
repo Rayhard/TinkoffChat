@@ -19,7 +19,8 @@ class FirebaseParseManager {
             
             guard let name = channel["name"] as? String,
                   let lastMessage = channel["lastMessage"] as? String ?? "",
-                  let lastActivity = channel["lastActivity"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
+                  let lastActivity = channel["lastActivity"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0)),
+                  name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
             else { continue }
             
             let newChannel = Channel(identifier: document.documentID,
@@ -41,10 +42,13 @@ class FirebaseParseManager {
             guard let content = message["content"] as? String,
                   let senderId = message["senderId"] as? String,
                   let senderName = message["senderName"] as? String,
-                  let created = message["created"] as? Timestamp
+                  let created = message["created"] as? Timestamp,
+                  content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false,
+                  senderName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
             else { continue }
 
-            let newMessage = Message(content: content,
+            let newMessage = Message(identifier: message.documentID,
+                                     content: content,
                                      created: created.dateValue(),
                                      senderId: senderId,
                                      senderName: senderName)
