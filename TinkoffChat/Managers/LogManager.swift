@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class LogManager{
+final class LogManager {
     private init() {}
     
     static let showLog: Bool = false
     
-    static func showMessage(_ text: String){
-        if showLog{
+    static func showMessage(_ text: String) {
+        if showLog {
             print(text)
         }
     }

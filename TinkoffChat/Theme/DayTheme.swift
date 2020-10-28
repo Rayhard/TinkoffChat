@@ -15,7 +15,6 @@ final class DayTheme: ThemeModel {
 
     var inputMessageBubbleColor: UIColor = UIColor(named: "DayInputBubble") ?? UIColor()
     var outputMessageBubbleColor: UIColor = UIColor(named: "DayOutputBubble") ?? UIColor()
-    
     var inputText: UIColor = .black
     var outputText: UIColor = .white
     var listText: UIColor = UIColor(named: "LabelLight") ?? UIColor()

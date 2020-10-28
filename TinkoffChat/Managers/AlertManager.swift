@@ -35,11 +35,44 @@ final class AlertManager {
             
             let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            let repeatAction = UIAlertAction(title: "Повторить", style: .default){ _ in
+            let repeatAction = UIAlertAction(title: "Повторить", style: .default) { _ in
                 closure(ProfileInfo())
             }
             alertController.addAction(okAction)
             alertController.addAction(repeatAction)
+            
+            let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+
+            if var topController = keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                
+                topController.present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    static func showTextFieldAlert(message: String, closure: @escaping (String) -> Void) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            let chancelAction = UIAlertAction(title: "Отмена", style: .default, handler: nil)
+            let createAction = UIAlertAction(title: "Создать", style: .default) { _ in
+                let nameChannel = alertController.textFields?[0]
+                
+                guard let name = nameChannel?.text else { return }
+                guard name.trimmingCharacters(in: .whitespaces).isEmpty == false else {
+                    self.showStaticAlert(withMessage: "Невозможно создать канал без имени")
+                    return
+                }
+                closure(name)
+            }
+            
+            alertController.addTextField { (textField: UITextField?) in
+                textField?.placeholder = "Введите название канала"
+            }
+            alertController.addAction(chancelAction)
+            alertController.addAction(createAction)
             
             let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 

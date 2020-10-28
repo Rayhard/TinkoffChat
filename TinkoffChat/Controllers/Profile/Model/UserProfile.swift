@@ -13,8 +13,12 @@ final class UserProfile {
     
     static let shared = UserProfile()
     
-    var name: String = "Nikita Perezhogin"
+    var name: String = "You Name"
+    var senderId: String {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.string(forKey: "senderId") ?? ""
+    }
     var symbols: String = "NP"
-    var description: String = "iOS Developer, QA Engener\nMoscow, Russia"
-    var photo: UIImage? = nil
+    var description: String = "You description1"
+    var photo: UIImage?
 }

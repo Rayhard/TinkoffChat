@@ -8,6 +8,6 @@
 
 import UIKit
 
-class Theme{
+class Theme {
     static var current: ThemeModel = ClassicTheme()
 }

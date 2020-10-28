@@ -8,14 +8,13 @@
 
 import UIKit
 
-class OperationDataManager: DataManagerProtocol{
+class OperationDataManager: DataManagerProtocol {
     weak var delegat: DataManagerDelegate?
-    
     private let nameFile = "name.txt"
     private let descriptionFile = "description.txt"
     private let photoFile = "photo.png"
     
-    func saveData(_ info: ProfileInfo){
+    func saveData(_ info: ProfileInfo) {
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let nameFileURL = dir.appendingPathComponent(self.nameFile)
             let descFileURL = dir.appendingPathComponent(self.descriptionFile)
@@ -28,15 +27,13 @@ class OperationDataManager: DataManagerProtocol{
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
-                self.delegat?.complited()
+                self.delegat?.saveComplited()
             }
             operationQueue.addOperation(operation)
         }
-        
     }
     
-    
-    func fetchData() -> ProfileInfo{
+    func fetchData() -> ProfileInfo {
         var profileInfo = ProfileInfo()
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let nameFileURL = dir.appendingPathComponent(self.nameFile)
@@ -49,7 +46,7 @@ class OperationDataManager: DataManagerProtocol{
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
-                self.delegat?.complited()
+                self.delegat?.loadComplited()
             }
             operationQueue.addOperations([operation], waitUntilFinished: true)
             profileInfo = operation.profile ?? ProfileInfo()
@@ -58,42 +55,42 @@ class OperationDataManager: DataManagerProtocol{
     }
 }
 
-
-class SaveOperation: Operation{
+class SaveOperation: Operation {
     var profile: ProfileInfo?
     var nameFileURL: URL?
     var descFileURL: URL?
     var photoFileURL: URL?
     
     override func main() {
-        do{
-            if let name = profile?.name{
+        do {
+            if let name = profile?.name, name != UserProfile.shared.name {
                 guard let path = nameFileURL else { return }
                 try name.write(to: path, atomically: false, encoding: .utf8)
+                UserProfile.shared.name = name
             }
             
-            if let desc = profile?.description{
+            if let desc = profile?.description, desc != UserProfile.shared.description {
                 guard let path = descFileURL else { return }
                 try desc.write(to: path, atomically: false, encoding: .utf8)
+                UserProfile.shared.description = desc
             }
             
-            if let photo = profile?.photo{
+            if let photo = profile?.photo, photo != UserProfile.shared.photo {
                 if let data = photo.pngData() {
                     guard let path = photoFileURL else { return }
                     try data.write(to: path)
+                    UserProfile.shared.photo = photo
                 }
             }
-            
-            AlertManager.showStaticAlert(withMessage: "Данные сохранены")
         } catch {
-            AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { profile in
+            AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { _ in
                 self.main()
             }
         }
     }
 }
 
-class LoadOperation: Operation{
+class LoadOperation: Operation {
     var profile: ProfileInfo?
     var nameFileURL: URL?
     var descFileURL: URL?
@@ -108,16 +105,19 @@ class LoadOperation: Operation{
             
             loadProfile.name = try String(contentsOf: namePath, encoding: .utf8)
             loadProfile.description = try String(contentsOf: descPath, encoding: .utf8)
-            
             let imageData = try Data(contentsOf: photoPath)
             loadProfile.photo = UIImage(data: imageData)
+            
+            UserProfile.shared.name = loadProfile.name ?? "Name Surname"
+            UserProfile.shared.description = loadProfile.description ?? "You description"
+            UserProfile.shared.photo = loadProfile.photo ?? UIImage(named: "clearFile")
             
             self.profile = loadProfile
         } catch {
             loadProfile.name = "Name Surname"
             loadProfile.description = "You description"
+            loadProfile.photo = UIImage(named: "clearFile")
             self.profile = loadProfile
         }
     }
-    
 }

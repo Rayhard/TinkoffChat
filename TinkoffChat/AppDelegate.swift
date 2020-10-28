@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,12 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
         
         LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
         
         let userDefaults = UserDefaults.standard
-        let theme = userDefaults.string(forKey: "Theme")
+        let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
+        if launchedBefore == false {
+            userDefaults.set(true, forKey: "launchedBefore")
+            
+            let senderId = "\(UUID())"
+            userDefaults.set(senderId, forKey: "senderId")
+            
+            let profile = ProfileInfo(name: "Name Surname",
+                                      description: "You description",
+                                      photo: UIImage(named: "clearFile"))
+            let dataManager = GCDDataManager()
+            dataManager.saveData(profile)
+        }
         
+        let theme = userDefaults.string(forKey: "Theme")
         switch theme {
         case "classic":
             Theme.current = ClassicTheme()
@@ -60,4 +75,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LogManager.showMessage("Application moved from <Suspended> to <Not running>: " + #function)
     }
 }
-
