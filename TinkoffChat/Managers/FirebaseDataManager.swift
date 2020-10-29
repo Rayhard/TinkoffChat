@@ -16,8 +16,6 @@ class FirebaseDataManager {
     private lazy var parseManager = FirebaseParseManager()
     private lazy var coreDataManager = CoreDataManager()
     
-    private let saveCDQueue = DispatchQueue(label: "CoreDataManager_Save", qos: .default, attributes: .concurrent)
-    
     let coreDataStack: CoreDataStack
     
     init(coreDataStack: CoreDataStack) {
@@ -31,9 +29,7 @@ class FirebaseDataManager {
                 if let error = error {
                     print("Error getting documents: \(error)")
                 } else {
-                    var channelsArray: [Channel] = []
-                    
-                    channelsArray = self.parseManager.parseChannel(querySnapshot)
+                    let channelsArray = self.parseManager.parseChannel(querySnapshot)
                     self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
                     
                     completion(channelsArray)
@@ -58,7 +54,7 @@ class FirebaseDataManager {
         reference.document(id).collection("messages").addDocument(data: [
             "content": message,
             "senderId": "",
-            "senderName": "",
+            "senderName": name,
             "created": time
         ])
     }

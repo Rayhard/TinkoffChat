@@ -34,7 +34,6 @@ class CoreDataManager {
                 
                 let result = try? context.fetch(fetchRequest)
                 if let channel = result?.first {
-                    var mesDB: [Message_db] = []
                     messagesArray.forEach { message in
                         let dbMessage = Message_db(identifier: message.identifier,
                                                    senderId: message.senderId,
@@ -42,13 +41,8 @@ class CoreDataManager {
                                                    content: message.content,
                                                    created: message.created,
                                                    in: context)
-                        mesDB.append(dbMessage)
+                        channel.addToMessages(dbMessage)
                     }
-                    
-                    mesDB.forEach { message in
-                        channel.addToMessages(message)
-                    }
-                    
                 }
             }
         }

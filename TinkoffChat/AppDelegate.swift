@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var coreDataStack = CoreDataStack()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
         
         LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
@@ -46,10 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setUserProfile(userDefaults: UserDefaults) {
-        let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
-        if launchedBefore == false {
-            userDefaults.set(true, forKey: "launchedBefore")
-            
+        let sender = userDefaults.string(forKey: "senderId")
+        if sender == nil {
             let senderId = "\(UUID())"
             userDefaults.set(senderId, forKey: "senderId")
             
@@ -67,9 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         coreDataStack.enableObservers()
-        
-//        let chatRequest = ChatRequest(coreDataStack: coreDataStack)
-//        chatRequest.makeRequest()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
