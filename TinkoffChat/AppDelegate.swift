@@ -14,27 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    var coreDataStack = CoreDataStack()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
         
         LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
         
-        let userDefaults = UserDefaults.standard
-        let launchedBefore = userDefaults.bool(forKey: "launchedBefore")
-        if launchedBefore == false {
-            userDefaults.set(true, forKey: "launchedBefore")
-            
-            let senderId = "\(UUID())"
-            userDefaults.set(senderId, forKey: "senderId")
-            
-            let profile = ProfileInfo(name: "Name Surname",
-                                      description: "You description",
-                                      photo: UIImage(named: "clearFile"))
-            let dataManager = GCDDataManager()
-            dataManager.saveData(profile)
-        }
+        setCoreData()
         
+        let userDefaults = UserDefaults.standard
+        setUserProfile(userDefaults: userDefaults)
+        setTheme(userDefaults: userDefaults)
+        
+        return true
+    }
+    
+    private func setTheme(userDefaults: UserDefaults) {
         let theme = userDefaults.string(forKey: "Theme")
         switch theme {
         case "classic":
@@ -46,8 +42,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             Theme.current = ClassicTheme()
         }
+    }
+    
+    private func setUserProfile(userDefaults: UserDefaults) {
+        let sender = userDefaults.string(forKey: "senderId")
+        if sender == nil {
+            let senderId = "\(UUID())"
+            userDefaults.set(senderId, forKey: "senderId")
+            
+            let profile = ProfileInfo(name: "Name Surname",
+                                      description: "You description",
+                                      photo: UIImage(named: "clearFile"))
+            let dataManager = GCDDataManager()
+            dataManager.saveData(profile)
+        }
+    }
+    
+    private func setCoreData() {
+        coreDataStack.didUpdateDatease = { stack in
+            stack.printDataBaseStats()
+        }
         
-        return true
+        coreDataStack.enableObservers()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

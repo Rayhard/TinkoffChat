@@ -10,11 +10,17 @@ import UIKit
 import Firebase
 
 class FirebaseDataManager {
-    
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     
     private lazy var parseManager = FirebaseParseManager()
+    private lazy var coreDataManager = CoreDataManager()
+    
+    let coreDataStack: CoreDataStack
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
     
     func getChannels(completion: @escaping ([Channel]) -> Void) {
         
@@ -24,6 +30,8 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let channelsArray = self.parseManager.parseChannel(querySnapshot)
+                    self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
+                    
                     completion(channelsArray)
                 }
             }
@@ -46,7 +54,7 @@ class FirebaseDataManager {
         reference.document(id).collection("messages").addDocument(data: [
             "content": message,
             "senderId": "",
-            "senderName": "",
+            "senderName": name,
             "created": time
         ])
     }
@@ -60,6 +68,8 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let messagesArray = self.parseManager.parseMessage(querySnapshot)
+                    self.coreDataManager.saveMessages(id: channelId, array: messagesArray, in: self.coreDataStack)
+                    
                     completion(messagesArray)
                 }
             }

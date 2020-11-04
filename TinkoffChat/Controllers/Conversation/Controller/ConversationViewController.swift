@@ -12,25 +12,27 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var messageTextView: UITextView?
     @IBOutlet weak var inputViewHight: NSLayoutConstraint?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
-        guard let message = messageTextView?.text else { return }
-        let dataManager = FirebaseDataManager()
-        dataManager.sendMessage(channelId: channelId, message: message)
+        guard let message = messageTextView?.text,
+              let id = channel?.identifier else { return }
+        dataManager?.sendMessage(channelId: id, message: message)
         
         messageTextView?.text = ""
     }
     
     private let cellInditifier = String(describing: ConversationViewCell.self)
-    
-    var name: String = ""
-    var channelId: String = ""
+
+    var channel: Channel?
     var messageArray: [Message] = []
+    var dataManager: FirebaseDataManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = name
+        self.title = channel?.name
+        activityIndicator?.isHidden = false
         setTheme()
         loadData()
         
@@ -55,9 +57,10 @@ class ConversationViewController: UIViewController {
     }
     
     private func loadData() {
-        let dataManager = FirebaseDataManager()
-        dataManager.getMessages(channelId: channelId) { [weak self] messages in
+        guard let id = channel?.identifier else { return }
+        dataManager?.getMessages(channelId: id) { [weak self] messages in
             let sortedArray = messages.sorted(by: {$0.created < $1.created})
+            self?.activityIndicator?.isHidden = true
             self?.messageArray = sortedArray.reversed()
             self?.tableView?.reloadData()
         }
