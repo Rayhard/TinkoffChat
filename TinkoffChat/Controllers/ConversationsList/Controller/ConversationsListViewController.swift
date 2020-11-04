@@ -48,6 +48,7 @@ class ConversationsListViewController: UIViewController {
         
         let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.fetchBatchSize = 18
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,

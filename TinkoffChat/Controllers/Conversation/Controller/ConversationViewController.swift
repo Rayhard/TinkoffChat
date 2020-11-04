@@ -41,8 +41,11 @@ class ConversationViewController: UIViewController {
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         guard let id = channel?.identifier else { return nil}
-        let predicate = NSPredicate(format: "channel.identifier = %@", id)
+        guard let channel = channel else { return nil }
+//        let predicate = NSPredicate(format: "channel.identifier = %@", id)
+        let predicate = NSPredicate(format: "channel = %@", channel)
         fetchRequest.predicate = predicate
+        fetchRequest.fetchBatchSize = 20
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,

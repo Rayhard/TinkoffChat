@@ -81,31 +81,31 @@ class CoreDataManager {
                                          content: content,
                                          created: created,
                                          in: context)
-                
-                channel.addToMessages(message)
+                message.channel = channel
+//                channel.addToMessages(message)
             }
         }
     }
-    
-    func saveMessages(id channelId: String, array messagesArray: [Message]) {
-        saveCDQueue.async {
-            self.coreDataStack.performSave { context in
-                let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
-                
-                let result = try? context.fetch(fetchRequest)
-                if let channel = result?.first {
-                    messagesArray.forEach { message in
-                        let dbMessage = Message_db(identifier: message.identifier,
-                                                   senderId: message.senderId,
-                                                   senderName: message.senderName,
-                                                   content: message.content,
-                                                   created: message.created,
-                                                   in: context)
-                        channel.addToMessages(dbMessage)
-                    }
-                }
-            }
-        }
-    }
+//
+//    func saveMessages(id channelId: String, array messagesArray: [Message]) {
+//        saveCDQueue.async {
+//            self.coreDataStack.performSave { context in
+//                let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+//                fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+//
+//                let result = try? context.fetch(fetchRequest)
+//                if let channel = result?.first {
+//                    messagesArray.forEach { message in
+//                        let dbMessage = Message_db(identifier: message.identifier,
+//                                                   senderId: message.senderId,
+//                                                   senderName: message.senderName,
+//                                                   content: message.content,
+//                                                   created: message.created,
+//                                                   in: context)
+//                        channel.addToMessages(dbMessage)
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
