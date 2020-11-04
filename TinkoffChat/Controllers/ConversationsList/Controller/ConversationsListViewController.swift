@@ -156,10 +156,8 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let message = fetchedResultsController.object(at: indexPath)
-            dataStack.performSave { context in
-                context.delete(message)
-            }
+            let channel = fetchedResultsController.object(at: indexPath)
+            dataManager.deleteChannel(channel: channel)
         }
     }
     

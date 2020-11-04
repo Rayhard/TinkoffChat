@@ -27,7 +27,6 @@ class ConversationViewController: UIViewController {
     private let cellInditifier = String(describing: ConversationViewCell.self)
 
     var channel: Channel_db?
-    var messageArray: [Message] = []
     var dataManager: FirebaseDataManager?
     
     private let dataStack: CoreDataStack = {

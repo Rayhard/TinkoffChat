@@ -31,6 +31,16 @@ class CoreDataManager {
         }
     }
     
+    func deleteChannel(channel: Channel_db) {
+        coreDataStack.mainContext.delete(channel)
+        
+        do {
+            try coreDataStack.mainContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     func saveMessages(id channelId: String, array messagesArray: [Message]) {
         saveCDQueue.async {
             self.coreDataStack.performSave { context in

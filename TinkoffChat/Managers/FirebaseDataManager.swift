@@ -53,6 +53,18 @@ class FirebaseDataManager {
         ])
     }
     
+    func deleteChannel(channel: Channel_db) {
+        guard let id = channel.identifier else { return }
+        let channelRef = reference.document(id)
+        channelRef.delete { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                self.coreDataManager.deleteChannel(channel: channel)
+            }
+        }
+    }
+    
     func getMessages(channelId: String, completion: @escaping ([Message]) -> Void) {
         let messageRef = reference.document(channelId).collection("messages")
         
