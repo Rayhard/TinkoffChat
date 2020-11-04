@@ -16,12 +16,6 @@ class FirebaseDataManager {
     private lazy var parseManager = FirebaseParseManager()
     private lazy var coreDataManager = CoreDataManager()
     
-    let coreDataStack: CoreDataStack
-    
-    init(coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
-    }
-    
     func getChannels(completion: @escaping ([Channel]) -> Void) {
         
         DispatchQueue.global().async {
@@ -30,7 +24,7 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let channelsArray = self.parseManager.parseChannel(querySnapshot)
-                    self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
+                    self.coreDataManager.saveChannels(array: channelsArray)
                     
                     completion(channelsArray)
                 }
@@ -68,7 +62,7 @@ class FirebaseDataManager {
                     print("Error getting documents: \(error)")
                 } else {
                     let messagesArray = self.parseManager.parseMessage(querySnapshot)
-                    self.coreDataManager.saveMessages(id: channelId, array: messagesArray, in: self.coreDataStack)
+                    self.coreDataManager.saveMessages(id: channelId, array: messagesArray)
                     
                     completion(messagesArray)
                 }

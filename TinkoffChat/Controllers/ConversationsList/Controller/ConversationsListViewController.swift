@@ -42,7 +42,7 @@ class ConversationsListViewController: UIViewController {
         guard let delegate = appDelegate else { return CoreDataStack()}
         return delegate.coreDataStack
     }()
-    lazy var dataManager = FirebaseDataManager(coreDataStack: dataStack)
+    lazy var dataManager = FirebaseDataManager()
 
     var channelsArray: [Channel] = []
     
