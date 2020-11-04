@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ConversationsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
@@ -42,9 +43,24 @@ class ConversationsListViewController: UIViewController {
         guard let delegate = appDelegate else { return CoreDataStack()}
         return delegate.coreDataStack
     }()
+    private lazy var fetchedResultsController: NSFetchedResultsController<Channel_db> = {
+        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        
+        let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: dataStack.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: "ChannelsCache")
+        
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
+ 
     lazy var dataManager = FirebaseDataManager()
-
-    var channelsArray: [Channel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,10 +102,13 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func loadData() {
-        dataManager.getChannels(completion: { [weak self] channels in
-            let sortedArray = channels.sorted(by: {($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date())})
-            self?.channelsArray = sortedArray
-            self?.tableView?.reloadData()
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
+        
+        dataManager.getChannels(completion: { [weak self] _ in
             self?.activityIndicator?.isHidden = true
         })
     }
@@ -116,14 +135,17 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channelsArray.count
+        guard let sections = fetchedResultsController.sections else { return 0 }
+        
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationsListCell else { return UITableViewCell()}
         
-        let item = channelsArray[indexPath.row]
-        cell.configure(with: item)
+        let channel = fetchedResultsController.object(at: indexPath)
+        cell.configure(with: channel)
         
         return cell
     }
@@ -132,8 +154,17 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         return UIView()
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let message = fetchedResultsController.object(at: indexPath)
+            dataStack.performSave { context in
+                context.delete(message)
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = channelsArray[indexPath.row]
+        let channel = fetchedResultsController.object(at: indexPath)
 
         let storyBoard: UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
@@ -142,6 +173,41 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         destinationController.dataManager = self.dataManager
         self.navigationController?.pushViewController(destinationController, animated: true)
 
+    }
+}
+
+// MARK: NSFetchedResultsControllerDelegate
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView?.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+
+        let index = indexPath ?? IndexPath()
+        let newIndex = newIndexPath ?? IndexPath()
+        
+        switch type {
+        case .insert:
+            self.tableView?.insertRows(at: [newIndex], with: .automatic)
+        case .move:
+            self.tableView?.deleteRows(at: [index], with: .automatic)
+            self.tableView?.insertRows(at: [newIndex], with: .automatic)
+        case .update:
+            self.tableView?.reloadRows(at: [index], with: .automatic)
+        case .delete:
+            self.tableView?.deleteRows(at: [index], with: .automatic)
+        default:
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView?.endUpdates()
     }
 }
 

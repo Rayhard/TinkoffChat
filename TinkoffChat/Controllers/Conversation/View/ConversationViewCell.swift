@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversationViewCell: UITableViewCell, ConfigurableView {
-    typealias ConfigurationModel = Message
+    typealias ConfigurationModel = Message_db
     
     @IBOutlet weak var messageBubbleView: UIView?
     @IBOutlet weak var textMessageLabel: UILabel?
@@ -24,7 +24,7 @@ class ConversationViewCell: UITableViewCell, ConfigurableView {
         
         textMessageLabel?.text = model.content
         nameLabel?.text = model.senderName
-        timeLabel?.text = formDate(model.created)
+        timeLabel?.text = formDate(model.created ?? Date())
         
         if model.senderId == UserProfile.shared.senderId {
             messageBubbleView?.backgroundColor = Theme.current.outputMessageBubbleColor
