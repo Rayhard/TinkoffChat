@@ -108,7 +108,7 @@ class ConversationsListViewController: UIViewController {
             print(error)
         }
         
-        dataManager.getChannels(completion: { [weak self] _ in
+        dataManager.getChannels(completion: { [weak self] in
             self?.activityIndicator?.isHidden = true
         })
     }

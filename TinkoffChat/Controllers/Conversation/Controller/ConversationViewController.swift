@@ -90,7 +90,7 @@ class ConversationViewController: UIViewController {
         }
         
         guard let id = channel?.identifier else { return }
-        dataManager?.getMessages(channelId: id) { [weak self] _ in
+        dataManager?.getMessages(channelId: id) { [weak self] in
             self?.activityIndicator?.isHidden = true
         }
     }

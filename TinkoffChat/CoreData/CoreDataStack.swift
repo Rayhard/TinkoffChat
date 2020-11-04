@@ -135,7 +135,7 @@ class CoreDataStack {
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
            deletes.count > 0 {
-            print("Обновлено объектов: ", deletes.count)
+            print("Удалено объектов: ", deletes.count)
         }
     }
     

@@ -17,27 +17,73 @@ class CoreDataManager {
         return delegate.coreDataStack
     }()
     
-    func saveChannels(array channelsArray: [Channel]) {
-        saveCDQueue.async {
-            self.coreDataStack.performSave { context in
-                channelsArray.forEach { channel in
-                    _ = Channel_db(identifier: channel.identifier,
-                                   name: channel.name,
-                                   lastMessage: channel.lastMessage,
-                                   lastActivity: channel.lastActivity,
-                                   in: context)
+    func addChannel(id identifier: String, name: String, message: String?, date: Date?) {
+        self.coreDataStack.performSave { context in
+            _ = Channel_db(identifier: identifier,
+                           name: name,
+                           lastMessage: message,
+                           lastActivity: date,
+                           in: context)
+        }
+    }
+    
+    func updateChannel(id identifier: String, name: String, message: String?, date: Date?) {
+        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        let predicate = NSPredicate(format: "identifier = %@", identifier)
+        fetchRequest.predicate = predicate
+        
+        coreDataStack.performSave { context in
+            let result = try? context.fetch(fetchRequest)
+            if let channel = result?.first {
+                if channel.value(forKey: "name") as? String != name {
+                    channel.setValue(name, forKey: "name")
+                }
+                
+                if channel.value(forKey: "lastMessage") as? String != message {
+                    channel.setValue(message, forKey: "lastMessage")
+                }
+                
+                if channel.value(forKey: "lastActivity") as? Date != date {
+                    channel.setValue(date, forKey: "lastActivity")
                 }
             }
         }
     }
     
-    func deleteChannel(channel: Channel_db) {
-        coreDataStack.mainContext.delete(channel)
+    func deleteChannel(channelId: String) {
+        let context = coreDataStack.mainContext
+        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
         
-        do {
-            try coreDataStack.mainContext.save()
-        } catch {
-            print(error.localizedDescription)
+        let result = try? context.fetch(fetchRequest)
+        if let channel = result?.first {
+            context.delete(channel)
+            
+            do {
+                try coreDataStack.mainContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func addMessage(channelId: String, messageId: String, senderId: String,
+                    senderName: String, content: String, created: Date) {
+        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+        
+        coreDataStack.performSave { context in
+            let result = try? context.fetch(fetchRequest)
+            if let channel = result?.first {
+                let message = Message_db(identifier: messageId,
+                                         senderId: senderId,
+                                         senderName: senderName,
+                                         content: content,
+                                         created: created,
+                                         in: context)
+                
+                channel.addToMessages(message)
+            }
         }
     }
     
