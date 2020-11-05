@@ -18,19 +18,31 @@ class CoreDataManager {
     }()
     
     func addChannel(id identifier: String, name: String, message: String?, date: Date?) {
+        let channelFetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        channelFetchRequest.predicate = NSPredicate(format: "identifier = %@", identifier)
+        
         self.coreDataStack.performSave { context in
-            _ = Channel_db(identifier: identifier,
-                           name: name,
-                           lastMessage: message,
-                           lastActivity: date,
-                           in: context)
+            let result = try? context.fetch(channelFetchRequest)
+            let channel = result?.first
+            
+            if channel == nil {
+                _ = Channel_db(identifier: identifier,
+                               name: name,
+                               lastMessage: message,
+                               lastActivity: date,
+                               in: context)
+            } else {
+                updateChannel(id: identifier,
+                              name: name,
+                              message: message,
+                              date: date)
+            }
         }
     }
     
     func updateChannel(id identifier: String, name: String, message: String?, date: Date?) {
         let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
-        let predicate = NSPredicate(format: "identifier = %@", identifier)
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = NSPredicate(format: "identifier = %@", identifier)
         
         coreDataStack.performSave { context in
             let result = try? context.fetch(fetchRequest)
@@ -69,43 +81,25 @@ class CoreDataManager {
     
     func addMessage(channelId: String, messageId: String, senderId: String,
                     senderName: String, content: String, created: Date) {
-        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+        let channelFetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        channelFetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+        
+        let messageFetchRequest: NSFetchRequest<Message_db> = Message_db.fetchRequest()
+        messageFetchRequest.predicate = NSPredicate(format: "identifier = %@", messageId)
         
         coreDataStack.performSave { context in
-            let result = try? context.fetch(fetchRequest)
-            if let channel = result?.first {
+            let message = try? context.fetch(messageFetchRequest)
+            let result = try? context.fetch(channelFetchRequest)
+            if let channel = result?.first,
+               message?.first == nil {
                 let message = Message_db(identifier: messageId,
                                          senderId: senderId,
                                          senderName: senderName,
                                          content: content,
                                          created: created,
                                          in: context)
-                message.channel = channel
-//                channel.addToMessages(message)
+                channel.addToMessages(message)
             }
         }
     }
-//
-//    func saveMessages(id channelId: String, array messagesArray: [Message]) {
-//        saveCDQueue.async {
-//            self.coreDataStack.performSave { context in
-//                let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
-//                fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
-//
-//                let result = try? context.fetch(fetchRequest)
-//                if let channel = result?.first {
-//                    messagesArray.forEach { message in
-//                        let dbMessage = Message_db(identifier: message.identifier,
-//                                                   senderId: message.senderId,
-//                                                   senderName: message.senderName,
-//                                                   content: message.content,
-//                                                   created: message.created,
-//                                                   in: context)
-//                        channel.addToMessages(dbMessage)
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
