@@ -17,21 +17,23 @@ class FirebaseDataManager {
     private lazy var coreDataManager = CoreDataManager()
     
     func getChannels(completion: @escaping () -> Void) {
-        self.reference.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error fetching snapshots: \(String(describing: error))")
-                return
-            }
-            snapshot.documentChanges.forEach { diff in
-                switch diff.type {
-                case .added:
-                    self.parseManager.parseNewChannel(diff: diff)
-                case .modified:
-                    self.parseManager.parseUpdateChannel(diff: diff)
-                case .removed:
-                    self.coreDataManager.deleteChannel(channelId: diff.document.documentID)
+        DispatchQueue.global().async {
+            self.reference.addSnapshotListener { querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching snapshots: \(String(describing: error))")
+                    return
                 }
-                completion()
+                snapshot.documentChanges.forEach { diff in
+                    switch diff.type {
+                    case .added:
+                        self.parseManager.parseNewChannel(diff: diff)
+                    case .modified:
+                        self.parseManager.parseUpdateChannel(diff: diff)
+                    case .removed:
+                        self.coreDataManager.deleteChannel(channelId: diff.document.documentID)
+                    }
+                    completion()
+                }
             }
         }
     }
@@ -72,22 +74,24 @@ class FirebaseDataManager {
     func getMessages(channelId: String, completion: @escaping () -> Void) {
         let messageRef = reference.document(channelId).collection("messages")
         
-        messageRef.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error fetching snapshots: \(String(describing: error))")
-                return
-            }
-            snapshot.documentChanges.forEach { diff in
-                switch diff.type {
-                case .added:
-                    self.parseManager.parseNewMessage(channelId: channelId, diff: diff)
-                case .modified:
-                    break
-                case .removed:
-                    break
+        DispatchQueue.global().async {
+            messageRef.addSnapshotListener { querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching snapshots: \(String(describing: error))")
+                    return
                 }
+                snapshot.documentChanges.forEach { diff in
+                    switch diff.type {
+                    case .added:
+                        self.parseManager.parseNewMessage(channelId: channelId, diff: diff)
+                    case .modified:
+                        break
+                    case .removed:
+                        break
+                    }
 
-                completion()
+                    completion()
+                }
             }
         }
     }
