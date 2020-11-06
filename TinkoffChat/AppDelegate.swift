@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    private let rootAssembly = RootAssembly()
+    
     var coreDataStack = CoreDataStack()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -26,6 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userDefaults = UserDefaults.standard
         setUserProfile(userDefaults: userDefaults)
         setTheme(userDefaults: userDefaults)
+        
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        let controller = rootAssembly.presentationAssembly.conversationsListViewController()
+//        window?.rootViewController = controller
+//        window?.makeKeyAndVisible()
         
         return true
     }

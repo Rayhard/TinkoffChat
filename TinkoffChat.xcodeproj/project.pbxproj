@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3305A98C25556F6500DD07F9 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3305A98B25556F6500DD07F9 /* RootAssembly.swift */; };
+		3305A99025556F9400DD07F9 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3305A98F25556F9400DD07F9 /* PresentationAssembly.swift */; };
+		3305A9932555706200DD07F9 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3305A9922555706200DD07F9 /* ServicesAssembly.swift */; };
+		3305A9962555709900DD07F9 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3305A9952555709900DD07F9 /* CoreAssembly.swift */; };
 		330C150D2538B99600A5F442 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 330C150C2538B99600A5F442 /* GoogleService-Info.plist */; };
 		333E5187254402A600648A8C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333E5186254402A600648A8C /* CoreDataStack.swift */; };
 		333E518A254409D400648A8C /* ObjectsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333E5189254409D400648A8C /* ObjectsExtensions.swift */; };
@@ -53,6 +57,10 @@
 
 /* Begin PBXFileReference section */
 		223883ADB126E789740DC487 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
+		3305A98B25556F6500DD07F9 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
+		3305A98F25556F9400DD07F9 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
+		3305A9922555706200DD07F9 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
+		3305A9952555709900DD07F9 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		330C150C2538B99600A5F442 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		333E5186254402A600648A8C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		333E5189254409D400648A8C /* ObjectsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsExtensions.swift; sourceTree = "<group>"; };
@@ -120,6 +128,69 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3305A98025556B0A00DD07F9 /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				3305A98725556E1E00DD07F9 /* Assembly */,
+				3354EEB3251D250C00C3CF52 /* Modules */,
+			);
+			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		3305A98125556B2200DD07F9 /* ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				3305A98925556E4500DD07F9 /* Assembly */,
+				3354EEC0251D346200C3CF52 /* Protocols */,
+				33F8CE032519D5E600EE593F /* Managers */,
+			);
+			path = ServiceLayer;
+			sourceTree = "<group>";
+		};
+		3305A98225556B3200DD07F9 /* CoreLayer */ = {
+			isa = PBXGroup;
+			children = (
+				3305A98A25556E5200DD07F9 /* Assembly */,
+				338D95EF2543160F007B6E26 /* CoreData */,
+			);
+			path = CoreLayer;
+			sourceTree = "<group>";
+		};
+		3305A98325556B3E00DD07F9 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				336ECBC4252213A300ADB381 /* Fonts */,
+				336ED0D4250B4BCB00E64482 /* Assets.xcassets */,
+				336ED0D6250B4BCB00E64482 /* LaunchScreen.storyboard */,
+				336ED0D9250B4BCB00E64482 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		3305A98725556E1E00DD07F9 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				3305A98F25556F9400DD07F9 /* PresentationAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		3305A98925556E4500DD07F9 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				3305A9922555706200DD07F9 /* ServicesAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		3305A98A25556E5200DD07F9 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				3305A9952555709900DD07F9 /* CoreAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		3347967D2523132C009BDF44 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +252,7 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		3354EEB3251D250C00C3CF52 /* Controllers */ = {
+		3354EEB3251D250C00C3CF52 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				33DE8656251F207F00A477E1 /* ConversationsList */,
@@ -189,7 +260,7 @@
 				33DE8654251F205F00A477E1 /* Profile */,
 				33FD97642526F3D500C7D2C5 /* ThemesViewController */,
 			);
-			path = Controllers;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		3354EEC0251D346200C3CF52 /* Protocols */ = {
@@ -222,6 +293,7 @@
 		336ED0BF250B4BCA00E64482 = {
 			isa = PBXGroup;
 			children = (
+				3305A98B25556F6500DD07F9 /* RootAssembly.swift */,
 				336ED0CA250B4BCA00E64482 /* TinkoffChat */,
 				336ED0C9250B4BCA00E64482 /* Products */,
 				DED2223B9B2E145BD1FD945C /* Pods */,
@@ -240,18 +312,14 @@
 		336ED0CA250B4BCA00E64482 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
-				338D95EF2543160F007B6E26 /* CoreData */,
+				3305A98025556B0A00DD07F9 /* PresentationLayer */,
+				3305A98125556B2200DD07F9 /* ServiceLayer */,
+				3305A98225556B3200DD07F9 /* CoreLayer */,
+				3305A98325556B3E00DD07F9 /* SupportingFiles */,
 				33FD9775252703B000C7D2C5 /* Theme */,
-				3354EEC0251D346200C3CF52 /* Protocols */,
-				33F8CE032519D5E600EE593F /* Managers */,
 				336E32F625173656000A40D8 /* Extentions */,
-				3354EEB3251D250C00C3CF52 /* Controllers */,
-				336ECBC4252213A300ADB381 /* Fonts */,
 				336ED0CB250B4BCA00E64482 /* AppDelegate.swift */,
-				336ED0D4250B4BCB00E64482 /* Assets.xcassets */,
-				336ED0D6250B4BCB00E64482 /* LaunchScreen.storyboard */,
 				330C150C2538B99600A5F442 /* GoogleService-Info.plist */,
-				336ED0D9250B4BCB00E64482 /* Info.plist */,
 			);
 			path = TinkoffChat;
 			sourceTree = "<group>";
@@ -515,6 +583,8 @@
 				336C23BA253978CA00C592DD /* FirebaseDataManager.swift in Sources */,
 				3346DD5A2527961E00ACC15F /* NightTheme.swift in Sources */,
 				3347A3C12521D75F009EA76A /* ConversationViewCell.swift in Sources */,
+				3305A9932555706200DD07F9 /* ServicesAssembly.swift in Sources */,
+				3305A99025556F9400DD07F9 /* PresentationAssembly.swift in Sources */,
 				3354EEBD251D298600C3CF52 /* ConversationsListCell.swift in Sources */,
 				336932242532F9C700BE7B56 /* OperationDataManager.swift in Sources */,
 				3354EEB8251D259C00C3CF52 /* ConversationViewController.swift in Sources */,
@@ -529,6 +599,7 @@
 				33CE749025455C90007EAECA /* CoreDataManager.swift in Sources */,
 				338C3F42253ED88800495814 /* FirebaseParseManager.swift in Sources */,
 				3354EEC2251D349000C3CF52 /* ConfigurableView.swift in Sources */,
+				3305A98C25556F6500DD07F9 /* RootAssembly.swift in Sources */,
 				3349E69D253599420059A321 /* DataManagerDelegate.swift in Sources */,
 				3343FA93251DC14900755C6A /* UserProfile.swift in Sources */,
 				336ED0D0250B4BCA00E64482 /* ProfileViewController.swift in Sources */,
@@ -542,6 +613,7 @@
 				336E32F825173695000A40D8 /* UIAlertControllerExtention.swift in Sources */,
 				336C23BD25397A1000C592DD /* ChannelModel.swift in Sources */,
 				3354EEB5251D253000C3CF52 /* ConversationsListViewController.swift in Sources */,
+				3305A9962555709900DD07F9 /* CoreAssembly.swift in Sources */,
 				333E5187254402A600648A8C /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -691,7 +763,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L2XU233WA6;
-				INFOPLIST_FILE = TinkoffChat/Info.plist;
+				INFOPLIST_FILE = TinkoffChat/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -710,7 +782,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L2XU233WA6;
-				INFOPLIST_FILE = TinkoffChat/Info.plist;
+				INFOPLIST_FILE = TinkoffChat/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
