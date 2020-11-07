@@ -8,8 +8,8 @@
 
 import UIKit
 
-class GCDDataManager: DataManagerProtocol {
-    weak var delegat: DataManagerDelegate?
+class GCDDataManager: IDataFileService {
+    weak var delegat: IDataFileServiceDelegate?
     
     private let nameFile = "name.txt"
     private let descriptionFile = "description.txt"
@@ -19,8 +19,7 @@ class GCDDataManager: DataManagerProtocol {
     private let loadQueue = DispatchQueue(label: "GCDDataManager_Load", qos: .userInitiated, attributes: .concurrent)
     
     func saveData(_ info: ProfileInfo) {
-        // Через After для того чтобы успеть проверить что не зависло все
-        saveQueue.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+        saveQueue.async {
             if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 let nameFileURL = dir.appendingPathComponent(self.nameFile)
                 let descFileURL = dir.appendingPathComponent(self.descriptionFile)
@@ -52,7 +51,7 @@ class GCDDataManager: DataManagerProtocol {
                     }
                 }
             }
-        })
+        }
     }
     
     func saveTheme(_ theme: String) {

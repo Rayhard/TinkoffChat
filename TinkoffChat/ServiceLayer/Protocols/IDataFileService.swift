@@ -8,8 +8,13 @@
 
 import Foundation
 
-protocol DataManagerProtocol {
+protocol IDataFileService {
     func saveData(_ info: ProfileInfo)
     func fetchData() -> ProfileInfo
-    var delegat: DataManagerDelegate? { get set }
+    var delegat: IDataFileServiceDelegate? { get set }
+}
+
+protocol IDataFileServiceDelegate: class {
+    func saveComplited()
+    func loadComplited()
 }

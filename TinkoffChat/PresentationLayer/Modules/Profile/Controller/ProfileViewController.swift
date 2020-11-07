@@ -52,7 +52,7 @@ class ProfileViewController: UIViewController {
     }
     
     var newProfileInfo: ProfileInfo = ProfileInfo()
-    var dataManager: DataManagerProtocol?
+    var dataManager: IDataFileService?
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -292,7 +292,7 @@ extension ProfileViewController {
 }
 
 // MARK: DataManagerDelegate
-extension ProfileViewController: DataManagerDelegate {
+extension ProfileViewController: IDataFileServiceDelegate {
     func saveComplited() {
         DispatchQueue.main.async {
             self.isEdited(false)

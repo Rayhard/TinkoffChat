@@ -8,8 +8,8 @@
 
 import UIKit
 
-class OperationDataManager: DataManagerProtocol {
-    weak var delegat: DataManagerDelegate?
+class OperationDataManager: IDataFileService {
+    weak var delegat: IDataFileServiceDelegate?
     private let nameFile = "name.txt"
     private let descriptionFile = "description.txt"
     private let photoFile = "photo.png"

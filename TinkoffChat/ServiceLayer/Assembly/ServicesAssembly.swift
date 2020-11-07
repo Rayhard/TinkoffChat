@@ -9,8 +9,11 @@
 import Foundation
 
 protocol IServicesAssembly {
-//    var tracksService: ITracksService { get }
-//    var cardsService: ICardsService { get }
+    var firebaseService: IFirebaseService { get }
+//    var firebaseParseService: IFirebaseParseService { get }
+//    var alertService: IAlertService { get }
+    var gcdService: IDataFileService { get }
+    var operationService: IDataFileService { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -20,5 +23,9 @@ class ServicesAssembly: IServicesAssembly {
     init(coreAssembly: ICoreAssembly) {
         self.coreAssembly = coreAssembly
     }
+    
+    lazy var firebaseService: IFirebaseService = FirebaseDataManager()
+    lazy var gcdService: IDataFileService = GCDDataManager()
+    lazy var operationService: IDataFileService = OperationDataManager()
 
 }

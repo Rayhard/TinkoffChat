@@ -29,10 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUserProfile(userDefaults: userDefaults)
         setTheme(userDefaults: userDefaults)
         
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        let controller = rootAssembly.presentationAssembly.conversationsListViewController()
-//        window?.rootViewController = controller
-//        window?.makeKeyAndVisible()
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navigation = rootAssembly.presentationAssembly.mainNavigationController()
+        window?.rootViewController = navigation
+        window?.makeKeyAndVisible()
         
         return true
     }

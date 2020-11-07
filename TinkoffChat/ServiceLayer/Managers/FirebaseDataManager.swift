@@ -9,7 +9,13 @@
 import UIKit
 import Firebase
 
-class FirebaseDataManager {
+protocol IFirebaseService {
+    func getChannels(completion: @escaping () -> Void)
+    func deleteChannel(channel: Channel_db)
+    func createNewChannel(name: String)
+}
+
+class FirebaseDataManager: IFirebaseService {
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     

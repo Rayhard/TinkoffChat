@@ -13,7 +13,7 @@
         <!--Channels-->
         <scene sceneID="zvZ-KL-Er1">
             <objects>
-                <viewController id="LwF-fI-iRC" customClass="ConversationsListViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConversationsListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LwF-fI-iRC" customClass="ConversationsListViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i0p-Aw-Ydv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,10 +95,10 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="862.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Main Navigation Controller-->
         <scene sceneID="azw-9w-QBW">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ejj-OK-0eb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ejj-OK-0eb" customClass="MainNavigationController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="FzN-NH-GVH">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>

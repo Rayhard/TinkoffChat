@@ -16,23 +16,23 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var profileSymbol: UILabel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
+    var presentationAssembly: IPresentationAssembly?
+    var model: IConversListFirebaseModel?
+    var secondModel: IConversListDataFileModel?
+    
     @IBAction func openThemeViewAction(_ sender: Any) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "ThemesViewController", bundle: nil)
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ThemesViewController") as? ThemesViewController
-        guard let destinationController = resultViewController else { return }
-        
+        guard let destinationController = presentationAssembly?.themesViewController() else { return }
 //        destinationController.delegate = self
         destinationController.setTheme = { [weak self] theme in
             Theme.current = theme
             self?.configureTheme(theme)
         }
-        
         self.navigationController?.pushViewController(destinationController, animated: true)
     }
     
     @IBAction func createNewChannelAction(_ sender: Any) {
         AlertManager.showTextFieldAlert(message: "Создать новый канал?") { (name) in
-            self.dataManager.createNewChannel(name: name)
+            self.model?.createNewChannel(name: name)
         }
     }
     
@@ -89,16 +89,13 @@ class ConversationsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let dataManager = OperationDataManager()
-//        let dataManager = GCDDataManager()
-        let profile = dataManager.fetchData()
-        profileImage?.image = profile.photo
+        let profile = secondModel?.loadData()
+        profileImage?.image = profile?.photo
     }
     
     @objc
     private func openProfile() {
-        let profileStoryboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
-        let profileVC = profileStoryboard.instantiateViewController(withIdentifier: "ProfileViewController")
+        guard let profileVC = presentationAssembly?.profileViewController() else { return }
         self.present(profileVC, animated: true)
     }
     
@@ -109,12 +106,10 @@ class ConversationsListViewController: UIViewController {
             print(error)
         }
         
-        dataManager.getChannels(completion: { [weak self] in
-            self?.activityIndicator?.isHidden = true
-        })
+        model?.fetchChannels()
     }
     
-    // MARK: Theme
+    // MARK: - Theme
     private func configureTheme(_ theme: ThemeModel) {
         UITableView.appearance().backgroundColor = theme.backgroundColor
         UITableViewCell.appearance().backgroundColor = theme.backgroundColor
@@ -128,9 +123,8 @@ class ConversationsListViewController: UIViewController {
     }
 }
 
-// MARK: UITableView configure
+// MARK: - UITableView configure
 extension ConversationsListViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 89
     }
@@ -158,16 +152,13 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
-            dataManager.deleteChannel(channel: channel)
+            model?.removeChannel(channel: channel)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let channel = fetchedResultsController.object(at: indexPath)
-
-        let storyBoard: UIStoryboard = UIStoryboard(name: "ConversationViewController", bundle: nil)
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
-        guard let destinationController = resultViewController else { return }
+        guard let destinationController = presentationAssembly?.conversationViewController() else { return }
         destinationController.channel = channel
         destinationController.dataManager = self.dataManager
         self.navigationController?.pushViewController(destinationController, animated: true)
@@ -175,7 +166,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     }
 }
 
-// MARK: NSFetchedResultsControllerDelegate
+// MARK: - NSFetchedResultsControllerDelegate
 extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView?.beginUpdates()
@@ -210,7 +201,14 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-// MARK: Method theme delegat
+// MARK: - IConversationsListModelDelegate
+extension ConversationsListViewController: IConversListFirebaseModelDelegate {
+    func loadComplited() {
+        activityIndicator?.isHidden = true
+    }
+}
+
+// MARK: - Method theme delegat
 //extension ConversationsListViewController: ThemesPickerDelegate{
 //    func setTheme(_ theme: ThemeModel) {
 //        Theme.current = theme
