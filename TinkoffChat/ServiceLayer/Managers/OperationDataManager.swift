@@ -9,12 +9,11 @@
 import UIKit
 
 class OperationDataManager: IDataFileService {
-    weak var delegat: IDataFileServiceDelegate?
     private let nameFile = "name.txt"
     private let descriptionFile = "description.txt"
     private let photoFile = "photo.png"
     
-    func saveData(_ info: ProfileInfo) {
+    func saveData(_ info: ProfileInfo, completion: @escaping () -> Void) {
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let nameFileURL = dir.appendingPathComponent(self.nameFile)
             let descFileURL = dir.appendingPathComponent(self.descriptionFile)
@@ -27,13 +26,13 @@ class OperationDataManager: IDataFileService {
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
-                self.delegat?.saveComplited()
+                completion()
             }
             operationQueue.addOperation(operation)
         }
     }
     
-    func fetchData() -> ProfileInfo {
+    func fetchData(completion: @escaping () -> Void) -> ProfileInfo {
         var profileInfo = ProfileInfo()
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let nameFileURL = dir.appendingPathComponent(self.nameFile)
@@ -46,7 +45,7 @@ class OperationDataManager: IDataFileService {
             operation.descFileURL = descFileURL
             operation.photoFileURL = photoFileURL
             operation.completionBlock = {
-                self.delegat?.loadComplited()
+                completion()
             }
             operationQueue.addOperations([operation], waitUntilFinished: true)
             profileInfo = operation.profile ?? ProfileInfo()

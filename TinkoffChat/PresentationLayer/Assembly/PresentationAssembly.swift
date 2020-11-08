@@ -51,8 +51,8 @@ class PresentationAssembly: IPresentationAssembly {
         let dataFileModel = ConversListDataFileModel(dataService: serviceAssembly.gcdService)
         
         conversationsListVC.presentationAssembly = self
-        conversationsListVC.model = firebaseModel
-        conversationsListVC.secondModel = dataFileModel
+        conversationsListVC.modelFirebase = firebaseModel
+        conversationsListVC.modelDataFile = dataFileModel
         firebaseModel.delegate = conversationsListVC
         
         return conversationsListVC
@@ -64,6 +64,10 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ConversationViewController
         guard let conversationsVC = resultViewController else { return ConversationViewController() }
         
+        let model = ConversFirebaseModel(firebaseService: serviceAssembly.firebaseService)
+        conversationsVC.model = model
+        model.delegate = conversationsVC
+        
         return conversationsVC
     }
     
@@ -72,6 +76,14 @@ class PresentationAssembly: IPresentationAssembly {
         let storyBoard: UIStoryboard = UIStoryboard(name: identifier, bundle: nil)
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ProfileViewController
         guard let profileVC = resultViewController else { return ProfileViewController() }
+        
+        let modelGCD = ProfileDataFileModel(dataService: serviceAssembly.gcdService)
+        profileVC.modelGCD = modelGCD
+        modelGCD.delegate = profileVC
+        
+        let modelOperation = ProfileDataFileModel(dataService: serviceAssembly.operationService)
+        profileVC.modelOperation = modelOperation
+        modelOperation.delegate = profileVC
         
         return profileVC
     }

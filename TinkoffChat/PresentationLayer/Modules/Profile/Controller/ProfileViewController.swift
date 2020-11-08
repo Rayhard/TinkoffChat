@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 
 class ProfileViewController: UIViewController {
-    
     @IBOutlet weak var scrollView: UIScrollView?
     @IBOutlet weak var circleView: UIView?
     @IBOutlet weak var nameSymbolsLabel: UILabel?
@@ -23,6 +22,9 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var headerView: UIView?
     @IBOutlet weak var headerTitle: UILabel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
+    
+    var modelGCD: IProfileDataFileModel?
+    var modelOperation: IProfileDataFileModel?
     
     @IBAction func editPhotoButtonAction(_ sender: Any) {
         showActionSheet()
@@ -38,21 +40,16 @@ class ProfileViewController: UIViewController {
         activityIndicator?.isHidden = false
         saveGCDButton?.isEnabled = false
         saveOperationButton?.isEnabled = false
-        dataManager = OperationDataManager()
-        dataManager?.delegat = self
-        dataManager?.saveData(newProfileInfo)
+        modelOperation?.saveData(profile: newProfileInfo)
     }
     @IBAction func saveGCDAction(_ sender: Any) {
         activityIndicator?.isHidden = false
         saveGCDButton?.isEnabled = false
         saveOperationButton?.isEnabled = false
-        dataManager = GCDDataManager()
-        dataManager?.delegat = self
-        dataManager?.saveData(newProfileInfo)
+        modelGCD?.saveData(profile: newProfileInfo)
     }
     
     var newProfileInfo: ProfileInfo = ProfileInfo()
-    var dataManager: IDataFileService?
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -189,10 +186,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadProfileData() {
-//        dataManager = OperationDataManager()
-        dataManager = GCDDataManager()
-        dataManager?.delegat = self
-        let profileInfo = dataManager?.fetchData()
+        let profileInfo = modelGCD?.loadData()
         nameTextField?.text = profileInfo?.name
         nameSymbolsLabel?.text = UserProfile.shared.symbols
         descriptionTextView?.text = profileInfo?.description
@@ -291,7 +285,7 @@ extension ProfileViewController {
     }
 }
 
-// MARK: DataManagerDelegate
+// MARK: IDataFileServiceDelegate
 extension ProfileViewController: IDataFileServiceDelegate {
     func saveComplited() {
         DispatchQueue.main.async {

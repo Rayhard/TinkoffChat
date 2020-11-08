@@ -9,9 +9,8 @@
 import Foundation
 
 protocol IDataFileService {
-    func saveData(_ info: ProfileInfo)
-    func fetchData() -> ProfileInfo
-    var delegat: IDataFileServiceDelegate? { get set }
+    func saveData(_ info: ProfileInfo, completion: @escaping () -> Void)
+    func fetchData(completion: @escaping () -> Void) -> ProfileInfo
 }
 
 protocol IDataFileServiceDelegate: class {

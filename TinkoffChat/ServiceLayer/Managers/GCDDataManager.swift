@@ -9,8 +9,6 @@
 import UIKit
 
 class GCDDataManager: IDataFileService {
-    weak var delegat: IDataFileServiceDelegate?
-    
     private let nameFile = "name.txt"
     private let descriptionFile = "description.txt"
     private let photoFile = "photo.png"
@@ -18,7 +16,7 @@ class GCDDataManager: IDataFileService {
     private let saveQueue = DispatchQueue(label: "GCDDataManager_Save", qos: .default, attributes: .concurrent)
     private let loadQueue = DispatchQueue(label: "GCDDataManager_Load", qos: .userInitiated, attributes: .concurrent)
     
-    func saveData(_ info: ProfileInfo) {
+    func saveData(_ info: ProfileInfo, completion: @escaping () -> Void) {
         saveQueue.async {
             if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 let nameFileURL = dir.appendingPathComponent(self.nameFile)
@@ -43,11 +41,11 @@ class GCDDataManager: IDataFileService {
                         }
                     }
                     
-                    self.delegat?.saveComplited()
+                    completion()
                     
                 } catch {
                     AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { profile in
-                        self.saveData(profile)
+                        self.saveData(profile, completion: completion)
                     }
                 }
             }
@@ -70,7 +68,7 @@ class GCDDataManager: IDataFileService {
         }
     }
     
-    func fetchData() -> ProfileInfo {
+    func fetchData(completion: @escaping () -> Void) -> ProfileInfo {
         var profileInfo = ProfileInfo()
         let group = DispatchGroup()
         
@@ -100,7 +98,7 @@ class GCDDataManager: IDataFileService {
             group.leave()
         }
         group.wait()
-        self.delegat?.loadComplited()
+        completion()
         
         return profileInfo
     }

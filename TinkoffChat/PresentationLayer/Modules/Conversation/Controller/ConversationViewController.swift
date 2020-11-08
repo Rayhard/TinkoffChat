@@ -15,11 +15,13 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var inputViewHight: NSLayoutConstraint?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
+    var model: IConversFirebaseModel?
+    
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
         guard let message = messageTextView?.text,
               let id = channel?.identifier else { return }
-        dataManager?.sendMessage(channelId: id, message: message)
+        model?.sendMessage(id: id, text: message)
         
         messageTextView?.text = ""
     }
@@ -27,7 +29,6 @@ class ConversationViewController: UIViewController {
     private let cellInditifier = String(describing: ConversationViewCell.self)
 
     var channel: Channel_db?
-    var dataManager: FirebaseDataManager?
     
     private let dataStack: CoreDataStack = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -42,7 +43,6 @@ class ConversationViewController: UIViewController {
         
         guard let id = channel?.identifier else { return nil}
         guard let channel = channel else { return nil }
-//        let predicate = NSPredicate(format: "channel.identifier = %@", id)
         let predicate = NSPredicate(format: "channel = %@", channel)
         fetchRequest.predicate = predicate
         fetchRequest.fetchBatchSize = 20
@@ -93,9 +93,7 @@ class ConversationViewController: UIViewController {
         }
         
         guard let id = channel?.identifier else { return }
-        dataManager?.getMessages(channelId: id) { [weak self] in
-            self?.activityIndicator?.isHidden = true
-        }
+        model?.fetchMessages(id: id)
     }
     
     // MARK: Theme
@@ -207,5 +205,11 @@ extension ConversationViewController {
 
     @objc private func hideKeyboard() {
         self.messageTextView?.endEditing(true)
+    }
+}
+
+extension ConversationViewController: IConversFirebaseModelDelegate {
+    func loadComplited() {
+        activityIndicator?.isHidden = true
     }
 }

@@ -13,6 +13,8 @@ protocol IFirebaseService {
     func getChannels(completion: @escaping () -> Void)
     func deleteChannel(channel: Channel_db)
     func createNewChannel(name: String)
+    func getMessages(channelId: String, completion: @escaping () -> Void)
+    func sendMessage(channelId: String, message: String)
 }
 
 class FirebaseDataManager: IFirebaseService {

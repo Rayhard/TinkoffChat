@@ -17,8 +17,8 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     var presentationAssembly: IPresentationAssembly?
-    var model: IConversListFirebaseModel?
-    var secondModel: IConversListDataFileModel?
+    var modelFirebase: IConversListFirebaseModel?
+    var modelDataFile: IConversListDataFileModel?
     
     @IBAction func openThemeViewAction(_ sender: Any) {
         guard let destinationController = presentationAssembly?.themesViewController() else { return }
@@ -32,7 +32,7 @@ class ConversationsListViewController: UIViewController {
     
     @IBAction func createNewChannelAction(_ sender: Any) {
         AlertManager.showTextFieldAlert(message: "Создать новый канал?") { (name) in
-            self.model?.createNewChannel(name: name)
+            self.modelFirebase?.createNewChannel(name: name)
         }
     }
     
@@ -60,8 +60,6 @@ class ConversationsListViewController: UIViewController {
         
         return fetchedResultsController
     }()
- 
-    lazy var dataManager = FirebaseDataManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +87,7 @@ class ConversationsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let profile = secondModel?.loadData()
+        let profile = modelDataFile?.loadData()
         profileImage?.image = profile?.photo
     }
     
@@ -106,7 +104,7 @@ class ConversationsListViewController: UIViewController {
             print(error)
         }
         
-        model?.fetchChannels()
+        modelFirebase?.fetchChannels()
     }
     
     // MARK: - Theme
@@ -152,7 +150,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
-            model?.removeChannel(channel: channel)
+            modelFirebase?.removeChannel(channel: channel)
         }
     }
     
@@ -160,7 +158,6 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
         let channel = fetchedResultsController.object(at: indexPath)
         guard let destinationController = presentationAssembly?.conversationViewController() else { return }
         destinationController.channel = channel
-        destinationController.dataManager = self.dataManager
         self.navigationController?.pushViewController(destinationController, animated: true)
 
     }

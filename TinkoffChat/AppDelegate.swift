@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       description: "You description",
                                       photo: UIImage(named: "clearFile"))
             let dataManager = GCDDataManager()
-            dataManager.saveData(profile)
+            dataManager.saveData((profile)) { }
         }
     }
     

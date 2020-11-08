@@ -20,6 +20,6 @@ class ConversListDataFileModel: IConversListDataFileModel {
     }
     
     func loadData() -> ProfileInfo {
-        return dataService.fetchData()
+        return dataService.fetchData { }
     }
 }
