@@ -11,7 +11,6 @@ import Foundation
 protocol IServicesAssembly {
     var firebaseService: IFirebaseService { get }
     var firebaseParseService: IFirebaseParserService { get }
-//    var alertService: IAlertService { get }
     var gcdService: IDataFileService { get }
     var operationService: IDataFileService { get }
     var coreDataService: ICoreDataService { get }

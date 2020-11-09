@@ -17,8 +17,7 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     var presentationAssembly: IPresentationAssembly?
-    var modelFirebase: IConversListFirebaseModel?
-    var modelDataFile: IConversListDataFileModel?
+    var model: IConversListModel?
     
     @IBAction func openThemeViewAction(_ sender: Any) {
         guard let destinationController = presentationAssembly?.themesViewController() else { return }
@@ -32,7 +31,7 @@ class ConversationsListViewController: UIViewController {
     
     @IBAction func createNewChannelAction(_ sender: Any) {
         AlertManager.showTextFieldAlert(message: "Создать новый канал?") { (name) in
-            self.modelFirebase?.createNewChannel(name: name)
+            self.model?.createNewChannel(name: name)
         }
     }
     
@@ -45,7 +44,7 @@ class ConversationsListViewController: UIViewController {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.fetchBatchSize = 18
         
-        guard let context = modelFirebase?.context() else { return NSFetchedResultsController() }
+        guard let context = model?.context() else { return NSFetchedResultsController() }
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -84,7 +83,7 @@ class ConversationsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let profile = modelDataFile?.loadData()
+        let profile = model?.loadUserInfo()
         profileImage?.image = profile?.photo
     }
     
@@ -101,7 +100,7 @@ class ConversationsListViewController: UIViewController {
             print(error)
         }
         
-        modelFirebase?.fetchChannels()
+        model?.fetchChannels()
     }
     
     // MARK: - Theme
@@ -147,7 +146,7 @@ extension ConversationsListViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
-            modelFirebase?.removeChannel(channel: channel)
+            model?.removeChannel(channel: channel)
         }
     }
     
@@ -196,7 +195,7 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
 }
 
 // MARK: - IConversationsListModelDelegate
-extension ConversationsListViewController: IConversListFirebaseModelDelegate {
+extension ConversationsListViewController: IConversListModelDelegate {
     func loadComplited() {
         activityIndicator?.isHidden = true
     }

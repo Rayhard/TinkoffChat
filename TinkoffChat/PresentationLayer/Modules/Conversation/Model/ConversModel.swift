@@ -9,20 +9,20 @@
 import Foundation
 import CoreData
 
-protocol IConversFirebaseModel {
-    var delegate: IConversFirebaseModelDelegate? { get set }
+protocol IConversModel {
+    var delegate: IConversModelDelegate? { get set }
     func fetchMessages(id channelId: String)
     func sendMessage(id channelId: String, text: String)
     
     func context() -> NSManagedObjectContext
 }
 
-protocol IConversFirebaseModelDelegate: class {
+protocol IConversModelDelegate: class {
     func loadComplited()
 }
 
-class ConversFirebaseModel: IConversFirebaseModel {
-    var delegate: IConversFirebaseModelDelegate?
+class ConversModel: IConversModel {
+    var delegate: IConversModelDelegate?
     
     let firebaseService: IFirebaseService
     let coreDataService: ICoreDataService

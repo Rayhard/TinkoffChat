@@ -9,27 +9,32 @@
 import Foundation
 import CoreData
 
-protocol IConversListFirebaseModel {
-    var delegate: IConversListFirebaseModelDelegate? { get set }
+protocol IConversListModel {
+    var delegate: IConversListModelDelegate? { get set }
     func fetchChannels()
     func removeChannel(channel: Channel_db)
     func createNewChannel(name: String)
     
     func context() -> NSManagedObjectContext
+    
+    func loadUserInfo() -> ProfileInfo
 }
 
-protocol IConversListFirebaseModelDelegate: class {
+protocol IConversListModelDelegate: class {
     func loadComplited()
 }
 
-class ConversListFirebaseModel: IConversListFirebaseModel {
-    weak var delegate: IConversListFirebaseModelDelegate?
+class ConversListModel: IConversListModel {
+    weak var delegate: IConversListModelDelegate?
+    
     let firebaseService: IFirebaseService
     let coreDataService: ICoreDataService
+    let dataService: IDataFileService
     
-    init(firebaseService: IFirebaseService, coreDataService: ICoreDataService) {
+    init(firebaseService: IFirebaseService, coreDataService: ICoreDataService, dataService: IDataFileService) {
         self.firebaseService = firebaseService
         self.coreDataService = coreDataService
+        self.dataService = dataService
     }
     
     func fetchChannels() {
@@ -48,5 +53,9 @@ class ConversListFirebaseModel: IConversListFirebaseModel {
     
     func context() -> NSManagedObjectContext {
         return coreDataService.getContext()
+    }
+    
+    func loadUserInfo() -> ProfileInfo {
+        return dataService.fetchData { }
     }
 }

@@ -23,8 +23,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var headerTitle: UILabel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
-    var modelGCD: IProfileDataFileModel?
-    var modelOperation: IProfileDataFileModel?
+    var model: IProfileModel?
     
     @IBAction func editPhotoButtonAction(_ sender: Any) {
         showActionSheet()
@@ -40,13 +39,13 @@ class ProfileViewController: UIViewController {
         activityIndicator?.isHidden = false
         saveGCDButton?.isEnabled = false
         saveOperationButton?.isEnabled = false
-        modelOperation?.saveData(profile: newProfileInfo)
+        model?.saveOperation(profile: newProfileInfo)
     }
     @IBAction func saveGCDAction(_ sender: Any) {
         activityIndicator?.isHidden = false
         saveGCDButton?.isEnabled = false
         saveOperationButton?.isEnabled = false
-        modelGCD?.saveData(profile: newProfileInfo)
+        model?.saveGCD(profile: newProfileInfo)
     }
     
     var newProfileInfo: ProfileInfo = ProfileInfo()
@@ -186,7 +185,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadProfileData() {
-        let profileInfo = modelGCD?.loadData()
+        let profileInfo = model?.loadGCD()
         nameTextField?.text = profileInfo?.name
         nameSymbolsLabel?.text = UserProfile.shared.symbols
         descriptionTextView?.text = profileInfo?.description
@@ -197,7 +196,6 @@ class ProfileViewController: UIViewController {
 
 // MARK: Picker delegate
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         
         if picker.sourceType == .camera {
@@ -291,8 +289,6 @@ extension ProfileViewController: IDataFileServiceDelegate {
         DispatchQueue.main.async {
             self.isEdited(false)
             self.activityIndicator?.isHidden = true
-            self.saveGCDButton?.isEnabled = false
-            self.saveOperationButton?.isEnabled = false
             
             AlertManager.showStaticAlert(withMessage: "Данные сохранены")
         }
@@ -302,8 +298,6 @@ extension ProfileViewController: IDataFileServiceDelegate {
         DispatchQueue.main.async {
             self.isEdited(false)
             self.activityIndicator?.isHidden = true
-            self.saveGCDButton?.isEnabled = false
-            self.saveOperationButton?.isEnabled = false
         }
     }
 }

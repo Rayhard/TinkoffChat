@@ -15,7 +15,7 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var inputViewHight: NSLayoutConstraint?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
-    var model: IConversFirebaseModel?
+    var model: IConversModel?
     
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
@@ -205,7 +205,7 @@ extension ConversationViewController {
     }
 }
 
-extension ConversationViewController: IConversFirebaseModelDelegate {
+extension ConversationViewController: IConversModelDelegate {
     func loadComplited() {
         activityIndicator?.isHidden = true
     }

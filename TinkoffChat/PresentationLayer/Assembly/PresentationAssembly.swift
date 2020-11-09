@@ -47,13 +47,13 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ConversationsListViewController
         guard let conversationsListVC = resultViewController else { return ConversationsListViewController() }
         
-        let firebaseModel = ConversListFirebaseModel(firebaseService: serviceAssembly.firebaseService, coreDataService: serviceAssembly.coreDataService)
-        let dataFileModel = ConversListDataFileModel(dataService: serviceAssembly.gcdService)
+        let model = ConversListModel(firebaseService: serviceAssembly.firebaseService,
+                                                     coreDataService: serviceAssembly.coreDataService,
+                                                     dataService: serviceAssembly.gcdService)
         
         conversationsListVC.presentationAssembly = self
-        conversationsListVC.modelFirebase = firebaseModel
-        conversationsListVC.modelDataFile = dataFileModel
-        firebaseModel.delegate = conversationsListVC
+        conversationsListVC.model = model
+        model.delegate = conversationsListVC
         
         return conversationsListVC
     }
@@ -64,7 +64,8 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ConversationViewController
         guard let conversationsVC = resultViewController else { return ConversationViewController() }
         
-        let model = ConversFirebaseModel(firebaseService: serviceAssembly.firebaseService, coreDataService: serviceAssembly.coreDataService)
+        let model = ConversModel(firebaseService: serviceAssembly.firebaseService,
+                                         coreDataService: serviceAssembly.coreDataService)
         conversationsVC.model = model
         model.delegate = conversationsVC
         
@@ -77,13 +78,10 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ProfileViewController
         guard let profileVC = resultViewController else { return ProfileViewController() }
         
-        let modelGCD = ProfileDataFileModel(dataService: serviceAssembly.gcdService)
-        profileVC.modelGCD = modelGCD
-        modelGCD.delegate = profileVC
-        
-        let modelOperation = ProfileDataFileModel(dataService: serviceAssembly.operationService)
-        profileVC.modelOperation = modelOperation
-        modelOperation.delegate = profileVC
+        let model = ProfileModel(dataService: serviceAssembly.gcdService,
+                                 operationService: serviceAssembly.operationService)
+        profileVC.model = model
+        model.delegate = profileVC
         
         return profileVC
     }
