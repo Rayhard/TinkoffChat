@@ -29,12 +29,7 @@ class ConversationViewController: UIViewController {
     private let cellInditifier = String(describing: ConversationViewCell.self)
 
     var channel: Channel_db?
-    
-    private let dataStack: CoreDataStack = {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let delegate = appDelegate else { return CoreDataStack()}
-        return delegate.coreDataStack
-    }()
+
     private lazy var fetchedResultsController: NSFetchedResultsController<Message_db>? = {
         let fetchRequest: NSFetchRequest<Message_db> = Message_db.fetchRequest()
         
@@ -47,9 +42,11 @@ class ConversationViewController: UIViewController {
         fetchRequest.predicate = predicate
         fetchRequest.fetchBatchSize = 20
         
+        guard let context = model?.context() else { return NSFetchedResultsController() }
+        
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: dataStack.mainContext,
+            managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: "MessageCacheForChannel\(id)")
         

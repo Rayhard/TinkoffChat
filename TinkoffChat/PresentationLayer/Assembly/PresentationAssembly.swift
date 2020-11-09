@@ -47,7 +47,7 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ConversationsListViewController
         guard let conversationsListVC = resultViewController else { return ConversationsListViewController() }
         
-        let firebaseModel = ConversListFirebaseModel(firebaseService: serviceAssembly.firebaseService)
+        let firebaseModel = ConversListFirebaseModel(firebaseService: serviceAssembly.firebaseService, coreDataService: serviceAssembly.coreDataService)
         let dataFileModel = ConversListDataFileModel(dataService: serviceAssembly.gcdService)
         
         conversationsListVC.presentationAssembly = self
@@ -64,7 +64,7 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ConversationViewController
         guard let conversationsVC = resultViewController else { return ConversationViewController() }
         
-        let model = ConversFirebaseModel(firebaseService: serviceAssembly.firebaseService)
+        let model = ConversFirebaseModel(firebaseService: serviceAssembly.firebaseService, coreDataService: serviceAssembly.coreDataService)
         conversationsVC.model = model
         model.delegate = conversationsVC
         

@@ -10,22 +10,28 @@ import Foundation
 
 protocol IServicesAssembly {
     var firebaseService: IFirebaseService { get }
-//    var firebaseParseService: IFirebaseParseService { get }
+    var firebaseParseService: IFirebaseParserService { get }
 //    var alertService: IAlertService { get }
     var gcdService: IDataFileService { get }
     var operationService: IDataFileService { get }
+    var coreDataService: ICoreDataService { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
-    
     private let coreAssembly: ICoreAssembly
     
     init(coreAssembly: ICoreAssembly) {
         self.coreAssembly = coreAssembly
     }
     
-    lazy var firebaseService: IFirebaseService = FirebaseDataManager()
+    lazy var firebaseService: IFirebaseService = FirebaseDataManager(parserService: firebaseParseService,
+                                                                     coreDataService: coreDataService)
+    
     lazy var gcdService: IDataFileService = GCDDataManager()
     lazy var operationService: IDataFileService = OperationDataManager()
+    
+    lazy var firebaseParseService: IFirebaseParserService = FirebaseParseManager(coreDataService: coreDataService)
+    
+    lazy var coreDataService: ICoreDataService = CoreDataManager(coreData: coreAssembly.coreDataStack)
 
 }

@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import CoreData
 
 protocol IConversListFirebaseModel {
     var delegate: IConversListFirebaseModelDelegate? { get set }
     func fetchChannels()
     func removeChannel(channel: Channel_db)
     func createNewChannel(name: String)
+    
+    func context() -> NSManagedObjectContext
 }
 
 protocol IConversListFirebaseModelDelegate: class {
@@ -22,9 +25,11 @@ protocol IConversListFirebaseModelDelegate: class {
 class ConversListFirebaseModel: IConversListFirebaseModel {
     weak var delegate: IConversListFirebaseModelDelegate?
     let firebaseService: IFirebaseService
+    let coreDataService: ICoreDataService
     
-    init(firebaseService: IFirebaseService) {
+    init(firebaseService: IFirebaseService, coreDataService: ICoreDataService) {
         self.firebaseService = firebaseService
+        self.coreDataService = coreDataService
     }
     
     func fetchChannels() {
@@ -39,5 +44,9 @@ class ConversListFirebaseModel: IConversListFirebaseModel {
     
     func createNewChannel(name: String) {
         firebaseService.createNewChannel(name: name)
+    }
+    
+    func context() -> NSManagedObjectContext {
+        return coreDataService.getContext()
     }
 }

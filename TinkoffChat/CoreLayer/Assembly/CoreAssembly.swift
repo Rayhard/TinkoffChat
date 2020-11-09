@@ -9,7 +9,9 @@
 import Foundation
 
 protocol ICoreAssembly {
+    var coreDataStack: ICoreDataStack { get }
 }
 
 class CoreAssembly: ICoreAssembly {
+    var coreDataStack: ICoreDataStack = CoreDataStack()
 }

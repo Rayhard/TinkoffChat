@@ -21,8 +21,13 @@ class FirebaseDataManager: IFirebaseService {
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     
-    private lazy var parseManager = FirebaseParseManager()
-    private lazy var coreDataManager = CoreDataManager()
+    let parserService: IFirebaseParserService
+    let coreDataService: ICoreDataService
+    
+    init(parserService: IFirebaseParserService, coreDataService: ICoreDataService) {
+        self.parserService = parserService
+        self.coreDataService = coreDataService
+    }
     
     func getChannels(completion: @escaping () -> Void) {
         DispatchQueue.global().async {
@@ -34,11 +39,11 @@ class FirebaseDataManager: IFirebaseService {
                 snapshot.documentChanges.forEach { diff in
                     switch diff.type {
                     case .added:
-                        self.parseManager.parseNewChannel(diff: diff)
+                        self.parserService.parseNewChannel(diff: diff)
                     case .modified:
-                        self.parseManager.parseUpdateChannel(diff: diff)
+                        self.parserService.parseUpdateChannel(diff: diff)
                     case .removed:
-                        self.coreDataManager.deleteChannel(channelId: diff.document.documentID)
+                        self.coreDataService.deleteChannel(channelId: diff.document.documentID)
                     }
                     completion()
                 }
@@ -74,7 +79,7 @@ class FirebaseDataManager: IFirebaseService {
             if let error = error {
                 print("Error removing document: \(error)")
             } else {
-                self.coreDataManager.deleteChannel(channelId: id)
+                self.coreDataService.deleteChannel(channelId: id)
             }
         }
     }
@@ -91,7 +96,7 @@ class FirebaseDataManager: IFirebaseService {
                 snapshot.documentChanges.forEach { diff in
                     switch diff.type {
                     case .added:
-                        self.parseManager.parseNewMessage(channelId: channelId, diff: diff)
+                        self.parserService.parseNewMessage(channelId: channelId, diff: diff)
                     case .modified:
                         break
                     case .removed:

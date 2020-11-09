@@ -7,11 +7,14 @@
 //
 
 import Foundation
+import CoreData
 
 protocol IConversFirebaseModel {
     var delegate: IConversFirebaseModelDelegate? { get set }
     func fetchMessages(id channelId: String)
     func sendMessage(id channelId: String, text: String)
+    
+    func context() -> NSManagedObjectContext
 }
 
 protocol IConversFirebaseModelDelegate: class {
@@ -22,9 +25,11 @@ class ConversFirebaseModel: IConversFirebaseModel {
     var delegate: IConversFirebaseModelDelegate?
     
     let firebaseService: IFirebaseService
+    let coreDataService: ICoreDataService
     
-    init(firebaseService: IFirebaseService) {
+    init(firebaseService: IFirebaseService, coreDataService: ICoreDataService) {
         self.firebaseService = firebaseService
+        self.coreDataService = coreDataService
     }
     
     func fetchMessages(id channelId: String) {
@@ -35,6 +40,10 @@ class ConversFirebaseModel: IConversFirebaseModel {
     
     func sendMessage(id channelId: String, text: String) {
         firebaseService.sendMessage(channelId: channelId, message: text)
+    }
+    
+    func context() -> NSManagedObjectContext {
+        return coreDataService.getContext()
     }
     
 }

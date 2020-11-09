@@ -9,9 +9,19 @@
 import Foundation
 import Firebase
 
-class FirebaseParseManager {
+protocol IFirebaseParserService {
+    func parseNewChannel(diff: DocumentChange)
+    func parseUpdateChannel(diff: DocumentChange)
+    func parseNewMessage(channelId: String, diff: DocumentChange)
+}
+
+class FirebaseParseManager: IFirebaseParserService {
     
-    private lazy var coreDataManager = CoreDataManager()
+    let coreDataService: ICoreDataService
+    
+    init(coreDataService: ICoreDataService) {
+        self.coreDataService = coreDataService
+    }
     
     func parseNewChannel(diff: DocumentChange) {
         let channel = diff.document.data()
@@ -22,7 +32,7 @@ class FirebaseParseManager {
               name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
         else { return }
         
-        coreDataManager.addChannel(id: diff.document.documentID,
+        coreDataService.addChannel(id: diff.document.documentID,
                                    name: name,
                                    message: lastMessage,
                                    date: lastActivity.dateValue())
@@ -37,7 +47,7 @@ class FirebaseParseManager {
               name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
         else { return }
         
-        coreDataManager.updateChannel(id: diff.document.documentID,
+        coreDataService.updateChannel(id: diff.document.documentID,
                                       name: name,
                                       message: lastMessage,
                                       date: lastActivity.dateValue())
@@ -54,7 +64,7 @@ class FirebaseParseManager {
               senderName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
         else { return }
         
-        coreDataManager.addMessage(channelId: channelId, messageId: diff.document.documentID, senderId: senderId,
+        coreDataService.addMessage(channelId: channelId, messageId: diff.document.documentID, senderId: senderId,
                                    senderName: senderName, content: content, created: created.dateValue())
     }
 }

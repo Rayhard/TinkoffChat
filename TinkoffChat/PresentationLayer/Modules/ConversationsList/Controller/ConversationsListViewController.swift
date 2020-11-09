@@ -38,11 +38,6 @@ class ConversationsListViewController: UIViewController {
     
     private let cellInditifier = String(describing: ConversationsListCell.self)
     
-    private let dataStack: CoreDataStack = {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let delegate = appDelegate else { return CoreDataStack()}
-        return delegate.coreDataStack
-    }()
     private lazy var fetchedResultsController: NSFetchedResultsController<Channel_db> = {
         let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
         
@@ -50,9 +45,11 @@ class ConversationsListViewController: UIViewController {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.fetchBatchSize = 18
         
+        guard let context = modelFirebase?.context() else { return NSFetchedResultsController() }
+        
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: dataStack.mainContext,
+            managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: "ChannelsCache")
         

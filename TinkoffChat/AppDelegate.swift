@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let rootAssembly = RootAssembly()
     
-    var coreDataStack = CoreDataStack()
+//    var coreDataStack = CoreDataStack()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
@@ -66,11 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setCoreData() {
-        coreDataStack.didUpdateDatease = { stack in
-            stack.printDataBaseStats()
-        }
-        
-        coreDataStack.enableObservers()
+//        coreDataStack.didUpdateDatease = { stack in
+//            stack.printDataBaseStats()
+//        }
+//
+//        coreDataStack.enableObservers()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

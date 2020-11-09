@@ -9,7 +9,12 @@
 import Foundation
 import CoreData
 
-class CoreDataStack {
+protocol ICoreDataStack {
+    var mainContext: NSManagedObjectContext { get }
+    func performSave(_ block: (NSManagedObjectContext) -> Void)
+}
+
+class CoreDataStack: ICoreDataStack {
     var didUpdateDatease: ((CoreDataStack) -> Void)?
     
     private var storeUrl: URL = {
