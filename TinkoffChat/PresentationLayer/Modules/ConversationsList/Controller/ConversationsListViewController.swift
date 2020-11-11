@@ -62,7 +62,23 @@ class ConversationsListViewController: UIViewController {
         
         configureTheme(Theme.current)
         loadData()
-        
+        setTableView()
+        setViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let profile = model?.loadUserInfo()
+        profileImage?.image = profile?.photo
+    }
+    
+    private func setTableView() {
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.register(UINib(nibName: String(describing: ConversationsListCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
+    }
+    
+    private func setViews() {
         activityIndicator?.isHidden = false
         
         profileView?.layer.cornerRadius = (profileView?.frame.width ?? 1) / 2
@@ -72,19 +88,9 @@ class ConversationsListViewController: UIViewController {
         let openProfileGesture = UITapGestureRecognizer(target: self, action: #selector(openProfile))
         profileView?.addGestureRecognizer(openProfileGesture)
         
-        tableView?.delegate = self
-        tableView?.dataSource = self
-        tableView?.register(UINib(nibName: String(describing: ConversationsListCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
-        
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let profile = model?.loadUserInfo()
-        profileImage?.image = profile?.photo
     }
     
     @objc

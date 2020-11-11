@@ -15,7 +15,7 @@ protocol IFirebaseParserService {
     func parseNewMessage(channelId: String, diff: DocumentChange)
 }
 
-class FirebaseParseManager: IFirebaseParserService {
+class FirebaseParserService: IFirebaseParserService {
     
     let coreDataService: ICoreDataService
     

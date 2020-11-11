@@ -9,46 +9,35 @@
 import UIKit
 
 class GCDDataManager: IDataFileService {
-    private let nameFile = "name.txt"
-    private let descriptionFile = "description.txt"
-    private let photoFile = "photo.png"
-    
     private let saveQueue = DispatchQueue(label: "GCDDataManager_Save", qos: .default, attributes: .concurrent)
     private let loadQueue = DispatchQueue(label: "GCDDataManager_Load", qos: .userInitiated, attributes: .concurrent)
     
+    let fileCore: IFileManagerCore
+    
+    init(fileCore: IFileManagerCore) {
+        self.fileCore = fileCore
+    }
+    
     func saveData(_ info: ProfileInfo, completion: @escaping () -> Void) {
         saveQueue.async {
-            if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let nameFileURL = dir.appendingPathComponent(self.nameFile)
-                let descFileURL = dir.appendingPathComponent(self.descriptionFile)
-                let photoFileURL = dir.appendingPathComponent(self.photoFile)
-                
-                do {
-                    if let name = info.name, name != UserProfile.shared.name {
-                        try name.write(to: nameFileURL, atomically: false, encoding: .utf8)
-                        UserProfile.shared.name = name
-                    }
-                    
-                    if let desc = info.description, desc != UserProfile.shared.description {
-                        try desc.write(to: descFileURL, atomically: false, encoding: .utf8)
-                        UserProfile.shared.description = desc
-                    }
-                    
-                    if let photo = info.photo, photo != UserProfile.shared.photo {
-                        if let data = photo.pngData() {
-                            try data.write(to: photoFileURL)
-                            UserProfile.shared.photo = photo
-                        }
-                    }
-                    
-                    completion()
-                    
-                } catch {
-                    AlertManager.showActionAlert(withMessage: "Не удалось сохранить данные") { profile in
-                        self.saveData(profile, completion: completion)
-                    }
+            if let name = info.name, name != UserProfile.shared.name {
+                self.fileCore.saveTextFile(file: .nameFile, content: name)
+                UserProfile.shared.name = name
+            }
+            
+            if let desc = info.description, desc != UserProfile.shared.description {
+                self.fileCore.saveTextFile(file: .descriptionFile, content: desc)
+                UserProfile.shared.description = desc
+            }
+            
+            if let photo = info.photo, photo != UserProfile.shared.photo {
+                if let data = photo.pngData() {
+                    self.fileCore.saveImageFile(file: .photoFile, content: data)
+                    UserProfile.shared.photo = photo
                 }
             }
+            
+            completion()
         }
     }
     
@@ -74,27 +63,14 @@ class GCDDataManager: IDataFileService {
         
         group.enter()
         loadQueue.async {
-            if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let nameFileURL = dir.appendingPathComponent(self.nameFile)
-                let descFileURL = dir.appendingPathComponent(self.descriptionFile)
-                let photoFileURL = dir.appendingPathComponent(self.photoFile)
+            profileInfo.name = self.fileCore.getTextFile(file: .nameFile)
+            profileInfo.description = self.fileCore.getTextFile(file: .descriptionFile)
+            profileInfo.photo = self.fileCore.getImageFile(file: .photoFile)
+            
+            UserProfile.shared.name = profileInfo.name ?? "Name Surname"
+            UserProfile.shared.description = profileInfo.description ?? "You description"
+            UserProfile.shared.photo = profileInfo.photo ?? UIImage(named: "clearFile")
 
-                do {
-                    profileInfo.name = try String(contentsOf: nameFileURL, encoding: .utf8)
-                    profileInfo.description = try String(contentsOf: descFileURL, encoding: .utf8)
-
-                    let imageData = try Data(contentsOf: photoFileURL)
-                    profileInfo.photo = UIImage(data: imageData)
-
-                    UserProfile.shared.name = profileInfo.name ?? "Name Surname"
-                    UserProfile.shared.description = profileInfo.description ?? "You description"
-                    UserProfile.shared.photo = profileInfo.photo ?? UIImage(named: "clearFile")
-                } catch {
-                    profileInfo.name = "Name Surname"
-                    profileInfo.description = "You description"
-                    profileInfo.photo = UIImage(named: "clearFile")
-                }
-            }
             group.leave()
         }
         group.wait()

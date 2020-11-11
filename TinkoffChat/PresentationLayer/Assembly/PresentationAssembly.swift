@@ -21,7 +21,7 @@ protocol IPresentationAssembly {
     func conversationViewController() -> ConversationViewController
     func profileViewController() -> ProfileViewController
     func themesViewController() -> ThemesViewController
-    func mainNavigationController() -> MainNavigationController
+    func mainNavigationController() -> UINavigationController
 }
 
 class PresentationAssembly: IPresentationAssembly {
@@ -31,14 +31,10 @@ class PresentationAssembly: IPresentationAssembly {
         self.serviceAssembly = serviceAssembly
     }
     
-    func mainNavigationController() -> MainNavigationController {
-        let identifier = Storyboard.MainNavigationController.rawValue
-        let storyBoard: UIStoryboard = UIStoryboard(name: Storyboard.ConversationsListViewController.rawValue, bundle: nil)
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? MainNavigationController
-        guard let navigationC = resultViewController else { return MainNavigationController() }
-        navigationC.setViewControllers([conversationsListViewController()], animated: true)
-        
-        return navigationC
+    func mainNavigationController() -> UINavigationController {
+        let nav = UINavigationController(rootViewController: conversationsListViewController())
+
+        return nav
     }
     
     func conversationsListViewController() -> ConversationsListViewController {

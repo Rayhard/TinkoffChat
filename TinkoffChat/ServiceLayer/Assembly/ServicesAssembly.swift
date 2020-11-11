@@ -23,13 +23,13 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
     
-    lazy var firebaseService: IFirebaseService = FirebaseDataManager(parserService: firebaseParseService,
+    lazy var firebaseService: IFirebaseService = FirebaseService(parserService: firebaseParseService,
                                                                      coreDataService: coreDataService)
     
-    lazy var gcdService: IDataFileService = GCDDataManager()
-    lazy var operationService: IDataFileService = OperationDataManager()
+    lazy var gcdService: IDataFileService = GCDDataManager(fileCore: coreAssembly.fileManagerCore)
+    lazy var operationService: IDataFileService = OperationDataManager(fileCore: coreAssembly.fileManagerCore)
     
-    lazy var firebaseParseService: IFirebaseParserService = FirebaseParseManager(coreDataService: coreDataService)
+    lazy var firebaseParseService: IFirebaseParserService = FirebaseParserService(coreDataService: coreDataService)
     
     lazy var coreDataService: ICoreDataService = CoreDataManager(coreData: coreAssembly.coreDataStack)
 

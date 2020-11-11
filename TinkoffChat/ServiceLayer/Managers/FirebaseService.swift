@@ -17,7 +17,7 @@ protocol IFirebaseService {
     func sendMessage(channelId: String, message: String)
 }
 
-class FirebaseDataManager: IFirebaseService {
+class FirebaseService: IFirebaseService {
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     

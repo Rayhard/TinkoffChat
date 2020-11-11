@@ -10,8 +10,10 @@ import Foundation
 
 protocol ICoreAssembly {
     var coreDataStack: ICoreDataStack { get }
+    var fileManagerCore: IFileManagerCore { get }
 }
 
 class CoreAssembly: ICoreAssembly {
     var coreDataStack: ICoreDataStack = CoreDataStack()
+    var fileManagerCore: IFileManagerCore = FileManagerCore()
 }

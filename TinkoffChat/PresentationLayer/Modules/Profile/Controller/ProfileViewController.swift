@@ -53,27 +53,21 @@ class ProfileViewController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView?.delegate = self
-        
         setTheme()
-        
-        LogManager.showMessage("viewDidLoad - Edit button frame:\n\t \(String(describing: editPhotoButton?.frame))")
-        
-        circleView?.layer.cornerRadius = (circleView?.bounds.height ?? 1) / 2
-        saveOperationButton?.layer.cornerRadius = (saveOperationButton?.bounds.height ?? 1) / 3
-        saveGCDButton?.layer.cornerRadius = (saveGCDButton?.bounds.height ?? 1) / 3
-        profileImageView?.layer.cornerRadius = (profileImageView?.bounds.height ?? 1) / 2
-        profileImageView?.clipsToBounds = true
-        navigationController?.navigationBar.isHidden = true
-        
+        setViews()
         loadProfileData()
-        
         addKeyboardGesture()
         isEdited(false)
-        
-        nameTextField?.addTarget(self, action: #selector(nameEditing), for: .editingChanged)
-        
-        LogManager.showMessage(#function)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addKeyboardObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObserver()
     }
     
     @objc func nameEditing() {
@@ -87,16 +81,17 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        addKeyboardObserver()
-        LogManager.showMessage(#function)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        removeKeyboardObserver()
-        LogManager.showMessage(#function)
+    private func setViews() {
+        descriptionTextView?.delegate = self
+        
+        circleView?.layer.cornerRadius = (circleView?.bounds.height ?? 1) / 2
+        saveOperationButton?.layer.cornerRadius = (saveOperationButton?.bounds.height ?? 1) / 3
+        saveGCDButton?.layer.cornerRadius = (saveGCDButton?.bounds.height ?? 1) / 3
+        profileImageView?.layer.cornerRadius = (profileImageView?.bounds.height ?? 1) / 2
+        profileImageView?.clipsToBounds = true
+        navigationController?.navigationBar.isHidden = true
+        
+        nameTextField?.addTarget(self, action: #selector(nameEditing), for: .editingChanged)
     }
     
     // MARK: Theme

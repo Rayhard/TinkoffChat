@@ -57,18 +57,10 @@ class ConversationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = channel?.name
-        activityIndicator?.isHidden = false
         setTheme()
         loadData()
-        
-        messageTextView?.delegate = self
-        messageTextView?.layer.cornerRadius = (messageTextView?.frame.height ?? 0) / 4
-
-        tableView?.delegate = self
-        tableView?.dataSource = self
-        tableView?.transform = CGAffineTransform(scaleX: 1, y: -1)
-        tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
+        setTableView()
+        setViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +72,21 @@ class ConversationViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObserver()
+    }
+    
+    private func setTableView() {
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView?.register(UINib(nibName: String(describing: ConversationViewCell.self), bundle: nil), forCellReuseIdentifier: cellInditifier)
+    }
+    
+    private func setViews() {
+        messageTextView?.delegate = self
+        messageTextView?.layer.cornerRadius = (messageTextView?.frame.height ?? 0) / 4
+        
+        self.title = channel?.name
+        activityIndicator?.isHidden = false
     }
     
     private func loadData() {

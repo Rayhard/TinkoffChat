@@ -22,7 +22,7 @@ class ThemesViewController: UIViewController {
     
     weak var delegate: ThemesPickerDelegate?
     var setTheme: ((ThemeModel) -> Void)?
-    let dataManager: GCDDataManager = GCDDataManager()
+//    let dataManager: GCDDataManager = GCDDataManager()
     
     @IBAction func setThemeAction(_ sender: UIButton) {
         switch sender {
@@ -42,6 +42,21 @@ class ThemesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setViews()
+        addGestures()
+        configureTheme()
+    }
+    
+    private func addGestures() {
+        let classicGesture = UITapGestureRecognizer(target: self, action: #selector(setClassicTheme))
+        let dayGesture = UITapGestureRecognizer(target: self, action: #selector(setDayTheme))
+        let nightGesture = UITapGestureRecognizer(target: self, action: #selector(setNightTheme))
+        classicMessageView?.addGestureRecognizer(classicGesture)
+        dayMessageView?.addGestureRecognizer(dayGesture)
+        nightMessageView?.addGestureRecognizer(nightGesture)
+    }
+    
+    private func setViews() {
         self.title = "Settings"
         navigationItem.largeTitleDisplayMode = .never
         
@@ -53,15 +68,6 @@ class ThemesViewController: UIViewController {
         classicMessageView?.layer.cornerRadius = (classicMessageView?.frame.height ?? 1) / 6
         dayMessageView?.layer.cornerRadius = (dayMessageView?.frame.height ?? 1) / 6
         nightMessageView?.layer.cornerRadius = (nightMessageView?.frame.height ?? 1) / 6
-        
-        let classicGesture = UITapGestureRecognizer(target: self, action: #selector(setClassicTheme))
-        let dayGesture = UITapGestureRecognizer(target: self, action: #selector(setDayTheme))
-        let nightGesture = UITapGestureRecognizer(target: self, action: #selector(setNightTheme))
-        classicMessageView?.addGestureRecognizer(classicGesture)
-        dayMessageView?.addGestureRecognizer(dayGesture)
-        nightMessageView?.addGestureRecognizer(nightGesture)
-        
-        configureTheme()
     }
     
     @objc private func setClassicTheme() {
@@ -69,7 +75,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(ClassicTheme())
         saveTheme(.classic)
         
-        dataManager.saveTheme("classic")
+//        dataManager.saveTheme("classic")
         
         setupClassicView(border: 3, color: .systemBlue)
         setupDayView(border: 1, color: .gray)
@@ -81,7 +87,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(DayTheme())
         saveTheme(.day)
         
-        dataManager.saveTheme("day")
+//        dataManager.saveTheme("day")
         
         setupDayView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
@@ -93,7 +99,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(NightTheme())
         saveTheme(.night)
         
-        dataManager.saveTheme("night")
+//        dataManager.saveTheme("night")
         
         setupNightView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
