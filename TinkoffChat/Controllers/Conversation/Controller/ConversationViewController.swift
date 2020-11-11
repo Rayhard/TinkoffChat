@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ConversationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
@@ -25,9 +26,37 @@ class ConversationViewController: UIViewController {
     
     private let cellInditifier = String(describing: ConversationViewCell.self)
 
-    var channel: Channel?
-    var messageArray: [Message] = []
+    var channel: Channel_db?
     var dataManager: FirebaseDataManager?
+    
+    private let dataStack: CoreDataStack = {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let delegate = appDelegate else { return CoreDataStack()}
+        return delegate.coreDataStack
+    }()
+    private lazy var fetchedResultsController: NSFetchedResultsController<Message_db>? = {
+        let fetchRequest: NSFetchRequest<Message_db> = Message_db.fetchRequest()
+        
+        let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        guard let id = channel?.identifier else { return nil}
+        guard let channel = channel else { return nil }
+//        let predicate = NSPredicate(format: "channel.identifier = %@", id)
+        let predicate = NSPredicate(format: "channel = %@", channel)
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchBatchSize = 20
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: dataStack.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: "MessageCacheForChannel\(id)")
+        
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +86,15 @@ class ConversationViewController: UIViewController {
     }
     
     private func loadData() {
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print(error)
+        }
+        
         guard let id = channel?.identifier else { return }
-        dataManager?.getMessages(channelId: id) { [weak self] messages in
-            let sortedArray = messages.sorted(by: {$0.created < $1.created})
+        dataManager?.getMessages(channelId: id) { [weak self] in
             self?.activityIndicator?.isHidden = true
-            self?.messageArray = sortedArray.reversed()
-            self?.tableView?.reloadData()
         }
     }
     
@@ -76,19 +108,56 @@ class ConversationViewController: UIViewController {
 // MARK: UITableView configure
 extension ConversationViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messageArray.count
+        guard let sections = fetchedResultsController?.sections else { return 0 }
+        
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellInditifier) as? ConversationViewCell else { return UITableViewCell() }
         
-        let message = messageArray[indexPath.row]
+        guard let message = fetchedResultsController?.object(at: indexPath) else { return UITableViewCell() }
         cell.transform = CGAffineTransform(scaleX: 1, y: -1)
         cell.configure(with: message)
         
         return cell
     }
+}
+
+// MARK: NSFetchedResultsControllerDelegate
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView?.beginUpdates()
+    }
     
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+
+        let index = indexPath ?? IndexPath()
+        let newIndex = newIndexPath ?? IndexPath()
+        
+        switch type {
+        case .insert:
+            self.tableView?.insertRows(at: [newIndex], with: .automatic)
+        case .move:
+            self.tableView?.deleteRows(at: [index], with: .automatic)
+            self.tableView?.insertRows(at: [newIndex], with: .automatic)
+        case .update:
+            self.tableView?.reloadRows(at: [index], with: .automatic)
+        case .delete:
+            self.tableView?.deleteRows(at: [index], with: .automatic)
+        default:
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView?.endUpdates()
+    }
 }
 
 // MARK: UITextViewDelegate

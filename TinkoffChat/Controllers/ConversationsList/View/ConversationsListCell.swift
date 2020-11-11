@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversationsListCell: UITableViewCell, ConfigurableView {
-    typealias ConfigurationModel = Channel
+    typealias ConfigurationModel = Channel_db
     
     @IBOutlet weak var nameLabel: UILabel?
     @IBOutlet weak var textMessageLabel: UILabel?
@@ -27,7 +27,7 @@ class ConversationsListCell: UITableViewCell, ConfigurableView {
         
         nameLabel?.text = model.name
         
-        nameSymbolLabel?.text = setSymbolFromName(model.name)
+        nameSymbolLabel?.text = setSymbolFromName(model.name ?? "Name")
         
         if model.lastMessage == ""{
             settingNilMessage()

@@ -41,16 +41,14 @@ class CoreDataStack {
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        DispatchQueue.global(qos: .background).async {
-            do {
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                                   configurationName: nil,
-                                                   at: self.storeUrl,
-                                                   options: nil)
-                
-            } catch {
-                fatalError(error.localizedDescription)
-            }
+        do {
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
+                                               configurationName: nil,
+                                               at: self.storeUrl,
+                                               options: nil)
+            
+        } catch {
+            fatalError(error.localizedDescription)
         }
         return coordinator
     }()
@@ -87,6 +85,11 @@ class CoreDataStack {
         context.performAndWait {
             block(context)
             if context.hasChanges {
+                do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
+                } catch {
+                    print(error.localizedDescription)
+                }
                 performSave(in: context)
             }
         }
@@ -130,7 +133,7 @@ class CoreDataStack {
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
            deletes.count > 0 {
-            print("Обновлено объектов: ", deletes.count)
+            print("Удалено объектов: ", deletes.count)
         }
     }
     

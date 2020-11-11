@@ -16,23 +16,23 @@ class FirebaseDataManager {
     private lazy var parseManager = FirebaseParseManager()
     private lazy var coreDataManager = CoreDataManager()
     
-    let coreDataStack: CoreDataStack
-    
-    init(coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
-    }
-    
-    func getChannels(completion: @escaping ([Channel]) -> Void) {
-        
+    func getChannels(completion: @escaping () -> Void) {
         DispatchQueue.global().async {
-            self.reference.addSnapshotListener { (querySnapshot, error) in
-                if let error = error {
-                    print("Error getting documents: \(error)")
-                } else {
-                    let channelsArray = self.parseManager.parseChannel(querySnapshot)
-                    self.coreDataManager.saveChannels(array: channelsArray, in: self.coreDataStack)
-                    
-                    completion(channelsArray)
+            self.reference.addSnapshotListener { querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching snapshots: \(String(describing: error))")
+                    return
+                }
+                snapshot.documentChanges.forEach { diff in
+                    switch diff.type {
+                    case .added:
+                        self.parseManager.parseNewChannel(diff: diff)
+                    case .modified:
+                        self.parseManager.parseUpdateChannel(diff: diff)
+                    case .removed:
+                        self.coreDataManager.deleteChannel(channelId: diff.document.documentID)
+                    }
+                    completion()
                 }
             }
         }
@@ -59,18 +59,38 @@ class FirebaseDataManager {
         ])
     }
     
-    func getMessages(channelId: String, completion: @escaping ([Message]) -> Void) {
+    func deleteChannel(channel: Channel_db) {
+        guard let id = channel.identifier else { return }
+        let channelRef = reference.document(id)
+        channelRef.delete { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                self.coreDataManager.deleteChannel(channelId: id)
+            }
+        }
+    }
+    
+    func getMessages(channelId: String, completion: @escaping () -> Void) {
         let messageRef = reference.document(channelId).collection("messages")
         
         DispatchQueue.global().async {
-            messageRef.addSnapshotListener { (querySnapshot, error) in
-                if let error = error {
-                    print("Error getting documents: \(error)")
-                } else {
-                    let messagesArray = self.parseManager.parseMessage(querySnapshot)
-                    self.coreDataManager.saveMessages(id: channelId, array: messagesArray, in: self.coreDataStack)
-                    
-                    completion(messagesArray)
+            messageRef.addSnapshotListener { querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching snapshots: \(String(describing: error))")
+                    return
+                }
+                snapshot.documentChanges.forEach { diff in
+                    switch diff.type {
+                    case .added:
+                        self.parseManager.parseNewMessage(channelId: channelId, diff: diff)
+                    case .modified:
+                        break
+                    case .removed:
+                        break
+                    }
+
+                    completion()
                 }
             }
         }
