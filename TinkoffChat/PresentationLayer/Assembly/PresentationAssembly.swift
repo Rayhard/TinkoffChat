@@ -88,6 +88,9 @@ class PresentationAssembly: IPresentationAssembly {
         let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ThemesViewController
         guard let themeVC = resultViewController else { return ThemesViewController() }
         
+        let model = ThemesControllerModel(saveService: serviceAssembly.themeSaver)
+        themeVC.model = model
+        
         return themeVC
     }
 }

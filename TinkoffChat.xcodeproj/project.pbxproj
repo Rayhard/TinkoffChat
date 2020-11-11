@@ -15,7 +15,7 @@
 		333E5187254402A600648A8C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333E5186254402A600648A8C /* CoreDataStack.swift */; };
 		333E518A254409D400648A8C /* ObjectsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333E5189254409D400648A8C /* ObjectsExtensions.swift */; };
 		3343FA93251DC14900755C6A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FA92251DC14900755C6A /* UserProfile.swift */; };
-		3346DD4F2527951000ACC15F /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346DD4E2527951000ACC15F /* ThemesPickerDelegate.swift */; };
+		334664B8255C37C700D11F14 /* ThemesControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334664B7255C37C700D11F14 /* ThemesControllerModel.swift */; };
 		3346DD53252795F100ACC15F /* ClassicTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346DD52252795F100ACC15F /* ClassicTheme.swift */; };
 		3346DD572527960E00ACC15F /* DayTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346DD562527960E00ACC15F /* DayTheme.swift */; };
 		3346DD5A2527961E00ACC15F /* NightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346DD592527961E00ACC15F /* NightTheme.swift */; };
@@ -65,7 +65,7 @@
 		333E5186254402A600648A8C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		333E5189254409D400648A8C /* ObjectsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsExtensions.swift; sourceTree = "<group>"; };
 		3343FA92251DC14900755C6A /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
-		3346DD4E2527951000ACC15F /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
+		334664B7255C37C700D11F14 /* ThemesControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesControllerModel.swift; sourceTree = "<group>"; };
 		3346DD52252795F100ACC15F /* ClassicTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicTheme.swift; sourceTree = "<group>"; };
 		3346DD562527960E00ACC15F /* DayTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTheme.swift; sourceTree = "<group>"; };
 		3346DD592527961E00ACC15F /* NightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightTheme.swift; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 		3349B53C255A8B6100A17FF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3346DD4E2527951000ACC15F /* ThemesPickerDelegate.swift */,
+				334664B7255C37C700D11F14 /* ThemesControllerModel.swift */,
 				33FD9775252703B000C7D2C5 /* Theme */,
 			);
 			path = Model;
@@ -599,6 +599,7 @@
 				336C23BA253978CA00C592DD /* FirebaseService.swift in Sources */,
 				3346DD5A2527961E00ACC15F /* NightTheme.swift in Sources */,
 				3347A3C12521D75F009EA76A /* ConversationViewCell.swift in Sources */,
+				334664B8255C37C700D11F14 /* ThemesControllerModel.swift in Sources */,
 				3305A9932555706200DD07F9 /* ServicesAssembly.swift in Sources */,
 				3305A99025556F9400DD07F9 /* PresentationAssembly.swift in Sources */,
 				3354EEBD251D298600C3CF52 /* ConversationsListCell.swift in Sources */,
@@ -608,7 +609,6 @@
 				3346DD572527960E00ACC15F /* DayTheme.swift in Sources */,
 				334DC88A255BC87C007D56FE /* FileManager.swift in Sources */,
 				336932272533073300BE7B56 /* ProfileInfo.swift in Sources */,
-				3346DD4F2527951000ACC15F /* ThemesPickerDelegate.swift in Sources */,
 				3346DD5D2527963700ACC15F /* ThemeModel.swift in Sources */,
 				336CB12A25357DC00005EECF /* IDataFileService.swift in Sources */,
 				33FD976C2526F4B800C7D2C5 /* ThemesViewController.swift in Sources */,

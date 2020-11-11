@@ -14,6 +14,7 @@ protocol IServicesAssembly {
     var gcdService: IDataFileService { get }
     var operationService: IDataFileService { get }
     var coreDataService: ICoreDataService { get }
+    var themeSaver: IThemeFileService { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -28,6 +29,7 @@ class ServicesAssembly: IServicesAssembly {
     
     lazy var gcdService: IDataFileService = GCDDataManager(fileCore: coreAssembly.fileManagerCore)
     lazy var operationService: IDataFileService = OperationDataManager(fileCore: coreAssembly.fileManagerCore)
+    lazy var themeSaver: IThemeFileService = GCDDataManager(fileCore: coreAssembly.fileManagerCore)
     
     lazy var firebaseParseService: IFirebaseParserService = FirebaseParserService(coreDataService: coreDataService)
     

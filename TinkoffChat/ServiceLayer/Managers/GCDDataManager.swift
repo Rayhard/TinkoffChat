@@ -8,7 +8,11 @@
 
 import UIKit
 
-class GCDDataManager: IDataFileService {
+protocol IThemeFileService {
+    func saveTheme(_ theme: String)
+}
+
+class GCDDataManager: IDataFileService, IThemeFileService {
     private let saveQueue = DispatchQueue(label: "GCDDataManager_Save", qos: .default, attributes: .concurrent)
     private let loadQueue = DispatchQueue(label: "GCDDataManager_Load", qos: .userInitiated, attributes: .concurrent)
     

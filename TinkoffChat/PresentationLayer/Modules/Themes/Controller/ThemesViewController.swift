@@ -22,7 +22,7 @@ class ThemesViewController: UIViewController {
     
     weak var delegate: ThemesPickerDelegate?
     var setTheme: ((ThemeModel) -> Void)?
-//    let dataManager: GCDDataManager = GCDDataManager()
+    var model: IThemesControllerModel?
     
     @IBAction func setThemeAction(_ sender: UIButton) {
         switch sender {
@@ -75,7 +75,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(ClassicTheme())
         saveTheme(.classic)
         
-//        dataManager.saveTheme("classic")
+        model?.saveTheme(name: "classic")
         
         setupClassicView(border: 3, color: .systemBlue)
         setupDayView(border: 1, color: .gray)
@@ -87,7 +87,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(DayTheme())
         saveTheme(.day)
         
-//        dataManager.saveTheme("day")
+        model?.saveTheme(name: "day")
         
         setupDayView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
@@ -99,7 +99,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(NightTheme())
         saveTheme(.night)
         
-//        dataManager.saveTheme("night")
+        model?.saveTheme(name: "night")
         
         setupNightView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
