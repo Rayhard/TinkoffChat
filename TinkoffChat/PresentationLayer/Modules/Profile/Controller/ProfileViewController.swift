@@ -23,7 +23,18 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var headerTitle: UILabel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
-    var model: IProfileModel?
+    let presentationAssembly: IPresentationAssembly
+    let model: IProfileModel
+    
+    init(model: IProfileModel, presentationAssembly: IPresentationAssembly) {
+        self.model = model
+        self.presentationAssembly = presentationAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBAction func editPhotoButtonAction(_ sender: Any) {
         showActionSheet()
@@ -39,13 +50,13 @@ class ProfileViewController: UIViewController {
         activityIndicator?.isHidden = false
         saveGCDButton?.isEnabled = false
         saveOperationButton?.isEnabled = false
-        model?.saveOperation(profile: newProfileInfo)
+        model.saveOperation(profile: newProfileInfo)
     }
     @IBAction func saveGCDAction(_ sender: Any) {
         activityIndicator?.isHidden = false
         saveGCDButton?.isEnabled = false
         saveOperationButton?.isEnabled = false
-        model?.saveGCD(profile: newProfileInfo)
+        model.saveGCD(profile: newProfileInfo)
     }
     
     var newProfileInfo: ProfileInfo = ProfileInfo()
@@ -128,10 +139,16 @@ class ProfileViewController: UIViewController {
             self.checkCameraPermission()
             
         }
+        let imagePicker = UIAlertAction(title: "Загрузить", style: .default) { _ in
+            let vc = self.presentationAssembly.imagePickerViewController()
+            self.present(vc, animated: true, completion: nil)
+        }
+        
         let cancel = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
         
         optionMenu.addAction(gallery)
         optionMenu.addAction(photoCam)
+        optionMenu.addAction(imagePicker)
         optionMenu.addAction(cancel)
         
         //Удаление предупреждения из консоли, являющимся багом Apple
@@ -180,11 +197,11 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadProfileData() {
-        let profileInfo = model?.loadGCD()
-        nameTextField?.text = profileInfo?.name
+        let profileInfo = model.loadGCD()
+        nameTextField?.text = profileInfo.name
         nameSymbolsLabel?.text = UserProfile.shared.symbols
-        descriptionTextView?.text = profileInfo?.description
-        profileImageView?.image = profileInfo?.photo
+        descriptionTextView?.text = profileInfo.description
+        profileImageView?.image = profileInfo.photo
     }
     
 }

@@ -15,13 +15,22 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var inputViewHight: NSLayoutConstraint?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
-    var model: IConversModel?
+    let model: IConversModel
+    
+    init(model: IConversModel) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBOutlet weak var sendMessageButton: UIButton?
     @IBAction func sendMessageAction(_ sender: Any) {
         guard let message = messageTextView?.text,
               let id = channel?.identifier else { return }
-        model?.sendMessage(id: id, text: message)
+        model.sendMessage(id: id, text: message)
         
         messageTextView?.text = ""
     }
@@ -42,7 +51,7 @@ class ConversationViewController: UIViewController {
         fetchRequest.predicate = predicate
         fetchRequest.fetchBatchSize = 20
         
-        guard let context = model?.context() else { return NSFetchedResultsController() }
+        let context = model.context()
         
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -97,7 +106,7 @@ class ConversationViewController: UIViewController {
         }
         
         guard let id = channel?.identifier else { return }
-        model?.fetchMessages(id: id)
+        model.fetchMessages(id: id)
     }
     
     // MARK: Theme

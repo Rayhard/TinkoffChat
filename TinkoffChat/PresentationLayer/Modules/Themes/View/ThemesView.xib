@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ThemesViewController" customModule="TinkoffChat" customModuleProvider="target">
+            <connections>
+                <outlet property="classicButton" destination="mvp-AB-r8m" id="dem-fC-qon"/>
+                <outlet property="classicMessageView" destination="7Hg-az-Jdq" id="K7c-Mp-RPs"/>
+                <outlet property="dayButton" destination="vwV-kC-IKX" id="Jty-5A-J1Y"/>
+                <outlet property="dayMessageView" destination="q6u-4b-mRB" id="Hhd-KA-Bgi"/>
+                <outlet property="nightButton" destination="i1b-De-bfU" id="HjJ-2L-bzk"/>
+                <outlet property="nightMessageView" destination="ABY-xh-jHc" id="iZ7-j8-bew"/>
+                <outlet property="view" destination="ClN-Jc-07b" id="zjE-Vr-635"/>
+                <outletCollection property="bubbleViews" destination="jdf-IL-HIW" collectionClass="NSMutableArray" id="2m8-bp-ZgB"/>
+                <outletCollection property="bubbleViews" destination="zps-xR-a1c" collectionClass="NSMutableArray" id="1ZS-vO-DKQ"/>
+                <outletCollection property="bubbleViews" destination="GgD-vS-1ZJ" collectionClass="NSMutableArray" id="LC5-m1-t9O"/>
+                <outletCollection property="bubbleViews" destination="0IB-la-nts" collectionClass="NSMutableArray" id="Zbk-50-Ync"/>
+                <outletCollection property="bubbleViews" destination="g4g-kE-D35" collectionClass="NSMutableArray" id="PEZ-Uo-xcn"/>
+                <outletCollection property="bubbleViews" destination="eb6-a3-UJh" collectionClass="NSMutableArray" id="NTS-Om-nnQ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ClN-Jc-07b">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="c6a-YR-q01">
+                    <rect key="frame" x="37" y="162" width="340" height="582"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhe-1I-ISc">
+                            <rect key="frame" x="0.0" y="0.0" width="340" height="194"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Hg-az-Jdq">
+                                    <rect key="frame" x="4" y="8" width="332" height="101"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zps-xR-a1c">
+                                            <rect key="frame" x="8" y="8" width="149.5" height="55.5"/>
+                                            <color key="backgroundColor" name="ClassicInputBubble"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdf-IL-HIW">
+                                            <rect key="frame" x="174.5" y="37.5" width="149.5" height="55.5"/>
+                                            <color key="backgroundColor" name="ClassicOutputBubble"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="jdf-IL-HIW" secondAttribute="trailing" constant="8" id="4dT-PJ-edH"/>
+                                        <constraint firstItem="jdf-IL-HIW" firstAttribute="height" secondItem="7Hg-az-Jdq" secondAttribute="height" multiplier="0.55" id="EFa-ho-pk0"/>
+                                        <constraint firstItem="zps-xR-a1c" firstAttribute="leading" secondItem="7Hg-az-Jdq" secondAttribute="leading" constant="8" id="Jdz-E1-yoC"/>
+                                        <constraint firstItem="jdf-IL-HIW" firstAttribute="width" secondItem="7Hg-az-Jdq" secondAttribute="width" multiplier="0.45" id="TMD-RR-XjM"/>
+                                        <constraint firstItem="zps-xR-a1c" firstAttribute="top" secondItem="7Hg-az-Jdq" secondAttribute="top" constant="8" id="dYd-aq-7EQ"/>
+                                        <constraint firstAttribute="bottom" secondItem="jdf-IL-HIW" secondAttribute="bottom" constant="8" id="frD-Ya-zTv"/>
+                                        <constraint firstItem="zps-xR-a1c" firstAttribute="height" secondItem="7Hg-az-Jdq" secondAttribute="height" multiplier="0.55" id="sFx-74-8K0"/>
+                                        <constraint firstItem="zps-xR-a1c" firstAttribute="width" secondItem="7Hg-az-Jdq" secondAttribute="width" multiplier="0.45" id="xC0-aA-gsP"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvp-AB-r8m">
+                                    <rect key="frame" x="30" y="119" width="280" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                    <state key="normal" title="Classic"/>
+                                    <connections>
+                                        <action selector="setThemeAction:" destination="-1" eventType="touchUpInside" id="Uct-oO-uwK"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="7Hg-az-Jdq" firstAttribute="top" secondItem="yhe-1I-ISc" secondAttribute="top" constant="8" id="C93-Nd-SxK"/>
+                                <constraint firstAttribute="trailing" secondItem="7Hg-az-Jdq" secondAttribute="trailing" constant="4" id="TB9-bp-pco"/>
+                                <constraint firstItem="mvp-AB-r8m" firstAttribute="top" secondItem="7Hg-az-Jdq" secondAttribute="bottom" constant="10" id="VbO-GC-hJ2"/>
+                                <constraint firstItem="mvp-AB-r8m" firstAttribute="leading" secondItem="yhe-1I-ISc" secondAttribute="leading" constant="30" id="WGa-Zn-Njr"/>
+                                <constraint firstItem="7Hg-az-Jdq" firstAttribute="leading" secondItem="yhe-1I-ISc" secondAttribute="leading" constant="4" id="ebk-7y-xxs"/>
+                                <constraint firstAttribute="bottom" secondItem="mvp-AB-r8m" secondAttribute="bottom" constant="40" id="wDh-ZN-Aa7"/>
+                                <constraint firstAttribute="trailing" secondItem="mvp-AB-r8m" secondAttribute="trailing" constant="30" id="xeX-B8-zIL"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxj-JD-KJb">
+                            <rect key="frame" x="0.0" y="194" width="340" height="194"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q6u-4b-mRB">
+                                    <rect key="frame" x="4" y="8" width="332" height="101"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0IB-la-nts">
+                                            <rect key="frame" x="8" y="8" width="149.5" height="55.5"/>
+                                            <color key="backgroundColor" name="DayInputBubble"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgD-vS-1ZJ">
+                                            <rect key="frame" x="174.5" y="37" width="149.5" height="55.5"/>
+                                            <color key="backgroundColor" name="DayOutputBubble"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="0IB-la-nts" firstAttribute="leading" secondItem="q6u-4b-mRB" secondAttribute="leading" constant="8" id="6Gv-5u-LIP"/>
+                                        <constraint firstItem="0IB-la-nts" firstAttribute="height" secondItem="q6u-4b-mRB" secondAttribute="height" multiplier="0.55" id="CG1-fX-wUB"/>
+                                        <constraint firstItem="0IB-la-nts" firstAttribute="top" secondItem="q6u-4b-mRB" secondAttribute="top" constant="8" id="aXX-h5-a8t"/>
+                                        <constraint firstAttribute="trailing" secondItem="GgD-vS-1ZJ" secondAttribute="trailing" constant="8" id="an3-rl-7jB"/>
+                                        <constraint firstItem="0IB-la-nts" firstAttribute="width" secondItem="q6u-4b-mRB" secondAttribute="width" multiplier="0.45" id="eou-xZ-ENe"/>
+                                        <constraint firstAttribute="bottom" secondItem="GgD-vS-1ZJ" secondAttribute="bottom" constant="8.5" id="f67-d3-3mW"/>
+                                        <constraint firstItem="GgD-vS-1ZJ" firstAttribute="width" secondItem="q6u-4b-mRB" secondAttribute="width" multiplier="0.45" id="iX5-W5-nfR"/>
+                                        <constraint firstItem="GgD-vS-1ZJ" firstAttribute="height" secondItem="q6u-4b-mRB" secondAttribute="height" multiplier="0.55" id="mxg-Gu-Not"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwV-kC-IKX">
+                                    <rect key="frame" x="30" y="119" width="280" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                    <state key="normal" title="Day"/>
+                                    <connections>
+                                        <action selector="setThemeAction:" destination="-1" eventType="touchUpInside" id="frB-jo-yHD"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="vwV-kC-IKX" secondAttribute="trailing" constant="30" id="9CQ-w4-3TD"/>
+                                <constraint firstItem="vwV-kC-IKX" firstAttribute="top" secondItem="q6u-4b-mRB" secondAttribute="bottom" constant="10" id="BMY-aL-tAi"/>
+                                <constraint firstItem="q6u-4b-mRB" firstAttribute="leading" secondItem="Rxj-JD-KJb" secondAttribute="leading" constant="4" id="BQK-Af-tqq"/>
+                                <constraint firstAttribute="bottom" secondItem="vwV-kC-IKX" secondAttribute="bottom" constant="40" id="H9k-fk-WbM"/>
+                                <constraint firstItem="vwV-kC-IKX" firstAttribute="leading" secondItem="Rxj-JD-KJb" secondAttribute="leading" constant="30" id="M6k-zZ-pcg"/>
+                                <constraint firstAttribute="trailing" secondItem="q6u-4b-mRB" secondAttribute="trailing" constant="4" id="RfX-vc-8VW"/>
+                                <constraint firstItem="q6u-4b-mRB" firstAttribute="top" secondItem="Rxj-JD-KJb" secondAttribute="top" constant="8" id="rey-ye-xbu"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PgI-8f-6oT">
+                            <rect key="frame" x="0.0" y="388" width="340" height="194"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABY-xh-jHc">
+                                    <rect key="frame" x="4" y="8" width="332" height="101"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eb6-a3-UJh">
+                                            <rect key="frame" x="8" y="8" width="149.5" height="55.5"/>
+                                            <color key="backgroundColor" name="NightInputBubble"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4g-kE-D35">
+                                            <rect key="frame" x="174.5" y="37.5" width="149.5" height="55.5"/>
+                                            <color key="backgroundColor" name="NightOutputBubble"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="labelColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="g4g-kE-D35" secondAttribute="trailing" constant="8" id="B6o-Ce-9OO"/>
+                                        <constraint firstItem="g4g-kE-D35" firstAttribute="width" secondItem="ABY-xh-jHc" secondAttribute="width" multiplier="0.45" id="If4-39-fwU"/>
+                                        <constraint firstItem="g4g-kE-D35" firstAttribute="height" secondItem="ABY-xh-jHc" secondAttribute="height" multiplier="0.55" id="SUK-zQ-CP3"/>
+                                        <constraint firstItem="eb6-a3-UJh" firstAttribute="top" secondItem="ABY-xh-jHc" secondAttribute="top" constant="8" id="bDX-Qj-UR7"/>
+                                        <constraint firstItem="eb6-a3-UJh" firstAttribute="leading" secondItem="ABY-xh-jHc" secondAttribute="leading" constant="8" id="nJK-bu-Gpb"/>
+                                        <constraint firstItem="eb6-a3-UJh" firstAttribute="height" secondItem="ABY-xh-jHc" secondAttribute="height" multiplier="0.55" id="r2u-j8-Y7b"/>
+                                        <constraint firstItem="eb6-a3-UJh" firstAttribute="width" secondItem="ABY-xh-jHc" secondAttribute="width" multiplier="0.45" id="wl9-pF-aoR"/>
+                                        <constraint firstAttribute="bottom" secondItem="g4g-kE-D35" secondAttribute="bottom" constant="8" id="xgq-3B-MFy"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1b-De-bfU">
+                                    <rect key="frame" x="30" y="119" width="280" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                    <state key="normal" title="Night"/>
+                                    <connections>
+                                        <action selector="setThemeAction:" destination="-1" eventType="touchUpInside" id="BP2-XH-33e"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="ABY-xh-jHc" firstAttribute="top" secondItem="PgI-8f-6oT" secondAttribute="top" constant="8" id="0ER-kc-jzz"/>
+                                <constraint firstAttribute="trailing" secondItem="ABY-xh-jHc" secondAttribute="trailing" constant="4" id="agd-AI-dJP"/>
+                                <constraint firstAttribute="bottom" secondItem="i1b-De-bfU" secondAttribute="bottom" constant="40" id="asI-w6-bxc"/>
+                                <constraint firstAttribute="trailing" secondItem="i1b-De-bfU" secondAttribute="trailing" constant="30" id="doU-Ue-TAG"/>
+                                <constraint firstItem="i1b-De-bfU" firstAttribute="top" secondItem="ABY-xh-jHc" secondAttribute="bottom" constant="10" id="npJ-iO-KoU"/>
+                                <constraint firstItem="i1b-De-bfU" firstAttribute="leading" secondItem="PgI-8f-6oT" secondAttribute="leading" constant="30" id="oFx-xR-Yqb"/>
+                                <constraint firstItem="ABY-xh-jHc" firstAttribute="leading" secondItem="PgI-8f-6oT" secondAttribute="leading" constant="4" id="rJX-Hx-UDS"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="meq-RV-09m"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="c6a-YR-q01" firstAttribute="leading" secondItem="meq-RV-09m" secondAttribute="leading" constant="37" id="R0K-4H-hW5"/>
+                <constraint firstItem="c6a-YR-q01" firstAttribute="centerY" secondItem="meq-RV-09m" secondAttribute="centerY" id="YKM-o7-T2i"/>
+                <constraint firstItem="c6a-YR-q01" firstAttribute="height" secondItem="ClN-Jc-07b" secondAttribute="height" multiplier="0.65" id="g5d-gX-qGd"/>
+                <constraint firstItem="meq-RV-09m" firstAttribute="trailing" secondItem="c6a-YR-q01" secondAttribute="trailing" constant="37" id="wcM-Ua-2Zd"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="146"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="ClassicInputBubble">
+            <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ClassicOutputBubble">
+            <color red="0.86299997568130493" green="0.96899998188018799" blue="0.77300000190734863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="DayInputBubble">
+            <color red="0.91764705882352937" green="0.92156862745098034" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="DayOutputBubble">
+            <color red="0.2627450980392157" green="0.53725490196078429" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NightInputBubble">
+            <color red="0.1803921568627451" green="0.1803921568627451" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NightOutputBubble">
+            <color red="0.36078431372549019" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
