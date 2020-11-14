@@ -27,8 +27,8 @@ class FirebaseParserService: IFirebaseParserService {
         let channel = diff.document.data()
         
         guard let name = channel["name"] as? String,
-              let lastMessage = channel["lastMessage"] as? String ?? "",
-              let lastActivity = channel["lastActivity"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0)),
+              let lastMessage = channel["lastMessage"] as? String,
+              let lastActivity = channel["lastActivity"] as? Timestamp,
               name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
         else { return }
         
@@ -42,8 +42,8 @@ class FirebaseParserService: IFirebaseParserService {
         let channel = diff.document.data()
         
         guard let name = channel["name"] as? String,
-              let lastMessage = channel["lastMessage"] as? String ?? "",
-              let lastActivity = channel["lastActivity"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0)),
+              let lastMessage = channel["lastMessage"] as? String,
+              let lastActivity = channel["lastActivity"] as? Timestamp,
               name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
         else { return }
         

@@ -32,7 +32,7 @@ class FileManagerCore: IFileManagerCore {
     
     func saveTextFile(file: FileUrls, content: String) {
         do {
-            guard let url = self.getFileUrl(file: .nameFile) else { return }
+            guard let url = self.getFileUrl(file: file) else { return }
             try content.write(to: url, atomically: false, encoding: .utf8)
         } catch {
             print(error)
@@ -41,7 +41,7 @@ class FileManagerCore: IFileManagerCore {
     
     func saveImageFile(file: FileUrls, content: Data) {
         do {
-            guard let url = self.getFileUrl(file: .nameFile) else { return }
+            guard let url = self.getFileUrl(file: file) else { return }
             try content.write(to: url)
         } catch {
             print(error)
