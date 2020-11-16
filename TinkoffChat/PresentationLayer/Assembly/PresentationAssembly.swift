@@ -10,10 +10,6 @@ import UIKit
 
 private enum Storyboard: String {
     case ConversationsListViewController
-    case ConversationViewController
-    case ProfileViewController
-    case ThemesViewController
-    case MainNavigationController
 }
 
 protocol IPresentationAssembly {
@@ -58,6 +54,7 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationViewController() -> ConversationViewController {
         let model = ConversModel(firebaseService: serviceAssembly.firebaseService,
                                          coreDataService: serviceAssembly.coreDataService)
+        
         let conversationsVC = ConversationViewController(model: model)
         model.delegate = conversationsVC
         
@@ -82,8 +79,9 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func imagePickerViewController() -> ImagePickerViewController {
-        let model = ImagePickerModel()
+        let model = ImagePickerModel(networkService: serviceAssembly.networkService)
         let imagePickerVC = ImagePickerViewController(model: model)
+        model.delegate = imagePickerVC
 
         return imagePickerVC
     }

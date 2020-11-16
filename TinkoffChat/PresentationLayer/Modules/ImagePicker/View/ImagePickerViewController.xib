@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImagePickerViewController" customModule="TinkoffChat" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="sf6-5Q-RK5" id="OF6-XD-LOu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sf6-5Q-RK5">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="114" width="414" height="748"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kuv-AL-Xbf">
                         <size key="itemSize" width="128" height="128"/>
@@ -29,13 +30,35 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LY7-m8-jts">
+                    <rect key="frame" x="0.0" y="44" width="414" height="70"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXA-Tm-jh7">
+                            <rect key="frame" x="361" y="18.5" width="45" height="33"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <state key="normal" title="Close"/>
+                            <connections>
+                                <action selector="closeButtonAction:" destination="-1" eventType="touchUpInside" id="ahn-VT-ZrZ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="ZXA-Tm-jh7" firstAttribute="centerY" secondItem="LY7-m8-jts" secondAttribute="centerY" id="WrA-TV-KxZ"/>
+                        <constraint firstAttribute="trailing" secondItem="ZXA-Tm-jh7" secondAttribute="trailing" constant="8" id="bJW-Ka-kg4"/>
+                        <constraint firstAttribute="height" constant="70" id="fpJ-a4-6Ep"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="sf6-5Q-RK5" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Bkz-s7-XhQ"/>
-                <constraint firstItem="sf6-5Q-RK5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="T52-Is-Pcc"/>
+                <constraint firstItem="LY7-m8-jts" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Mt2-UA-a6b"/>
+                <constraint firstItem="sf6-5Q-RK5" firstAttribute="top" secondItem="LY7-m8-jts" secondAttribute="bottom" id="PSH-hH-g03"/>
+                <constraint firstItem="LY7-m8-jts" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="QQj-UY-9LT"/>
                 <constraint firstItem="sf6-5Q-RK5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ddk-mx-iBD"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LY7-m8-jts" secondAttribute="trailing" id="lbH-wu-4f5"/>
                 <constraint firstItem="sf6-5Q-RK5" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="wlA-Ik-cIu"/>
             </constraints>
             <point key="canvasLocation" x="-152.17391304347828" y="145.98214285714286"/>

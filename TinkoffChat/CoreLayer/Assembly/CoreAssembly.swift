@@ -11,9 +11,11 @@ import Foundation
 protocol ICoreAssembly {
     var coreDataStack: ICoreDataStack { get }
     var fileManagerCore: IFileManagerCore { get }
+    var requestSender: IRequestSender { get }
 }
 
 class CoreAssembly: ICoreAssembly {
-    var coreDataStack: ICoreDataStack = CoreDataStack()
-    var fileManagerCore: IFileManagerCore = FileManagerCore()
+    lazy var coreDataStack: ICoreDataStack = CoreDataStack()
+    lazy var fileManagerCore: IFileManagerCore = FileManagerCore()
+    lazy var requestSender: IRequestSender = RequestSender()
 }
