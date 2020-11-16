@@ -16,11 +16,12 @@ class RequestSender: IRequestSender {
         return session
     }
     
-    func send<Parser>(requestConfig config: RequestConfig<Parser>,
+    func send<Parser>(pageNumber: Int?,
+                      requestConfig config: RequestConfig<Parser>,
                       completionHandler: @escaping (Result<Parser.Model>) -> Void) where Parser: IParser {
         
         let session = getSession()
-        guard let urlRequest = config.request.urlRequest else {
+        guard let urlRequest = config.request.urlRequest(pageNumber: pageNumber) else {
             completionHandler(Result.error("url string can't be parsed to URL"))
             return
         }

@@ -31,17 +31,19 @@ class ImagePickerModel: IImagePickerModel {
     }
     
     weak var delegate: ImagePickerModelDelegate?
+    private var pageNumber = 0
     var data: [Images] = []
     
     func fetchImagesURL() {
-        networkService.getImageUrls { images, error in
+        pageNumber += 1
+        networkService.getImageUrls(pageNumber: pageNumber) { images, error in
             if let error = error {
                 print(error)
                 return
             }
             
             guard let images = images else { return }
-            self.data = images
+            self.data.append(contentsOf: images)
             
             self.delegate?.loadComplited()
         }

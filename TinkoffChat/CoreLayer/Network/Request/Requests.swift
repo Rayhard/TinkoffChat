@@ -10,11 +10,16 @@ import Foundation
 
 class ImageURLRequest: IRequest {
     var urlRequest: URLRequest? {
-        guard let url = urlConstructor() else { return nil }
+        guard let url = urlConstructor(pageNumber: 1) else { return nil }
+        return URLRequest(url: url)
+    }
+    func urlRequest(pageNumber: Int?) -> URLRequest? {
+        guard let pageNumber = pageNumber,
+              let url = urlConstructor(pageNumber: pageNumber) else { return nil }
         return URLRequest(url: url)
     }
     
-    private func urlConstructor() -> URL? {
+    private func urlConstructor(pageNumber: Int) -> URL? {
         var urlConstructor = URLComponents()
         
         urlConstructor.scheme = "https"
@@ -24,7 +29,9 @@ class ImageURLRequest: IRequest {
         urlConstructor.queryItems = [
             URLQueryItem(name: "key", value: "19115888-415eac269de104437b7592c97"),
             URLQueryItem(name: "q", value: "yellow+flowers"),
-            URLQueryItem(name: "image_type", value: "photo")
+            URLQueryItem(name: "image_type", value: "photo"),
+            URLQueryItem(name: "page", value: "\(pageNumber)"),
+            URLQueryItem(name: "per_page", value: "30")
         ]
         
         return urlConstructor.url
@@ -35,6 +42,10 @@ class ImageRequest: IRequest {
     var url: String
     
     var urlRequest: URLRequest? {
+        guard let url = URL(string: url) else { return nil }
+        return URLRequest(url: url)
+    }
+    func urlRequest(pageNumber: Int?) -> URLRequest? {
         guard let url = URL(string: url) else { return nil }
         return URLRequest(url: url)
     }

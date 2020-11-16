@@ -9,7 +9,7 @@
 import UIKit
 
 protocol INetworkService {
-    func getImageUrls(completionHandler: @escaping ([Images]?, String?) -> Void)
+    func getImageUrls(pageNumber: Int?, completionHandler: @escaping ([Images]?, String?) -> Void)
     func getImage(imageUrl: String, completionHandler: @escaping (UIImage?, String?) -> Void)
 }
 
@@ -20,10 +20,10 @@ class NetworkService: INetworkService {
         self.requestSender = requestSender
     }
     
-    func getImageUrls(completionHandler: @escaping ([Images]?, String?) -> Void) {
+    func getImageUrls(pageNumber: Int?, completionHandler: @escaping ([Images]?, String?) -> Void) {
         let requestConfig = RequestsFactory.Requests.newImageURLConfig()
         
-        loadImageURL(requestConfig: requestConfig, completionHandler: completionHandler)
+        loadImageURL(pageNumber: pageNumber, requestConfig: requestConfig, completionHandler: completionHandler)
     }
     
     func getImage(imageUrl: String, completionHandler: @escaping (UIImage?, String?) -> Void) {
@@ -32,9 +32,10 @@ class NetworkService: INetworkService {
         loadImage(requestConfig: requestConfig, completionHandler: completionHandler)
     }
     
-    private func loadImageURL(requestConfig: RequestConfig<ImageURLParser>,
+    private func loadImageURL(pageNumber: Int?,
+                              requestConfig: RequestConfig<ImageURLParser>,
                               completionHandler: @escaping ([Images]?, String?) -> Void) {
-        requestSender.send(requestConfig: requestConfig) { (result: Result<[Images]>) in
+        requestSender.send(pageNumber: pageNumber, requestConfig: requestConfig) { (result: Result<[Images]>) in
             
             switch result {
             case .success(let apps):
@@ -47,7 +48,7 @@ class NetworkService: INetworkService {
     
     private func loadImage(requestConfig: RequestConfig<ImageParser>,
                            completionHandler: @escaping (UIImage?, String?) -> Void) {
-        requestSender.send(requestConfig: requestConfig) { (result: Result<UIImage>) in
+        requestSender.send(pageNumber: nil, requestConfig: requestConfig) { (result: Result<UIImage>) in
             
             switch result {
             case .success(let apps):

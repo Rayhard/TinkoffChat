@@ -75,6 +75,12 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
         delegate?.setImage(image: image)
         closeView()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == model.data.count - 7 {
+            model.fetchImagesURL()
+        }
+    }
 }
 
 extension ImagePickerViewController: UICollectionViewDelegateFlowLayout {

@@ -23,7 +23,8 @@ enum Result<Model> {
 //}
 
 protocol IRequestSender {
-    func send<Parser>(requestConfig: RequestConfig<Parser>,
+    func send<Parser>(pageNumber: Int?,
+                      requestConfig: RequestConfig<Parser>,
                       completionHandler: @escaping(Result<Parser.Model>) -> Void)
 }
 
