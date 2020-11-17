@@ -13,22 +13,13 @@ struct RequestConfig<Parser> where Parser: IParser {
     let parser: Parser
 }
 
-enum Result<Model> {
-    case success(Model)
-    case error(String)
+enum ApiError: Error {
+    case stringCantBeParsed, dataCantBeParsed
+    case taskError
 }
-
-//enum ApiError: Error {
-//    case stringCantBeParsed
-//}
 
 protocol IRequestSender {
     func send<Parser>(pageNumber: Int?,
                       requestConfig: RequestConfig<Parser>,
-                      completionHandler: @escaping(Result<Parser.Model>) -> Void)
+                      completionHandler: @escaping(Result<Parser.Model, ApiError>) -> Void)
 }
-
-//protocol IRequestSender {
-//    func send<Parser>(requestConfig: RequestConfig<Parser>,
-//                      completionHandler: @escaping(Result<Parser.Model, ApiError>) -> Void)
-//}

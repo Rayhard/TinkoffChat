@@ -35,26 +35,26 @@ class NetworkService: INetworkService {
     private func loadImageURL(pageNumber: Int?,
                               requestConfig: RequestConfig<ImageURLParser>,
                               completionHandler: @escaping ([Images]?, String?) -> Void) {
-        requestSender.send(pageNumber: pageNumber, requestConfig: requestConfig) { (result: Result<[Images]>) in
+        requestSender.send(pageNumber: pageNumber, requestConfig: requestConfig) { (result: Result<[Images], ApiError>) in
             
             switch result {
             case .success(let apps):
                 completionHandler(apps, nil)
-            case .error(let error):
-                completionHandler(nil, error)
+            case .failure(let error):
+                completionHandler(nil, error.localizedDescription)
             }
         }
     }
     
     private func loadImage(requestConfig: RequestConfig<ImageParser>,
                            completionHandler: @escaping (UIImage?, String?) -> Void) {
-        requestSender.send(pageNumber: nil, requestConfig: requestConfig) { (result: Result<UIImage>) in
+        requestSender.send(pageNumber: nil, requestConfig: requestConfig) { (result: Result<UIImage, ApiError>) in
             
             switch result {
             case .success(let apps):
                 completionHandler(apps, nil)
-            case .error(let error):
-                completionHandler(nil, error)
+            case .failure(let error):
+                completionHandler(nil, error.localizedDescription)
             }
         }
     }

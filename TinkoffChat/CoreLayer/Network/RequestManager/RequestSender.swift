@@ -18,23 +18,24 @@ class RequestSender: IRequestSender {
     
     func send<Parser>(pageNumber: Int?,
                       requestConfig config: RequestConfig<Parser>,
-                      completionHandler: @escaping (Result<Parser.Model>) -> Void) where Parser: IParser {
+                      completionHandler: @escaping (Result<Parser.Model, ApiError>) -> Void) where Parser: IParser {
         
         let session = getSession()
         guard let urlRequest = config.request.urlRequest(pageNumber: pageNumber) else {
-            completionHandler(Result.error("url string can't be parsed to URL"))
+            completionHandler(.failure(.stringCantBeParsed))
             return
         }
         
         let task = session.dataTask(with: urlRequest) { data, _, error in
             if let error = error {
-                completionHandler(Result.error(error.localizedDescription))
+                print(error.localizedDescription)
+                completionHandler(.failure(.taskError))
                 return
             }
             
             guard let data = data,
                   let parsedModel: Parser.Model = config.parser.parse(data: data) else {
-                completionHandler(Result.error("received data can't be parsed"))
+                completionHandler(.failure(.dataCantBeParsed))
                 return
             }
 

@@ -10,7 +10,6 @@ import UIKit
 
 struct RequestsFactory {
     struct Requests {
-        
         static func newImageURLConfig() -> RequestConfig<ImageURLParser> {
             return RequestConfig<ImageURLParser>(request: ImageURLRequest(), parser: ImageURLParser())
         }
