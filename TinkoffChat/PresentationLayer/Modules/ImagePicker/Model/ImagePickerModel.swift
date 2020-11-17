@@ -25,9 +25,11 @@ protocol ImagePickerDelegate: class {
 
 class ImagePickerModel: IImagePickerModel {
     private let networkService: INetworkService
+    private let imageCacheService: IImageCacheService
     
-    init(networkService: INetworkService) {
+    init(networkService: INetworkService, imageCacheService: IImageCacheService) {
         self.networkService = networkService
+        self.imageCacheService = imageCacheService
     }
     
     weak var delegate: ImagePickerModelDelegate?
@@ -50,17 +52,22 @@ class ImagePickerModel: IImagePickerModel {
     }
     
     func fetchImage(imageUrl: String, completion: @escaping (UIImage?) -> Void) {
-        var fetchImage = UIImage()
-        networkService.getImage(imageUrl: imageUrl) { image, error in
-            if let error = error {
-                print(error)
-                return
+        imageCacheService.checkCache(url: imageUrl) { cachedImage in
+            if let imageCache = cachedImage {
+                completion(imageCache)
+            } else {
+                self.networkService.getImage(imageUrl: imageUrl) { loadingImage, error in
+                    if let error = error {
+                        print(error)
+                        return
+                    }
+                    
+                    guard let imageWeb = loadingImage else { return }
+                    self.imageCacheService.saveToCache(url: imageUrl, image: imageWeb)
+                    
+                    completion(imageWeb)
+                }
             }
-            
-            guard let image = image else { return }
-            fetchImage = image
-            
-            completion(fetchImage)
         }
     }
 }

@@ -9,14 +9,14 @@
 import Foundation
 
 class ImageURLRequest: IRequest {
-    var urlRequest: URLRequest? {
-        guard let url = urlConstructor(pageNumber: 1) else { return nil }
-        return URLRequest(url: url)
-    }
+//    var urlRequest: URLRequest? {
+//        guard let url = urlConstructor(pageNumber: 1) else { return nil }
+//        return URLRequest(url: url)
+//    }
     func urlRequest(pageNumber: Int?) -> URLRequest? {
         guard let pageNumber = pageNumber,
               let url = urlConstructor(pageNumber: pageNumber) else { return nil }
-        return URLRequest(url: url)
+        return URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad)
     }
     
     private func urlConstructor(pageNumber: Int) -> URL? {
@@ -41,13 +41,13 @@ class ImageURLRequest: IRequest {
 class ImageRequest: IRequest {
     var url: String
     
-    var urlRequest: URLRequest? {
-        guard let url = URL(string: url) else { return nil }
-        return URLRequest(url: url)
-    }
+//    var urlRequest: URLRequest? {
+//        guard let url = URL(string: url) else { return nil }
+//        return URLRequest(url: url)
+//    }
     func urlRequest(pageNumber: Int?) -> URLRequest? {
         guard let url = URL(string: url) else { return nil }
-        return URLRequest(url: url)
+        return URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad)
     }
     
     init(url: String) {

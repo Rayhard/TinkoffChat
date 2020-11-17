@@ -17,29 +17,26 @@
                 <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zxi-6D-ux8">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="zxi-6D-ux8">
                         <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                     </imageView>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="EGI-Kv-cb7">
-                        <rect key="frame" x="45" y="45" width="20" height="20"/>
-                    </activityIndicatorView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="EGI-Kv-cb7" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="5uQ-x0-zcv"/>
                 <constraint firstItem="zxi-6D-ux8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="9W4-Nu-3pF"/>
-                <constraint firstItem="EGI-Kv-cb7" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="LJu-nG-fGK"/>
                 <constraint firstItem="zxi-6D-ux8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ZOd-TF-WoQ"/>
                 <constraint firstAttribute="bottom" secondItem="zxi-6D-ux8" secondAttribute="bottom" id="jar-wo-D9f"/>
                 <constraint firstAttribute="trailing" secondItem="zxi-6D-ux8" secondAttribute="trailing" id="xx0-LE-Xcc"/>
             </constraints>
             <size key="customSize" width="109" height="110"/>
             <connections>
-                <outlet property="activityIndicator" destination="EGI-Kv-cb7" id="0kW-L7-n3j"/>
                 <outlet property="imageView" destination="zxi-6D-ux8" id="ltb-Uy-dK8"/>
             </connections>
             <point key="canvasLocation" x="242.75362318840581" y="148.66071428571428"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="placeholder" width="300" height="202"/>
+    </resources>
 </document>

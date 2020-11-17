@@ -16,6 +16,7 @@ protocol IServicesAssembly {
     var coreDataService: ICoreDataService { get }
     var themeSaver: IThemeFileService { get }
     var networkService: INetworkService { get }
+    var imageCacheService: IImageCacheService { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -37,5 +38,6 @@ class ServicesAssembly: IServicesAssembly {
     lazy var coreDataService: ICoreDataService = CoreDataManager(coreData: coreAssembly.coreDataStack)
     
     lazy var networkService: INetworkService = NetworkService(requestSender: coreAssembly.requestSender)
+    lazy var imageCacheService: IImageCacheService = ImageCacheService()
 
 }

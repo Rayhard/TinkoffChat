@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImagePickerViewController" customModule="TinkoffChat" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="pFw-Wj-Sb1" id="NKc-Zz-OxP"/>
                 <outlet property="collectionView" destination="sf6-5Q-RK5" id="OF6-XD-LOu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -41,12 +42,17 @@
                                 <action selector="closeButtonAction:" destination="-1" eventType="touchUpInside" id="ahn-VT-ZrZ"/>
                             </connections>
                         </button>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pFw-Wj-Sb1">
+                            <rect key="frame" x="197" y="25" width="20" height="20"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="pFw-Wj-Sb1" firstAttribute="centerX" secondItem="LY7-m8-jts" secondAttribute="centerX" id="P8S-PK-j7h"/>
                         <constraint firstItem="ZXA-Tm-jh7" firstAttribute="centerY" secondItem="LY7-m8-jts" secondAttribute="centerY" id="WrA-TV-KxZ"/>
                         <constraint firstAttribute="trailing" secondItem="ZXA-Tm-jh7" secondAttribute="trailing" constant="8" id="bJW-Ka-kg4"/>
                         <constraint firstAttribute="height" constant="70" id="fpJ-a4-6Ep"/>
+                        <constraint firstItem="pFw-Wj-Sb1" firstAttribute="centerY" secondItem="LY7-m8-jts" secondAttribute="centerY" id="jIf-px-W7E"/>
                     </constraints>
                 </view>
             </subviews>

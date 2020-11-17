@@ -11,15 +11,19 @@ import UIKit
 class ImagePickerCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView?
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+//        imageView?.image = UIImage(named: "placeholder")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+//        dataTask?.cancel()
+        imageView?.image = UIImage(named: "placeholder")
     }
 
     func configure(image: UIImage?) {
         imageView?.image = image
-        activityIndicator?.hidesWhenStopped = true
-        activityIndicator?.stopAnimating()
     }
 }

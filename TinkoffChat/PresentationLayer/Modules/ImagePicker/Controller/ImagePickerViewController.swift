@@ -21,6 +21,7 @@ class ImagePickerViewController: UIViewController {
     }
     
     @IBOutlet weak var collectionView: UICollectionView?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     @IBAction func closeButtonAction(_ sender: Any) {
         closeView()
     }
@@ -32,6 +33,9 @@ class ImagePickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
+        activityIndicator?.hidesWhenStopped = true
+        activityIndicator?.startAnimating()
+        
         DispatchQueue.global(qos: .background).async {
             self.model.fetchImagesURL()
         }
@@ -58,8 +62,10 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePickerCell", for: indexPath) as? ImagePickerCell else { return UICollectionViewCell() }
         
+        cell.configure(image: UIImage(named: "placeholder"))
+        
         DispatchQueue.global(qos: .background).async {
-            let imageURL = self.model.data[indexPath.row].previewURL
+            let imageURL = self.model.data[indexPath.row].webformatURL
             self.model.fetchImage(imageUrl: imageURL) { image in
                 DispatchQueue.main.async {
                     cell.configure(image: image)
@@ -106,6 +112,7 @@ extension ImagePickerViewController: ImagePickerModelDelegate {
     func loadComplited() {
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
+            self.activityIndicator?.stopAnimating()
         }
     }
     

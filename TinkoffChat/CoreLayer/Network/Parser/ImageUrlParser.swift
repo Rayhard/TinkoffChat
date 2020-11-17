@@ -13,8 +13,8 @@ struct ImagePickerJSON: Codable {
 }
 
 struct Images: Codable {
-//    let webformatURL: String
-    let previewURL: String
+    let webformatURL: String
+//    let previewURL: String
 }
 
 class ImageURLParser: IParser {

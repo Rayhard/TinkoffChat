@@ -50,6 +50,7 @@
 		337870C8255FC6F000B6752B /* ImagePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337870C7255FC6F000B6752B /* ImagePickerModel.swift */; };
 		337870CD255FCAA200B6752B /* ThemesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337870CC255FCAA200B6752B /* ThemesView.xib */; };
 		337870D2255FCC8100B6752B /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337870D1255FCC8100B6752B /* ConversationView.xib */; };
+		3378DD6E2562F26C00D27A37 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */; };
 		337DC2A5256063E400C81469 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337DC2A3256063E400C81469 /* ImagePickerCell.swift */; };
 		337DC2A6256063E400C81469 /* ImagePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337DC2A4256063E400C81469 /* ImagePickerCell.xib */; };
 		337ED9F7256169FD004169B2 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337ED9F6256169FD004169B2 /* Requests.swift */; };
@@ -116,6 +117,7 @@
 		337870C7255FC6F000B6752B /* ImagePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerModel.swift; sourceTree = "<group>"; };
 		337870CC255FCAA200B6752B /* ThemesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesView.xib; sourceTree = "<group>"; };
 		337870D1255FCC8100B6752B /* ConversationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationView.xib; sourceTree = "<group>"; };
+		3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		337DC2A3256063E400C81469 /* ImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
 		337DC2A4256063E400C81469 /* ImagePickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePickerCell.xib; sourceTree = "<group>"; };
 		337ED9F6256169FD004169B2 /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				338C3F41253ED88800495814 /* FirebaseParserService.swift */,
 				33CE748F25455C90007EAECA /* CoreDataManager.swift */,
 				33784DC325613471004E6190 /* NetworkService.swift */,
+				3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				337EDA1525617938004169B2 /* RequestSenderProtocol.swift in Sources */,
 				337870BF255FC2B500B6752B /* ImagePickerViewController.swift in Sources */,
 				338C3F42253ED88800495814 /* FirebaseParserService.swift in Sources */,
+				3378DD6E2562F26C00D27A37 /* ImageCacheService.swift in Sources */,
 				3354EEC2251D349000C3CF52 /* ConfigurableView.swift in Sources */,
 				337EDA1B256181ED004169B2 /* ImageParser.swift in Sources */,
 				337ED9FB25616CCE004169B2 /* RequestSender.swift in Sources */,

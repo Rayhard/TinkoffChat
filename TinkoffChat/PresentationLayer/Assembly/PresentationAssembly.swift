@@ -79,7 +79,9 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func imagePickerViewController() -> ImagePickerViewController {
-        let model = ImagePickerModel(networkService: serviceAssembly.networkService)
+        let model = ImagePickerModel(networkService: serviceAssembly.networkService,
+                                     imageCacheService: serviceAssembly.imageCacheService)
+        
         let imagePickerVC = ImagePickerViewController(model: model)
         model.delegate = imagePickerVC
 
