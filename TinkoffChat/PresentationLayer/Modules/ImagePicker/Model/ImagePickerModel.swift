@@ -52,22 +52,53 @@ class ImagePickerModel: IImagePickerModel {
     }
     
     func fetchImage(imageUrl: String, completion: @escaping (UIImage?) -> Void) {
-        imageCacheService.checkCache(url: imageUrl) { cachedImage in
-            if let imageCache = cachedImage {
-                completion(imageCache)
-            } else {
-                self.networkService.getImage(imageUrl: imageUrl) { loadingImage, error in
-                    if let error = error {
-                        print(error)
-                        return
-                    }
-                    
-                    guard let imageWeb = loadingImage else { return }
-                    self.imageCacheService.saveToCache(url: imageUrl, image: imageWeb)
-                    
-                    completion(imageWeb)
+//        self.networkService.getImage(imageUrl: imageUrl) { loadingImage, error in
+//            if let error = error {
+//                print(error)
+//                return
+//            }
+//
+//            guard let imageWeb = loadingImage else { return }
+////            self.imageCacheService.saveToCache(url: imageUrl, image: imageWeb)
+//
+//            completion(imageWeb)
+//        }
+        
+        let finalImage = imageCacheService.checkCache(url: imageUrl)
+        
+        guard let image = finalImage else {
+            self.networkService.getImage(imageUrl: imageUrl) { loadingImage, error in
+                if let error = error {
+                    print(error)
+                    return
                 }
+                
+                guard let imageWeb = loadingImage else { return }
+                self.imageCacheService.saveToCache(url: imageUrl, image: imageWeb)
+                
+                completion(imageWeb)
+                
             }
+            return
         }
+        completion(finalImage)
+        
+//        imageCacheService.checkCache(url: imageUrl) { cachedImage in
+//            if let imageCache = cachedImage {
+//                completion(imageCache)
+//            } else {
+//                self.networkService.getImage(imageUrl: imageUrl) { loadingImage, error in
+//                    if let error = error {
+//                        print(error)
+//                        return
+//                    }
+//
+//                    guard let imageWeb = loadingImage else { return }
+//                    self.imageCacheService.saveToCache(url: imageUrl, image: imageWeb)
+//
+//                    completion(imageWeb)
+//                }
+//            }
+//        }
     }
 }

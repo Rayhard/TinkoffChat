@@ -9,18 +9,18 @@
 import UIKit
 
 protocol IImageCacheService {
-    func checkCache(url: String, completion: @escaping (UIImage?) -> Void)
+    func checkCache(url: String) -> UIImage?
     func saveToCache(url: String, image: UIImage)
 }
 
 class ImageCacheService: IImageCacheService {
     private var imageCache = NSCache<NSString, UIImage>()
     
-    func checkCache(url: String, completion: @escaping (UIImage?) -> Void) {
+    func checkCache(url: String) -> UIImage? {
         if let cachedImage = imageCache.object(forKey: url as NSString) {
-            completion(cachedImage)
+            return cachedImage
         }
-        completion(nil)
+        return nil
     }
     
     func saveToCache(url: String, image: UIImage) {

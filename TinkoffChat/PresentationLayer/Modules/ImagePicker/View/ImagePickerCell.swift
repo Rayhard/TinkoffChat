@@ -12,6 +12,8 @@ class ImagePickerCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView?
     
+    var cellTag: Int?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 //        imageView?.image = UIImage(named: "placeholder")

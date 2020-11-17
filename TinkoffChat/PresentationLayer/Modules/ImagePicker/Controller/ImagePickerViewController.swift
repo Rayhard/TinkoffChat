@@ -63,12 +63,15 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePickerCell", for: indexPath) as? ImagePickerCell else { return UICollectionViewCell() }
         
         cell.configure(image: UIImage(named: "placeholder"))
+        cell.cellTag = indexPath.row
         
-        DispatchQueue.global(qos: .background).async {
-            let imageURL = self.model.data[indexPath.row].webformatURL
+        guard cell.cellTag == indexPath.row else { return UICollectionViewCell() }
+        DispatchQueue.global(qos: .userInteractive).async {
+            let imageURL = self.model.data[indexPath.row].previewURL
             self.model.fetchImage(imageUrl: imageURL) { image in
                 DispatchQueue.main.async {
                     cell.configure(image: image)
+                    cell.layoutIfNeeded()
                 }
             }
         }
@@ -76,10 +79,16 @@ extension ImagePickerViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? ImagePickerCell
-        let image = cell?.imageView?.image
-        delegate?.setImage(image: image)
-        closeView()
+        DispatchQueue.global(qos: .userInteractive).async {
+            let imageURL = self.model.data[indexPath.row].webformatURL
+            self.model.fetchImage(imageUrl: imageURL) { image in
+                guard let image = image else { return }
+                DispatchQueue.main.async {
+                    self.delegate?.setImage(image: image)
+                    self.closeView()
+                }
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

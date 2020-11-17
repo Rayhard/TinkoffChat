@@ -317,7 +317,10 @@ extension ProfileViewController: ImagePickerDelegate {
     func setImage(image: UIImage?) {
         profileImageView?.image = image
         newProfileInfo.photo = image
-        
-        setStateSaveButtons(state: true)
+        if image == UserProfile.shared.photo {
+            setStateSaveButtons(state: false)
+        } else {
+            setStateSaveButtons(state: true)
+        }
     }
 }
