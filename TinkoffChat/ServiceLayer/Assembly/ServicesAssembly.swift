@@ -10,7 +10,7 @@ import Foundation
 
 protocol IServicesAssembly {
     var firebaseService: IFirebaseService { get }
-    var firebaseParseService: IFirebaseParserService { get }
+    var firebaseParseService: IFirebaseParser { get }
     var gcdService: IDataFileService { get }
     var operationService: IDataFileService { get }
     var coreDataService: ICoreDataService { get }
@@ -33,7 +33,7 @@ class ServicesAssembly: IServicesAssembly {
     lazy var operationService: IDataFileService = OperationDataManager(fileCore: coreAssembly.fileManagerCore)
     lazy var themeSaver: IThemeFileService = GCDDataManager(fileCore: coreAssembly.fileManagerCore)
     
-    lazy var firebaseParseService: IFirebaseParserService = FirebaseParserService(coreDataService: coreDataService)
+    lazy var firebaseParseService: IFirebaseParser = FirebaseParser(coreDataService: coreDataService)
     
     lazy var coreDataService: ICoreDataService = CoreDataManager(coreData: coreAssembly.coreDataStack)
     

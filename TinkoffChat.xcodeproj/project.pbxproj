@@ -61,7 +61,7 @@
 		337EDA1025617755004169B2 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337EDA0F25617755004169B2 /* RequestProtocol.swift */; };
 		337EDA1525617938004169B2 /* RequestSenderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337EDA1425617938004169B2 /* RequestSenderProtocol.swift */; };
 		337EDA1B256181ED004169B2 /* ImageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337EDA1A256181ED004169B2 /* ImageParser.swift */; };
-		338C3F42253ED88800495814 /* FirebaseParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338C3F41253ED88800495814 /* FirebaseParserService.swift */; };
+		338C3F42253ED88800495814 /* FirebaseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338C3F41253ED88800495814 /* FirebaseParser.swift */; };
 		338D95F225431627007B6E26 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 338D95F025431627007B6E26 /* Chat.xcdatamodeld */; };
 		33CE749025455C90007EAECA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CE748F25455C90007EAECA /* CoreDataManager.swift */; };
 		33F618792556E99900863F4D /* ConversModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F618782556E99900863F4D /* ConversModel.swift */; };
@@ -128,7 +128,7 @@
 		337EDA0F25617755004169B2 /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		337EDA1425617938004169B2 /* RequestSenderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderProtocol.swift; sourceTree = "<group>"; };
 		337EDA1A256181ED004169B2 /* ImageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageParser.swift; sourceTree = "<group>"; };
-		338C3F41253ED88800495814 /* FirebaseParserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseParserService.swift; sourceTree = "<group>"; };
+		338C3F41253ED88800495814 /* FirebaseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseParser.swift; sourceTree = "<group>"; };
 		338D95F125431627007B6E26 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		33CE748F25455C90007EAECA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		33F618782556E99900863F4D /* ConversModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversModel.swift; sourceTree = "<group>"; };
@@ -181,9 +181,9 @@
 			isa = PBXGroup;
 			children = (
 				3305A98A25556E5200DD07F9 /* Assembly */,
+				33B05976256583D7009A7580 /* FileManager */,
 				337ED9F5256169D8004169B2 /* Network */,
 				338D95EF2543160F007B6E26 /* CoreData */,
-				334DC889255BC87C007D56FE /* FileManager.swift */,
 			);
 			path = CoreLayer;
 			sourceTree = "<group>";
@@ -457,6 +457,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		33B05976256583D7009A7580 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				334DC889255BC87C007D56FE /* FileManager.swift */,
+			);
+			path = FileManager;
+			sourceTree = "<group>";
+		};
 		33DE8654251F205F00A477E1 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,7 +518,7 @@
 				336932202532F9B800BE7B56 /* GCDDataManager.swift */,
 				336932232532F9C700BE7B56 /* OperationDataManager.swift */,
 				336C23B9253978CA00C592DD /* FirebaseService.swift */,
-				338C3F41253ED88800495814 /* FirebaseParserService.swift */,
+				338C3F41253ED88800495814 /* FirebaseParser.swift */,
 				33CE748F25455C90007EAECA /* CoreDataManager.swift */,
 				33784DC325613471004E6190 /* NetworkService.swift */,
 				3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */,
@@ -732,7 +740,7 @@
 				33CE749025455C90007EAECA /* CoreDataManager.swift in Sources */,
 				337EDA1525617938004169B2 /* RequestSenderProtocol.swift in Sources */,
 				337870BF255FC2B500B6752B /* ImagePickerViewController.swift in Sources */,
-				338C3F42253ED88800495814 /* FirebaseParserService.swift in Sources */,
+				338C3F42253ED88800495814 /* FirebaseParser.swift in Sources */,
 				3378DD6E2562F26C00D27A37 /* ImageCacheService.swift in Sources */,
 				3354EEC2251D349000C3CF52 /* ConfigurableView.swift in Sources */,
 				337EDA1B256181ED004169B2 /* ImageParser.swift in Sources */,

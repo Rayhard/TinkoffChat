@@ -21,6 +21,7 @@ class ImagePickerViewController: UIViewController {
     }
     
     @IBOutlet weak var collectionView: UICollectionView?
+    @IBOutlet weak var headerView: UIView?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     @IBAction func closeButtonAction(_ sender: Any) {
         closeView()
@@ -33,14 +34,25 @@ class ImagePickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
+        setTheme()
+        loadData()
+        
+        cellSize = (UIScreen.main.bounds.width - 22) / 3.0
+    }
+    
+    private func setTheme() {
+        self.view.backgroundColor = Theme.current.backgroundColor
+        collectionView?.backgroundColor = Theme.current.backgroundColor
+        headerView?.backgroundColor = Theme.current.inputMessageBubbleColor
+    }
+    
+    private func loadData() {
         activityIndicator?.hidesWhenStopped = true
         activityIndicator?.startAnimating()
         
         DispatchQueue.global(qos: .background).async {
             self.model.fetchImagesURL()
         }
-        
-        cellSize = (UIScreen.main.bounds.width - 22) / 3.0
     }
     
     private func setCollectionView() {

@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="activityIndicator" destination="pFw-Wj-Sb1" id="NKc-Zz-OxP"/>
                 <outlet property="collectionView" destination="sf6-5Q-RK5" id="OF6-XD-LOu"/>
+                <outlet property="headerView" destination="LY7-m8-jts" id="dlT-CU-o4u"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
