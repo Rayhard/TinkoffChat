@@ -16,12 +16,10 @@ class ImagePickerCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        imageView?.image = UIImage(named: "placeholder")
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        dataTask?.cancel()
         imageView?.image = UIImage(named: "placeholder")
     }
 
