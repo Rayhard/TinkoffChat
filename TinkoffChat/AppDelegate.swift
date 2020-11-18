@@ -14,18 +14,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var coreDataStack = CoreDataStack()
+    private let rootAssembly = RootAssembly()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
-        LogManager.showMessage("Application moved from <Not running> to <Inactive>: " + #function)
-        
-        setCoreData()
-        
         let userDefaults = UserDefaults.standard
         setUserProfile(userDefaults: userDefaults)
         setTheme(userDefaults: userDefaults)
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navigation = rootAssembly.presentationAssembly.mainNavigationController()
+        window?.rootViewController = navigation
+        window?.makeKeyAndVisible()
         
         return true
     }
@@ -53,41 +54,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let profile = ProfileInfo(name: "Name Surname",
                                       description: "You description",
                                       photo: UIImage(named: "clearFile"))
-            let dataManager = GCDDataManager()
-            dataManager.saveData(profile)
+            let dataManager = GCDDataManager(fileCore: FileManagerCore())
+            dataManager.saveData((profile)) { }
         }
-    }
-    
-    private func setCoreData() {
-        coreDataStack.didUpdateDatease = { stack in
-            stack.printDataBaseStats()
-        }
-        
-        coreDataStack.enableObservers()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        
-        LogManager.showMessage("Application moved from <Inactive> to <Active>: " + #function)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        
-        LogManager.showMessage("Application moved from <Active> to <Inactive>: " + #function)
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        
-        LogManager.showMessage("Application moved from <Inactive> to <Background>: " + #function)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        
-        LogManager.showMessage("Application moved from <Background> to <Inactive>: " + #function)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        
-        LogManager.showMessage("Application moved from <Suspended> to <Not running>: " + #function)
     }
 }
