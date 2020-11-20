@@ -29,6 +29,7 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func mainNavigationController() -> UINavigationController {
+        appSettings()
         let nav = UINavigationController(rootViewController: conversationsListViewController())
 
         return nav
@@ -41,8 +42,8 @@ class PresentationAssembly: IPresentationAssembly {
         guard let conversationsListVC = resultViewController else { return ConversationsListViewController() }
         
         let model = ConversListModel(firebaseService: serviceAssembly.firebaseService,
-                                                     coreDataService: serviceAssembly.coreDataService,
-                                                     dataService: serviceAssembly.gcdService)
+                                     coreDataService: serviceAssembly.coreDataService,
+                                     dataService: serviceAssembly.gcdService)
         
         conversationsListVC.presentationAssembly = self
         conversationsListVC.model = model
@@ -53,7 +54,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func conversationViewController() -> ConversationViewController {
         let model = ConversModel(firebaseService: serviceAssembly.firebaseService,
-                                         coreDataService: serviceAssembly.coreDataService)
+                                 coreDataService: serviceAssembly.coreDataService)
         
         let conversationsVC = ConversationViewController(model: model)
         model.delegate = conversationsVC
@@ -86,5 +87,12 @@ class PresentationAssembly: IPresentationAssembly {
         model.delegate = imagePickerVC
 
         return imagePickerVC
+    }
+}
+
+extension PresentationAssembly {
+    private func appSettings() {
+        serviceAssembly.settingsService.setTheme()
+        serviceAssembly.settingsService.setProfile()
     }
 }

@@ -17,9 +17,9 @@ protocol IFirebaseParser {
 
 class FirebaseParser: IFirebaseParser {
     
-    let coreDataService: ICoreDataService
+    private let coreDataService: ICoreDataManager
     
-    init(coreDataService: ICoreDataService) {
+    init(coreDataService: ICoreDataManager) {
         self.coreDataService = coreDataService
     }
     

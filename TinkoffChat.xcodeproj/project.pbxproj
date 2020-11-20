@@ -31,6 +31,9 @@
 		3354EEBD251D298600C3CF52 /* ConversationsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3354EEBB251D298600C3CF52 /* ConversationsListCell.swift */; };
 		3354EEBE251D298600C3CF52 /* ConversationsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3354EEBC251D298600C3CF52 /* ConversationsListCell.xib */; };
 		3354EEC2251D349000C3CF52 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3354EEC1251D349000C3CF52 /* ConfigurableView.swift */; };
+		335E180C256732520015CAC4 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E180B256732520015CAC4 /* CoreDataService.swift */; };
+		3362FFA22567A715007B8946 /* UserDefaultsCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3362FFA12567A715007B8946 /* UserDefaultsCore.swift */; };
+		3362FFA62567A998007B8946 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3362FFA52567A998007B8946 /* SettingsService.swift */; };
 		336932212532F9B800BE7B56 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336932202532F9B800BE7B56 /* GCDDataManager.swift */; };
 		336932242532F9C700BE7B56 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336932232532F9C700BE7B56 /* OperationDataManager.swift */; };
 		336932272533073300BE7B56 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336932262533073300BE7B56 /* ProfileInfo.swift */; };
@@ -96,6 +99,9 @@
 		3354EEBB251D298600C3CF52 /* ConversationsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListCell.swift; sourceTree = "<group>"; };
 		3354EEBC251D298600C3CF52 /* ConversationsListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListCell.xib; sourceTree = "<group>"; };
 		3354EEC1251D349000C3CF52 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
+		335E180B256732520015CAC4 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		3362FFA12567A715007B8946 /* UserDefaultsCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsCore.swift; sourceTree = "<group>"; };
+		3362FFA52567A998007B8946 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		336932202532F9B800BE7B56 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		336932232532F9C700BE7B56 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		336932262533073300BE7B56 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
@@ -181,7 +187,9 @@
 			isa = PBXGroup;
 			children = (
 				3305A98A25556E5200DD07F9 /* Assembly */,
+				3362FF9F2567A6EA007B8946 /* UserDefaults */,
 				33B05976256583D7009A7580 /* FileManager */,
+				335E180E256733010015CAC4 /* Firebase */,
 				337ED9F5256169D8004169B2 /* Network */,
 				338D95EF2543160F007B6E26 /* CoreData */,
 			);
@@ -324,6 +332,31 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		335E1809256731B30015CAC4 /* FileDataServices */ = {
+			isa = PBXGroup;
+			children = (
+				336932202532F9B800BE7B56 /* GCDDataManager.swift */,
+				336932232532F9C700BE7B56 /* OperationDataManager.swift */,
+			);
+			path = FileDataServices;
+			sourceTree = "<group>";
+		};
+		335E180E256733010015CAC4 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				338C3F41253ED88800495814 /* FirebaseParser.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		3362FF9F2567A6EA007B8946 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				3362FFA12567A715007B8946 /* UserDefaultsCore.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
 		336E32F625173656000A40D8 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +486,7 @@
 			children = (
 				3349B53D255A8B9E00A17FF2 /* Entities */,
 				333E5186254402A600648A8C /* CoreDataStack.swift */,
+				33CE748F25455C90007EAECA /* CoreDataManager.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -514,14 +548,13 @@
 		33F8CE032519D5E600EE593F /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				335E1809256731B30015CAC4 /* FileDataServices */,
 				334E8736251A00B500BCDCF7 /* AlertManager.swift */,
-				336932202532F9B800BE7B56 /* GCDDataManager.swift */,
-				336932232532F9C700BE7B56 /* OperationDataManager.swift */,
 				336C23B9253978CA00C592DD /* FirebaseService.swift */,
-				338C3F41253ED88800495814 /* FirebaseParser.swift */,
-				33CE748F25455C90007EAECA /* CoreDataManager.swift */,
 				33784DC325613471004E6190 /* NetworkService.swift */,
 				3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */,
+				335E180B256732520015CAC4 /* CoreDataService.swift */,
+				3362FFA52567A998007B8946 /* SettingsService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -715,6 +748,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335E180C256732520015CAC4 /* CoreDataService.swift in Sources */,
 				336C23BA253978CA00C592DD /* FirebaseService.swift in Sources */,
 				3346DD5A2527961E00ACC15F /* NightTheme.swift in Sources */,
 				3347A3C12521D75F009EA76A /* ConversationViewCell.swift in Sources */,
@@ -728,6 +762,7 @@
 				3354EEB8251D259C00C3CF52 /* ConversationViewController.swift in Sources */,
 				33F618792556E99900863F4D /* ConversModel.swift in Sources */,
 				3346DD572527960E00ACC15F /* DayTheme.swift in Sources */,
+				3362FFA22567A715007B8946 /* UserDefaultsCore.swift in Sources */,
 				334DC88A255BC87C007D56FE /* FileManager.swift in Sources */,
 				337ED9F7256169FD004169B2 /* Requests.swift in Sources */,
 				336932272533073300BE7B56 /* ProfileInfo.swift in Sources */,
@@ -746,6 +781,7 @@
 				337EDA1B256181ED004169B2 /* ImageParser.swift in Sources */,
 				337ED9FB25616CCE004169B2 /* RequestSender.swift in Sources */,
 				3305A98C25556F6500DD07F9 /* RootAssembly.swift in Sources */,
+				3362FFA62567A998007B8946 /* SettingsService.swift in Sources */,
 				3343FA93251DC14900755C6A /* UserProfile.swift in Sources */,
 				336ED0D0250B4BCA00E64482 /* ProfileViewController.swift in Sources */,
 				3346DD53252795F100ACC15F /* ClassicTheme.swift in Sources */,

@@ -10,13 +10,13 @@ import Foundation
 
 protocol IServicesAssembly {
     var firebaseService: IFirebaseService { get }
-    var firebaseParseService: IFirebaseParser { get }
     var gcdService: IDataFileService { get }
     var operationService: IDataFileService { get }
     var coreDataService: ICoreDataService { get }
     var themeSaver: IThemeFileService { get }
     var networkService: INetworkService { get }
     var imageCacheService: IImageCacheService { get }
+    var settingsService: ISettingsService { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -26,18 +26,18 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
     
-    lazy var firebaseService: IFirebaseService = FirebaseService(parserService: firebaseParseService,
-                                                                     coreDataService: coreDataService)
+    lazy var firebaseService: IFirebaseService = FirebaseService(parserService: coreAssembly.firebaseParseService,
+                                                                 coreDataService: coreAssembly.coreDataService)
     
     lazy var gcdService: IDataFileService = GCDDataManager(fileCore: coreAssembly.fileManagerCore)
     lazy var operationService: IDataFileService = OperationDataManager(fileCore: coreAssembly.fileManagerCore)
     lazy var themeSaver: IThemeFileService = GCDDataManager(fileCore: coreAssembly.fileManagerCore)
     
-    lazy var firebaseParseService: IFirebaseParser = FirebaseParser(coreDataService: coreDataService)
-    
-    lazy var coreDataService: ICoreDataService = CoreDataManager(coreData: coreAssembly.coreDataStack)
+    lazy var coreDataService: ICoreDataService = CoreDataService(coreData: coreAssembly.coreDataStack)
     
     lazy var networkService: INetworkService = NetworkService(requestSender: coreAssembly.requestSender)
     lazy var imageCacheService: IImageCacheService = ImageCacheService()
+    lazy var settingsService: ISettingsService = SettingsService(userDefaults: coreAssembly.userDefaultsCore,
+                                                                 fileManager: gcdService)
 
 }
