@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var headerView: UIView?
     @IBOutlet weak var headerTitle: UILabel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
+    @IBOutlet weak var editProfileButton: UIButton?
     
     let presentationAssembly: IPresentationAssembly
     let model: IProfileModel
@@ -40,7 +41,15 @@ class ProfileViewController: UIViewController {
         showActionSheet()
     }
     @IBAction func editProfileInfoAction(_ sender: Any) {
-        isEdited(true)
+        if editedEnable {
+            editButtonAnimation(false)
+            isEdited(false)
+        } else {
+            editButtonAnimation(true)
+            isEdited(true)
+        }
+        
+        editedEnable = !editedEnable
     }
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -58,6 +67,7 @@ class ProfileViewController: UIViewController {
     }
     
     var newProfileInfo: ProfileInfo = ProfileInfo()
+    private var editedEnable: Bool = false
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -103,7 +113,8 @@ class ProfileViewController: UIViewController {
     
     // MARK: Theme
     private func setTheme() {
-        self.view.backgroundColor = Theme.current.backgroundColor
+        self.view.backgroundColor = Theme.current.inputMessageBubbleColor
+        scrollView?.backgroundColor = Theme.current.backgroundColor
         nameTextField?.textColor = Theme.current.textColor
         descriptionTextView?.textColor = Theme.current.textColor
         descriptionTextView?.backgroundColor = Theme.current.backgroundColor
@@ -321,6 +332,57 @@ extension ProfileViewController: ImagePickerDelegate {
             setStateSaveButtons(state: false)
         } else {
             setStateSaveButtons(state: true)
+        }
+    }
+}
+
+extension ProfileViewController {
+    func editButtonAnimation(_ state: Bool) {
+        guard let button = editProfileButton else { return }
+        button.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
+        if state {
+            let animationsGroup = CAAnimationGroup()
+            animationsGroup.duration = 0.3
+            animationsGroup.autoreverses = true
+            animationsGroup.repeatCount = .infinity
+            animationsGroup.fillMode = .both
+
+            let translationX = CABasicAnimation(keyPath: "position.x")
+            translationX.fromValue = button.center.x - 5
+            translationX.toValue = button.center.x + 5
+
+            let translationY = CABasicAnimation(keyPath: "position.y")
+            translationY.fromValue = button.center.y - 5
+            translationY.toValue = button.center.y + 5
+
+            let rotate = CABasicAnimation(keyPath: "transform.rotation")
+            rotate.fromValue = CGFloat(Double.pi / 10)
+            rotate.toValue = CGFloat(-Double.pi / 10)
+
+            animationsGroup.animations = [translationY, translationX, rotate]
+            button.layer.add(animationsGroup, forKey: nil)
+            
+        } else {
+            let animationsGroup = CAAnimationGroup()
+            animationsGroup.duration = 0.5
+            animationsGroup.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            
+            let translationX = CABasicAnimation(keyPath: "position.x")
+            translationX.toValue = button.center.x
+            
+            let translationY = CABasicAnimation(keyPath: "position.y")
+            translationY.toValue = button.center.y
+            
+            let rotate = CABasicAnimation(keyPath: "transform.rotation")
+            rotate.toValue = CGFloat(0)
+            
+            animationsGroup.animations = [translationX, translationY, rotate]
+            button.layer.add(animationsGroup, forKey: nil)
+            
+            CATransaction.setCompletionBlock {
+                button.layer.removeAllAnimations()
+            }
         }
     }
 }

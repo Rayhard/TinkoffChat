@@ -96,7 +96,9 @@ class ConversationsListViewController: UIViewController {
     @objc
     private func openProfile() {
         guard let profileVC = presentationAssembly?.profileViewController() else { return }
-        self.present(profileVC, animated: true)
+        profileVC.modalPresentationStyle = .custom
+        profileVC.transitioningDelegate = self
+        present(profileVC, animated: true, completion: nil)
     }
     
     private func loadData() {
@@ -204,6 +206,12 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
 extension ConversationsListViewController: IConversListModelDelegate {
     func loadComplited() {
         activityIndicator?.isHidden = true
+    }
+}
+
+extension ConversationsListViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 1, animationType: .present)
     }
 }
 
