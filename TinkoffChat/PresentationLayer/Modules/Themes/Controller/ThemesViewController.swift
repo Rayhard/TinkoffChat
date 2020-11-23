@@ -54,6 +54,15 @@ class ThemesViewController: UIViewController {
         setViews()
         addGestures()
         configureTheme()
+        
+        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
+//        animationGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(animationGesture)
+    }
+    
+    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
+        let emitterManager = EmitterLayerAnimator(view: view, gesture: tapgesture)
+        emitterManager.startAnimation()
     }
     
     private func addGestures() {

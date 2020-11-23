@@ -343,6 +343,7 @@ extension ProfileViewController {
         
         if state {
             let animationsGroup = CAAnimationGroup()
+            //TimeInterval(exactly: 0.3) ?? 0.3
             animationsGroup.duration = 0.3
             animationsGroup.autoreverses = true
             animationsGroup.repeatCount = .infinity
