@@ -342,48 +342,43 @@ extension ProfileViewController {
         button.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         if state {
-            let animationsGroup = CAAnimationGroup()
-            //TimeInterval(exactly: 0.3) ?? 0.3
-            animationsGroup.duration = 0.3
-            animationsGroup.autoreverses = true
-            animationsGroup.repeatCount = .infinity
-            animationsGroup.fillMode = .both
-
-            let translationX = CABasicAnimation(keyPath: "position.x")
-            translationX.fromValue = button.center.x - 5
-            translationX.toValue = button.center.x + 5
-
-            let translationY = CABasicAnimation(keyPath: "position.y")
-            translationY.fromValue = button.center.y - 5
-            translationY.toValue = button.center.y + 5
-
-            let rotate = CABasicAnimation(keyPath: "transform.rotation")
-            rotate.fromValue = CGFloat(Double.pi / 10)
-            rotate.toValue = CGFloat(-Double.pi / 10)
-
-            animationsGroup.animations = [translationY, translationX, rotate]
-            button.layer.add(animationsGroup, forKey: nil)
+            UIView.animateKeyframes(withDuration: 0.3,
+                                    delay: 0,
+                                    options: [.repeat, .autoreverse, .allowUserInteraction, .calculationModeCubicPaced],
+                                    animations: {
+                                        
+                                        UIView.addKeyframe(withRelativeStartTime: 0,
+                                                           relativeDuration: 0.25) {
+                                            button.transform = CGAffineTransform(translationX: -5, y: -5)
+                                        }
+                                        
+                                        UIView.addKeyframe(withRelativeStartTime: 0.15,
+                                                           relativeDuration: 0.25) {
+                                            button.transform = CGAffineTransform(rotationAngle: (-CGFloat.pi / 10))
+                                        }
+                                        
+                                        UIView.addKeyframe(withRelativeStartTime: 0.25,
+                                                           relativeDuration: 0.25) {
+                                            button.transform = CGAffineTransform(translationX: 5, y: 5)
+                                        }
+                                        
+                                        UIView.addKeyframe(withRelativeStartTime: 0.65,
+                                                           relativeDuration: 0.25) {
+                                            button.transform = CGAffineTransform(rotationAngle: (CGFloat.pi / 10))
+                                        }
+                                    },
+                                    completion: nil)
             
         } else {
-            let animationsGroup = CAAnimationGroup()
-            animationsGroup.duration = 0.5
-            animationsGroup.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-            
-            let translationX = CABasicAnimation(keyPath: "position.x")
-            translationX.toValue = button.center.x
-            
-            let translationY = CABasicAnimation(keyPath: "position.y")
-            translationY.toValue = button.center.y
-            
-            let rotate = CABasicAnimation(keyPath: "transform.rotation")
-            rotate.toValue = CGFloat(0)
-            
-            animationsGroup.animations = [translationX, translationY, rotate]
-            button.layer.add(animationsGroup, forKey: nil)
-            
-            CATransaction.setCompletionBlock {
-                button.layer.removeAllAnimations()
-            }
+            button.layer.removeAllAnimations()
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           options: [.allowUserInteraction, .curveEaseInOut],
+                           animations: {
+                            button.transform = CGAffineTransform(rotationAngle: 0)
+                            button.transform = CGAffineTransform(translationX: .zero, y: .zero)
+                           },
+                           completion: nil)
         }
     }
 }
