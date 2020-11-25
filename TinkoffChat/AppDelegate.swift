@@ -19,44 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
-        let userDefaults = UserDefaults.standard
-        setUserProfile(userDefaults: userDefaults)
-        setTheme(userDefaults: userDefaults)
-        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let navigation = rootAssembly.presentationAssembly.mainNavigationController()
         window?.rootViewController = navigation
         window?.makeKeyAndVisible()
         
         return true
-    }
-    
-    private func setTheme(userDefaults: UserDefaults) {
-        let theme = userDefaults.string(forKey: "Theme")
-        switch theme {
-        case "classic":
-            Theme.current = ClassicTheme()
-        case "day":
-            Theme.current = DayTheme()
-        case "night":
-            Theme.current = NightTheme()
-        default:
-            Theme.current = ClassicTheme()
-        }
-    }
-    
-    private func setUserProfile(userDefaults: UserDefaults) {
-        let sender = userDefaults.string(forKey: "senderId")
-        if sender == nil {
-            let senderId = "\(UUID())"
-            userDefaults.set(senderId, forKey: "senderId")
-            
-            let profile = ProfileInfo(name: "Name Surname",
-                                      description: "You description",
-                                      photo: UIImage(named: "clearFile"))
-            let dataManager = GCDDataManager(fileCore: FileManagerCore())
-            dataManager.saveData((profile)) { }
-        }
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

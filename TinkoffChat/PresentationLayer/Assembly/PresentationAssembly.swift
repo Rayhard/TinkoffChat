@@ -10,10 +10,6 @@ import UIKit
 
 private enum Storyboard: String {
     case ConversationsListViewController
-    case ConversationViewController
-    case ProfileViewController
-    case ThemesViewController
-    case MainNavigationController
 }
 
 protocol IPresentationAssembly {
@@ -21,6 +17,7 @@ protocol IPresentationAssembly {
     func conversationViewController() -> ConversationViewController
     func profileViewController() -> ProfileViewController
     func themesViewController() -> ThemesViewController
+    func imagePickerViewController() -> ImagePickerViewController
     func mainNavigationController() -> UINavigationController
 }
 
@@ -32,6 +29,7 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func mainNavigationController() -> UINavigationController {
+        appSettings()
         let nav = UINavigationController(rootViewController: conversationsListViewController())
 
         return nav
@@ -44,8 +42,8 @@ class PresentationAssembly: IPresentationAssembly {
         guard let conversationsListVC = resultViewController else { return ConversationsListViewController() }
         
         let model = ConversListModel(firebaseService: serviceAssembly.firebaseService,
-                                                     coreDataService: serviceAssembly.coreDataService,
-                                                     dataService: serviceAssembly.gcdService)
+                                     coreDataService: serviceAssembly.coreDataService,
+                                     dataService: serviceAssembly.gcdService)
         
         conversationsListVC.presentationAssembly = self
         conversationsListVC.model = model
@@ -55,42 +53,46 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func conversationViewController() -> ConversationViewController {
-        let identifier = Storyboard.ConversationViewController.rawValue
-        let storyBoard: UIStoryboard = UIStoryboard(name: identifier, bundle: nil)
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ConversationViewController
-        guard let conversationsVC = resultViewController else { return ConversationViewController() }
-        
         let model = ConversModel(firebaseService: serviceAssembly.firebaseService,
-                                         coreDataService: serviceAssembly.coreDataService)
-        conversationsVC.model = model
+                                 coreDataService: serviceAssembly.coreDataService)
+        
+        let conversationsVC = ConversationViewController(model: model)
         model.delegate = conversationsVC
         
         return conversationsVC
     }
     
     func profileViewController() -> ProfileViewController {
-        let identifier = Storyboard.ProfileViewController.rawValue
-        let storyBoard: UIStoryboard = UIStoryboard(name: identifier, bundle: nil)
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ProfileViewController
-        guard let profileVC = resultViewController else { return ProfileViewController() }
-        
         let model = ProfileModel(dataService: serviceAssembly.gcdService,
                                  operationService: serviceAssembly.operationService)
-        profileVC.model = model
+        
+        let profileVC = ProfileViewController(model: model, presentationAssembly: self)
         model.delegate = profileVC
         
         return profileVC
     }
     
     func themesViewController() -> ThemesViewController {
-        let identifier = Storyboard.ThemesViewController.rawValue
-        let storyBoard: UIStoryboard = UIStoryboard(name: identifier, bundle: nil)
-        let resultViewController = storyBoard.instantiateViewController(withIdentifier: identifier) as? ThemesViewController
-        guard let themeVC = resultViewController else { return ThemesViewController() }
-        
         let model = ThemesControllerModel(saveService: serviceAssembly.themeSaver)
-        themeVC.model = model
+        let themeVC = ThemesViewController(model: model)
         
         return themeVC
+    }
+    
+    func imagePickerViewController() -> ImagePickerViewController {
+        let model = ImagePickerModel(networkService: serviceAssembly.networkService,
+                                     imageCacheService: serviceAssembly.imageCacheService)
+        
+        let imagePickerVC = ImagePickerViewController(model: model)
+        model.delegate = imagePickerVC
+
+        return imagePickerVC
+    }
+}
+
+extension PresentationAssembly {
+    private func appSettings() {
+        serviceAssembly.settingsService.setTheme()
+        serviceAssembly.settingsService.setProfile()
     }
 }

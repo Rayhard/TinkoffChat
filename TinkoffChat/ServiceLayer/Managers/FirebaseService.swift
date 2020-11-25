@@ -21,10 +21,10 @@ class FirebaseService: IFirebaseService {
     private lazy var db = Firestore.firestore()
     private lazy var reference = db.collection("channels")
     
-    let parserService: IFirebaseParserService
-    let coreDataService: ICoreDataService
+    private let parserService: IFirebaseParser
+    private let coreDataService: ICoreDataManager
     
-    init(parserService: IFirebaseParserService, coreDataService: ICoreDataService) {
+    init(parserService: IFirebaseParser, coreDataService: ICoreDataManager) {
         self.parserService = parserService
         self.coreDataService = coreDataService
     }

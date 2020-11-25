@@ -9,24 +9,22 @@
 import UIKit
 import CoreData
 
-protocol ICoreDataService {
+protocol ICoreDataManager {
     func addChannel(id identifier: String, name: String, message: String?, date: Date?)
     func updateChannel(id identifier: String, name: String, message: String?, date: Date?)
     func deleteChannel(channelId: String)
     func addMessage(channelId: String, messageId: String, senderId: String,
                     senderName: String, content: String, created: Date)
-    
-    func getContext() -> NSManagedObjectContext
 }
 
-class CoreDataManager: ICoreDataService {
-    let coreData: ICoreDataStack
+class CoreDataManager: ICoreDataManager {
+    private let coreData: ICoreDataStack
     
     init(coreData: ICoreDataStack) {
         self.coreData = coreData
     }
     
-    func getContext() -> NSManagedObjectContext {
+    private func getContext() -> NSManagedObjectContext {
         return coreData.mainContext
     }
     

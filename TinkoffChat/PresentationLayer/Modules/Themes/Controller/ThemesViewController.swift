@@ -22,7 +22,16 @@ class ThemesViewController: UIViewController {
     
     weak var delegate: ThemesPickerDelegate?
     var setTheme: ((ThemeModel) -> Void)?
-    var model: IThemesControllerModel?
+    var model: IThemesControllerModel
+    
+    init(model: IThemesControllerModel) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBAction func setThemeAction(_ sender: UIButton) {
         switch sender {
@@ -75,7 +84,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(ClassicTheme())
         saveTheme(.classic)
         
-        model?.saveTheme(name: "classic")
+        model.saveTheme(name: "classic")
         
         setupClassicView(border: 3, color: .systemBlue)
         setupDayView(border: 1, color: .gray)
@@ -87,7 +96,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(DayTheme())
         saveTheme(.day)
         
-        model?.saveTheme(name: "day")
+        model.saveTheme(name: "day")
         
         setupDayView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)
@@ -99,7 +108,7 @@ class ThemesViewController: UIViewController {
         self.setTheme?(NightTheme())
         saveTheme(.night)
         
-        model?.saveTheme(name: "night")
+        model.saveTheme(name: "night")
         
         setupNightView(border: 3, color: .systemBlue)
         setupClassicView(border: 1, color: .gray)

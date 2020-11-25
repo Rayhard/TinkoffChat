@@ -9,17 +9,17 @@
 import Foundation
 import Firebase
 
-protocol IFirebaseParserService {
+protocol IFirebaseParser {
     func parseNewChannel(diff: DocumentChange)
     func parseUpdateChannel(diff: DocumentChange)
     func parseNewMessage(channelId: String, diff: DocumentChange)
 }
 
-class FirebaseParserService: IFirebaseParserService {
+class FirebaseParser: IFirebaseParser {
     
-    let coreDataService: ICoreDataService
+    private let coreDataService: ICoreDataManager
     
-    init(coreDataService: ICoreDataService) {
+    init(coreDataService: ICoreDataManager) {
         self.coreDataService = coreDataService
     }
     
