@@ -96,13 +96,6 @@ class ConversationViewController: UIViewController {
         
         self.title = channel?.name
         activityIndicator?.isHidden = false
-        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
-        view.addGestureRecognizer(animationGesture)
-    }
-    
-    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
-        let emitterManager = EmitterLayerAnimator(gesture: tapgesture)
-        emitterManager.startAnimation()
     }
     
     private func loadData() {

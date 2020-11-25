@@ -109,14 +109,6 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         
         nameTextField?.addTarget(self, action: #selector(nameEditing), for: .editingChanged)
-        
-        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
-        view.addGestureRecognizer(animationGesture)
-    }
-    
-    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
-        let emitterManager = EmitterLayerAnimator(gesture: tapgesture)
-        emitterManager.startAnimation()
     }
     
     // MARK: Theme

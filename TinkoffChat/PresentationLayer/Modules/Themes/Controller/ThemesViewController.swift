@@ -60,11 +60,9 @@ class ThemesViewController: UIViewController {
         let classicGesture = UITapGestureRecognizer(target: self, action: #selector(setClassicTheme))
         let dayGesture = UITapGestureRecognizer(target: self, action: #selector(setDayTheme))
         let nightGesture = UITapGestureRecognizer(target: self, action: #selector(setNightTheme))
-        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
         classicMessageView?.addGestureRecognizer(classicGesture)
         dayMessageView?.addGestureRecognizer(dayGesture)
         nightMessageView?.addGestureRecognizer(nightGesture)
-        view.addGestureRecognizer(animationGesture)
     }
     
     private func setViews() {
@@ -79,11 +77,6 @@ class ThemesViewController: UIViewController {
         classicMessageView?.layer.cornerRadius = (classicMessageView?.frame.height ?? 1) / 6
         dayMessageView?.layer.cornerRadius = (dayMessageView?.frame.height ?? 1) / 6
         nightMessageView?.layer.cornerRadius = (nightMessageView?.frame.height ?? 1) / 6
-    }
-    
-    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
-        let emitterManager = EmitterLayerAnimator(gesture: tapgesture)
-        emitterManager.startAnimation()
     }
     
     @objc private func setClassicTheme() {

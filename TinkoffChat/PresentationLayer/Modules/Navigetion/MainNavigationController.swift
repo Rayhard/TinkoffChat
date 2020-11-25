@@ -9,16 +9,7 @@
 import UIKit
 
 class MainNavigationController: UINavigationController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
-        view.addGestureRecognizer(animationGesture)
-    }
-    
-    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
-        let emitterManager = EmitterLayerAnimator(gesture: tapgesture)
-        emitterManager.startAnimation()
     }
 }

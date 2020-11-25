@@ -24,7 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigation
         window?.makeKeyAndVisible()
         
+        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
+        window?.addGestureRecognizer(animationGesture)
+        
         return true
+    }
+    
+    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
+        let emitterManager = EmitterLayerAnimator(gesture: tapgesture)
+        emitterManager.startAnimation()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -52,7 +52,7 @@ class EmitterLayerAnimator {
         cell.emissionRange = CGFloat.pi / 4
         cell.spin = 1
         cell.spinRange = 2
-        cell.scale = 0.05
+        cell.scale = 0.1
         cell.scaleRange = 0.15
         cell.scaleSpeed = -0.05
         
