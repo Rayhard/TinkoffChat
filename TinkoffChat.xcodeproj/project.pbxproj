@@ -173,6 +173,7 @@
 			children = (
 				3305A98725556E1E00DD07F9 /* Assembly */,
 				3354EEB3251D250C00C3CF52 /* Modules */,
+				3369D64D256E458F007AFDE3 /* Animation */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -294,7 +295,6 @@
 				336ED0D1250B4BCA00E64482 /* ConversationsListViewController.storyboard */,
 				3354EEBC251D298600C3CF52 /* ConversationsListCell.xib */,
 				3354EEBB251D298600C3CF52 /* ConversationsListCell.swift */,
-				3345B22225697C5C00BA6CD4 /* AnimationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -324,7 +324,6 @@
 				33DE8654251F205F00A477E1 /* Profile */,
 				33FD97642526F3D500C7D2C5 /* Themes */,
 				337870BB255FC25900B6752B /* ImagePicker */,
-				33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -361,6 +360,15 @@
 				3362FFA12567A715007B8946 /* UserDefaultsCore.swift */,
 			);
 			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		3369D64D256E458F007AFDE3 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */,
+				3345B22225697C5C00BA6CD4 /* AnimationController.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		336E32F625173656000A40D8 /* Extentions */ = {

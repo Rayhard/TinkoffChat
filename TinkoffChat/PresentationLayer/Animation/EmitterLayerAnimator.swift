@@ -19,23 +19,15 @@ class EmitterLayerAnimator {
     }
     
     func startAnimation() {
-        let particleEmitter = CAEmitterLayer()
-        
         guard let location = gesture?.location(in: view) else { return }
-        
-        particleEmitter.emitterPosition = location
-        particleEmitter.emitterShape = .line
-        particleEmitter.emitterSize = CGSize(width: 5, height: 1)
-        
-        let cell = makeEmitterCell()
-        particleEmitter.emitterCells = [cell]
+        emitterLayer.emitterPosition = location
         
         switch gesture?.state {
         case .began:
-            view?.layer.addSublayer(particleEmitter)
+            view?.layer.addSublayer(emitterLayer)
         case .changed:
             stopAnimate()
-            view?.layer.addSublayer(particleEmitter)
+            view?.layer.addSublayer(emitterLayer)
         case .ended:
             stopAnimate()
         default:
@@ -43,9 +35,18 @@ class EmitterLayerAnimator {
         }
     }
     
-    private func makeEmitterCell() -> CAEmitterCell {
+    lazy var emitterLayer: CAEmitterLayer = {
+        let emitterLayer = CAEmitterLayer()
+        emitterLayer.emitterShape = .line
+        emitterLayer.emitterSize = CGSize(width: 5, height: 1)
+        emitterLayer.emitterCells = [emitterCell]
+        
+        return emitterLayer
+    }()
+    
+    lazy var emitterCell: CAEmitterCell = {
         let cell = CAEmitterCell()
-        cell.birthRate = 2
+        cell.birthRate = 3
         cell.lifetime = 1.0
         cell.lifetimeRange = 0
         cell.velocity = 100
@@ -55,12 +56,12 @@ class EmitterLayerAnimator {
         cell.spin = 1
         cell.spinRange = 2
         cell.scale = 0.1
-        cell.scaleRange = 0.2
+        cell.scaleRange = 0.1
         cell.scaleSpeed = -0.05
         
         cell.contents = UIImage(named: "logo")?.cgImage
         return cell
-    }
+    }()
     
     private func stopAnimate() {
         guard let allSublayers = view?.layer.sublayers else { return }

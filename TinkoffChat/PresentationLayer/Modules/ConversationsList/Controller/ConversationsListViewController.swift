@@ -91,6 +91,14 @@ class ConversationsListViewController: UIViewController {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
+        
+        let animationGesture = UILongPressGestureRecognizer(target: self, action: #selector(startAnimation(tapgesture:)))
+        view.addGestureRecognizer(animationGesture)
+    }
+    
+    @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
+        let emitterManager = EmitterLayerAnimator(view: view, gesture: tapgesture)
+        emitterManager.startAnimation()
     }
     
     @objc
@@ -212,6 +220,10 @@ extension ConversationsListViewController: IConversListModelDelegate {
 extension ConversationsListViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return AnimationController(animationDuration: 1, animationType: .present)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 0.5, animationType: .dismiss)
     }
 }
 

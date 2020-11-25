@@ -43,17 +43,19 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
             presentAnimation(with: transitionContext,
                              viewToAnimate: toViewController.view,
                              sourceView: fromViewController.view)
-        case .dismiss: break
-        //
+        case .dismiss:
+            dismissAnimation(with: transitionContext,
+                             viewToAnimate: fromViewController.view,
+                             sourceView: toViewController.view)
         }
     }
     
     func presentAnimation(with context: UIViewControllerContextTransitioning, viewToAnimate: UIView, sourceView: UIView) {
-        
-        viewToAnimate.frame = CGRect(x: 0, y: -sourceView.frame.height,
-                                     width: sourceView.frame.width, height: sourceView.frame.height)
-        
         let duration = transitionDuration(using: context)
+        let size = sourceView.frame
+        
+        viewToAnimate.frame = CGRect(x: 0, y: -size.height,
+                                     width: size.width, height: size.height)
         
         UIView.animate(withDuration: duration,
                        delay: 0,
@@ -62,9 +64,25 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
                        options: [],
                        animations: {
                         viewToAnimate.frame = CGRect(x: 0, y: 0,
+                                                     width: size.width, height: size.height)
+                        
+                       }, completion: { _ in
+                        context.completeTransition(true)
+                       })
+    }
+    
+    func dismissAnimation(with context: UIViewControllerContextTransitioning, viewToAnimate: UIView, sourceView: UIView) {
+        let duration = transitionDuration(using: context)
+        
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       options: [],
+                       animations: {
+                        viewToAnimate.frame = CGRect(x: 0, y: -sourceView.frame.height,
                                                      width: sourceView.frame.width, height: sourceView.frame.height)
-                       }) { _ in
-            context.completeTransition(true)
-        }
+                       }, completion: { _ in
+                        viewToAnimate.removeFromSuperview()
+                        context.completeTransition(true)
+                       })
     }
 }
