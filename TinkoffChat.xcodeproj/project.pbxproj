@@ -56,6 +56,7 @@
 		337870D2255FCC8100B6752B /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337870D1255FCC8100B6752B /* ConversationView.xib */; };
 		3378DD6E2562F26C00D27A37 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */; };
 		33798189256C4FAC008A6A83 /* EmitterLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */; };
+		337B1C2B256ED6310040B6BF /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337B1C2A256ED6310040B6BF /* MainNavigationController.swift */; };
 		337DC2A5256063E400C81469 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337DC2A3256063E400C81469 /* ImagePickerCell.swift */; };
 		337DC2A6256063E400C81469 /* ImagePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337DC2A4256063E400C81469 /* ImagePickerCell.xib */; };
 		337ED9F7256169FD004169B2 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337ED9F6256169FD004169B2 /* Requests.swift */; };
@@ -128,6 +129,7 @@
 		337870D1255FCC8100B6752B /* ConversationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationView.xib; sourceTree = "<group>"; };
 		3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmitterLayerAnimator.swift; sourceTree = "<group>"; };
+		337B1C2A256ED6310040B6BF /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		337DC2A3256063E400C81469 /* ImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
 		337DC2A4256063E400C81469 /* ImagePickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePickerCell.xib; sourceTree = "<group>"; };
 		337ED9F6256169FD004169B2 /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		3354EEB3251D250C00C3CF52 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				337B1C29256ED6080040B6BF /* Navigetion */,
 				33DE8656251F207F00A477E1 /* ConversationsList */,
 				33DE8658251F209100A477E1 /* Conversation */,
 				33DE8654251F205F00A477E1 /* Profile */,
@@ -454,6 +457,14 @@
 				337DC2A4256063E400C81469 /* ImagePickerCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		337B1C29256ED6080040B6BF /* Navigetion */ = {
+			isa = PBXGroup;
+			children = (
+				337B1C2A256ED6310040B6BF /* MainNavigationController.swift */,
+			);
+			path = Navigetion;
 			sourceTree = "<group>";
 		};
 		337ED9F5256169D8004169B2 /* Network */ = {
@@ -762,6 +773,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337B1C2B256ED6310040B6BF /* MainNavigationController.swift in Sources */,
 				335E180C256732520015CAC4 /* CoreDataService.swift in Sources */,
 				336C23BA253978CA00C592DD /* FirebaseService.swift in Sources */,
 				3346DD5A2527961E00ACC15F /* NightTheme.swift in Sources */,

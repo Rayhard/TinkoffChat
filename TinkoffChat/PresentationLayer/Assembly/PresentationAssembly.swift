@@ -30,9 +30,9 @@ class PresentationAssembly: IPresentationAssembly {
     
     func mainNavigationController() -> UINavigationController {
         appSettings()
-        let nav = UINavigationController(rootViewController: conversationsListViewController())
+        let navigation = MainNavigationController(rootViewController: conversationsListViewController())
 
-        return nav
+        return navigation
     }
     
     func conversationsListViewController() -> ConversationsListViewController {

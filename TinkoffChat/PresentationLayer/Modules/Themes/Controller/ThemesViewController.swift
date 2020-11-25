@@ -82,7 +82,7 @@ class ThemesViewController: UIViewController {
     }
     
     @objc func startAnimation(tapgesture: UILongPressGestureRecognizer) {
-        let emitterManager = EmitterLayerAnimator(view: view, gesture: tapgesture)
+        let emitterManager = EmitterLayerAnimator(gesture: tapgesture)
         emitterManager.startAnimation()
     }
     
