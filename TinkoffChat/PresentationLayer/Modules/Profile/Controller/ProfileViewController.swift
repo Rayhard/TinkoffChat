@@ -41,11 +41,12 @@ class ProfileViewController: UIViewController {
         showActionSheet()
     }
     @IBAction func editProfileInfoAction(_ sender: Any) {
+        guard let layer = editProfileButton?.layer else { return }
         if editedEnable {
-            editButtonAnimation(false)
+            ShakeAnimation.stopShakeAnimation(layer: layer)
             isEdited(false)
         } else {
-            editButtonAnimation(true)
+            ShakeAnimation.startShakeAnimation(layer: layer)
             isEdited(true)
         }
         
@@ -332,53 +333,6 @@ extension ProfileViewController: ImagePickerDelegate {
             setStateSaveButtons(state: false)
         } else {
             setStateSaveButtons(state: true)
-        }
-    }
-}
-
-extension ProfileViewController {
-    func editButtonAnimation(_ state: Bool) {
-        guard let button = editProfileButton else { return }
-        button.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        
-        if state {
-            UIView.animateKeyframes(withDuration: 0.3,
-                                    delay: 0,
-                                    options: [.repeat, .autoreverse, .allowUserInteraction, .calculationModeCubicPaced],
-                                    animations: {
-                                        
-                                        UIView.addKeyframe(withRelativeStartTime: 0,
-                                                           relativeDuration: 0.25) {
-                                            button.transform = CGAffineTransform(translationX: -5, y: -5)
-                                        }
-                                        
-                                        UIView.addKeyframe(withRelativeStartTime: 0.15,
-                                                           relativeDuration: 0.25) {
-                                            button.transform = CGAffineTransform(rotationAngle: (-CGFloat.pi / 10))
-                                        }
-                                        
-                                        UIView.addKeyframe(withRelativeStartTime: 0.25,
-                                                           relativeDuration: 0.25) {
-                                            button.transform = CGAffineTransform(translationX: 5, y: 5)
-                                        }
-                                        
-                                        UIView.addKeyframe(withRelativeStartTime: 0.65,
-                                                           relativeDuration: 0.25) {
-                                            button.transform = CGAffineTransform(rotationAngle: (CGFloat.pi / 10))
-                                        }
-                                    },
-                                    completion: nil)
-            
-        } else {
-            button.layer.removeAllAnimations()
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           options: [.allowUserInteraction, .curveEaseInOut],
-                           animations: {
-                            button.transform = CGAffineTransform(rotationAngle: 0)
-                            button.transform = CGAffineTransform(translationX: .zero, y: .zero)
-                           },
-                           completion: nil)
         }
     }
 }
