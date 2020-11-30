@@ -9,7 +9,7 @@
 import Foundation
 
 protocol IUserDefaultsCore {
-    var userDefaults: UserDefaults { get }
+//    var userDefaults: UserDefaults { get }
     func getValueToKey(key: String, completion: @escaping (String?) -> Void)
     func setValueToKey(value: String, key: String)
 }

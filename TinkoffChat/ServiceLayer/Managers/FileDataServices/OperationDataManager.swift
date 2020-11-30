@@ -50,19 +50,14 @@ class SaveOperation: Operation {
     override func main() {
         if let name = profile?.name, name != UserProfile.shared.name {
             fileCore?.saveTextFile(file: .nameFile, content: name)
-            UserProfile.shared.name = name
         }
         
         if let desc = profile?.description, desc != UserProfile.shared.description {
             fileCore?.saveTextFile(file: .nameFile, content: desc)
-            UserProfile.shared.description = desc
         }
         
         if let photo = profile?.photo, photo != UserProfile.shared.photo {
-            if let data = photo.pngData() {
-                fileCore?.saveImageFile(file: .photoFile, content: data)
-                UserProfile.shared.photo = photo
-            }
+            fileCore?.saveImageFile(file: .photoFile, content: photo)
         }
     }
 }
@@ -77,10 +72,6 @@ class LoadOperation: Operation {
         loadProfile.name = self.fileCore?.getTextFile(file: .nameFile)
         loadProfile.description = self.fileCore?.getTextFile(file: .descriptionFile)
         loadProfile.photo = self.fileCore?.getImageFile(file: .photoFile)
-        
-        UserProfile.shared.name = loadProfile.name ?? "Name Surname"
-        UserProfile.shared.description = loadProfile.description ?? "You description"
-        UserProfile.shared.photo = loadProfile.photo ?? UIImage(named: "clearFile")
         
         self.profile = loadProfile
     }

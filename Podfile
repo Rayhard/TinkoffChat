@@ -18,3 +18,13 @@ target 'TinkoffChat' do
   pod 'SwiftLint'
 
 end
+
+target 'TinkoffChatTests' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for TinkoffChat
+  pod 'Firebase/Firestore'
+  pod 'SwiftLint'
+
+end

@@ -26,19 +26,14 @@ class GCDDataManager: IDataFileService, IThemeFileService {
         saveQueue.async {
             if let name = info.name, name != UserProfile.shared.name {
                 self.fileCore.saveTextFile(file: .nameFile, content: name)
-                UserProfile.shared.name = name
             }
             
             if let desc = info.description, desc != UserProfile.shared.description {
                 self.fileCore.saveTextFile(file: .descriptionFile, content: desc)
-                UserProfile.shared.description = desc
             }
             
             if let photo = info.photo, photo != UserProfile.shared.photo {
-                if let data = photo.pngData() {
-                    self.fileCore.saveImageFile(file: .photoFile, content: data)
-                    UserProfile.shared.photo = photo
-                }
+                self.fileCore.saveImageFile(file: .photoFile, content: photo)
             }
             
             completion()
@@ -70,10 +65,6 @@ class GCDDataManager: IDataFileService, IThemeFileService {
             profileInfo.name = self.fileCore.getTextFile(file: .nameFile)
             profileInfo.description = self.fileCore.getTextFile(file: .descriptionFile)
             profileInfo.photo = self.fileCore.getImageFile(file: .photoFile)
-            
-            UserProfile.shared.name = profileInfo.name ?? "Name Surname"
-            UserProfile.shared.description = profileInfo.description ?? "You description"
-            UserProfile.shared.photo = profileInfo.photo ?? UIImage(named: "clearFile")
 
             group.leave()
         }
