@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var headerView: UIView?
     @IBOutlet weak var headerTitle: UILabel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
+    @IBOutlet weak var editProfileButton: UIButton?
     
     let presentationAssembly: IPresentationAssembly
     let model: IProfileModel
@@ -40,7 +41,16 @@ class ProfileViewController: UIViewController {
         showActionSheet()
     }
     @IBAction func editProfileInfoAction(_ sender: Any) {
-        isEdited(true)
+        guard let layer = editProfileButton?.layer else { return }
+        if editedEnable {
+            ShakeAnimation.stopShakeAnimation(layer: layer)
+            isEdited(false)
+        } else {
+            ShakeAnimation.startShakeAnimation(layer: layer)
+            isEdited(true)
+        }
+        
+        editedEnable = !editedEnable
     }
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -58,6 +68,7 @@ class ProfileViewController: UIViewController {
     }
     
     var newProfileInfo: ProfileInfo = ProfileInfo()
+    private var editedEnable: Bool = false
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -103,7 +114,8 @@ class ProfileViewController: UIViewController {
     
     // MARK: Theme
     private func setTheme() {
-        self.view.backgroundColor = Theme.current.backgroundColor
+        self.view.backgroundColor = Theme.current.inputMessageBubbleColor
+        scrollView?.backgroundColor = Theme.current.backgroundColor
         nameTextField?.textColor = Theme.current.textColor
         descriptionTextView?.textColor = Theme.current.textColor
         descriptionTextView?.backgroundColor = Theme.current.backgroundColor

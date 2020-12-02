@@ -16,6 +16,7 @@
                 <outlet property="circleView" destination="AYr-3c-xXC" id="OVb-eY-vqm"/>
                 <outlet property="descriptionTextView" destination="mHS-sN-aGV" id="XBs-lz-0jo"/>
                 <outlet property="editPhotoButton" destination="ASc-i4-Zrv" id="ncl-rb-FGb"/>
+                <outlet property="editProfileButton" destination="TTa-RQ-igr" id="UvR-8K-QeR"/>
                 <outlet property="headerTitle" destination="he0-wb-oUb" id="vjQ-sw-EVb"/>
                 <outlet property="headerView" destination="cBo-of-3Vo" id="23h-cy-Cij"/>
                 <outlet property="nameSymbolsLabel" destination="Xuv-K9-v3l" id="92x-DO-2J4"/>

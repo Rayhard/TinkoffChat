@@ -15,6 +15,7 @@
 		333E5187254402A600648A8C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333E5186254402A600648A8C /* CoreDataStack.swift */; };
 		333E518A254409D400648A8C /* ObjectsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333E5189254409D400648A8C /* ObjectsExtensions.swift */; };
 		3343FA93251DC14900755C6A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FA92251DC14900755C6A /* UserProfile.swift */; };
+		3345B22325697C5C00BA6CD4 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3345B22225697C5C00BA6CD4 /* AnimationController.swift */; };
 		334664B8255C37C700D11F14 /* ThemesControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334664B7255C37C700D11F14 /* ThemesControllerModel.swift */; };
 		3346DD53252795F100ACC15F /* ClassicTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346DD52252795F100ACC15F /* ClassicTheme.swift */; };
 		3346DD572527960E00ACC15F /* DayTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3346DD562527960E00ACC15F /* DayTheme.swift */; };
@@ -54,6 +55,8 @@
 		337870CD255FCAA200B6752B /* ThemesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337870CC255FCAA200B6752B /* ThemesView.xib */; };
 		337870D2255FCC8100B6752B /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337870D1255FCC8100B6752B /* ConversationView.xib */; };
 		3378DD6E2562F26C00D27A37 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */; };
+		33798189256C4FAC008A6A83 /* EmitterLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */; };
+		337B1C2B256ED6310040B6BF /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337B1C2A256ED6310040B6BF /* MainNavigationController.swift */; };
 		337DC2A5256063E400C81469 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337DC2A3256063E400C81469 /* ImagePickerCell.swift */; };
 		337DC2A6256063E400C81469 /* ImagePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337DC2A4256063E400C81469 /* ImagePickerCell.xib */; };
 		337ED9F7256169FD004169B2 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337ED9F6256169FD004169B2 /* Requests.swift */; };
@@ -66,6 +69,7 @@
 		337EDA1B256181ED004169B2 /* ImageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337EDA1A256181ED004169B2 /* ImageParser.swift */; };
 		338C3F42253ED88800495814 /* FirebaseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338C3F41253ED88800495814 /* FirebaseParser.swift */; };
 		338D95F225431627007B6E26 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 338D95F025431627007B6E26 /* Chat.xcdatamodeld */; };
+		33CC2D40256FDE5300CE2CD6 /* ShakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC2D3F256FDE5300CE2CD6 /* ShakeAnimation.swift */; };
 		33CE749025455C90007EAECA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CE748F25455C90007EAECA /* CoreDataManager.swift */; };
 		33F618792556E99900863F4D /* ConversModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F618782556E99900863F4D /* ConversModel.swift */; };
 		33FD976C2526F4B800C7D2C5 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FD976B2526F4B800C7D2C5 /* ThemesViewController.swift */; };
@@ -83,6 +87,7 @@
 		333E5186254402A600648A8C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		333E5189254409D400648A8C /* ObjectsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsExtensions.swift; sourceTree = "<group>"; };
 		3343FA92251DC14900755C6A /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		3345B22225697C5C00BA6CD4 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		334664B7255C37C700D11F14 /* ThemesControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesControllerModel.swift; sourceTree = "<group>"; };
 		3346DD52252795F100ACC15F /* ClassicTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicTheme.swift; sourceTree = "<group>"; };
 		3346DD562527960E00ACC15F /* DayTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTheme.swift; sourceTree = "<group>"; };
@@ -124,6 +129,8 @@
 		337870CC255FCAA200B6752B /* ThemesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesView.xib; sourceTree = "<group>"; };
 		337870D1255FCC8100B6752B /* ConversationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationView.xib; sourceTree = "<group>"; };
 		3378DD6D2562F26C00D27A37 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
+		33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmitterLayerAnimator.swift; sourceTree = "<group>"; };
+		337B1C2A256ED6310040B6BF /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		337DC2A3256063E400C81469 /* ImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
 		337DC2A4256063E400C81469 /* ImagePickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePickerCell.xib; sourceTree = "<group>"; };
 		337ED9F6256169FD004169B2 /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
@@ -136,6 +143,7 @@
 		337EDA1A256181ED004169B2 /* ImageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageParser.swift; sourceTree = "<group>"; };
 		338C3F41253ED88800495814 /* FirebaseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseParser.swift; sourceTree = "<group>"; };
 		338D95F125431627007B6E26 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
+		33CC2D3F256FDE5300CE2CD6 /* ShakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeAnimation.swift; sourceTree = "<group>"; };
 		33CE748F25455C90007EAECA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		33F618782556E99900863F4D /* ConversModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversModel.swift; sourceTree = "<group>"; };
 		33FD976B2526F4B800C7D2C5 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +177,7 @@
 			children = (
 				3305A98725556E1E00DD07F9 /* Assembly */,
 				3354EEB3251D250C00C3CF52 /* Modules */,
+				3369D64D256E458F007AFDE3 /* Animation */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -314,6 +323,7 @@
 		3354EEB3251D250C00C3CF52 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				337B1C29256ED6080040B6BF /* Navigetion */,
 				33DE8656251F207F00A477E1 /* ConversationsList */,
 				33DE8658251F209100A477E1 /* Conversation */,
 				33DE8654251F205F00A477E1 /* Profile */,
@@ -355,6 +365,16 @@
 				3362FFA12567A715007B8946 /* UserDefaultsCore.swift */,
 			);
 			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		3369D64D256E458F007AFDE3 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				33798188256C4FAC008A6A83 /* EmitterLayerAnimator.swift */,
+				3345B22225697C5C00BA6CD4 /* AnimationController.swift */,
+				33CC2D3F256FDE5300CE2CD6 /* ShakeAnimation.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		336E32F625173656000A40D8 /* Extentions */ = {
@@ -440,6 +460,14 @@
 				337DC2A4256063E400C81469 /* ImagePickerCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		337B1C29256ED6080040B6BF /* Navigetion */ = {
+			isa = PBXGroup;
+			children = (
+				337B1C2A256ED6310040B6BF /* MainNavigationController.swift */,
+			);
+			path = Navigetion;
 			sourceTree = "<group>";
 		};
 		337ED9F5256169D8004169B2 /* Network */ = {
@@ -748,6 +776,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CC2D40256FDE5300CE2CD6 /* ShakeAnimation.swift in Sources */,
+				337B1C2B256ED6310040B6BF /* MainNavigationController.swift in Sources */,
 				335E180C256732520015CAC4 /* CoreDataService.swift in Sources */,
 				336C23BA253978CA00C592DD /* FirebaseService.swift in Sources */,
 				3346DD5A2527961E00ACC15F /* NightTheme.swift in Sources */,
@@ -760,6 +790,7 @@
 				337EDA0C25617593004169B2 /* ParserProtocol.swift in Sources */,
 				336932242532F9C700BE7B56 /* OperationDataManager.swift in Sources */,
 				3354EEB8251D259C00C3CF52 /* ConversationViewController.swift in Sources */,
+				3345B22325697C5C00BA6CD4 /* AnimationController.swift in Sources */,
 				33F618792556E99900863F4D /* ConversModel.swift in Sources */,
 				3346DD572527960E00ACC15F /* DayTheme.swift in Sources */,
 				3362FFA22567A715007B8946 /* UserDefaultsCore.swift in Sources */,
@@ -798,6 +829,7 @@
 				333E5187254402A600648A8C /* CoreDataStack.swift in Sources */,
 				334AB2FF2557D2CC0012CFBD /* ProfileModel.swift in Sources */,
 				33784DC425613471004E6190 /* NetworkService.swift in Sources */,
+				33798189256C4FAC008A6A83 /* EmitterLayerAnimator.swift in Sources */,
 				337DC2A5256063E400C81469 /* ImagePickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
