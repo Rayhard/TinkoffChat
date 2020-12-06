@@ -58,7 +58,7 @@ class FileMangersTests: XCTestCase {
         // Arrange
         let fileManagerMock = FileManagerMock()
         let gcdDataManager = OperationDataManager(fileCore: fileManagerMock)
-        let profileInfo = ProfileInfo(name: "Name", description: "Description", photo: nil)
+        let profileInfo = ProfileInfo(name: "Name", description: "Description", photo: UIImage(named: "clearFile"))
         
         // Act
         gcdDataManager.saveData(profileInfo) {
