@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/Rayhard/TinkoffChat.svg?branch=master)](https://travis-ci.org/Rayhard/TinkoffChat)
-
 fastlane documentation
 ================
 # Installation
@@ -21,17 +19,22 @@ or alternatively using `brew install fastlane`
 ```
 fastlane build_for_testing
 ```
-Description of what the lane does
+Create build for testing
 ### run_tests
 ```
 fastlane run_tests
 ```
-
+Run tests on build
+### send_discord_notification
+```
+fastlane send_discord_notification
+```
+Send notification to discord
 ### build_and_test
 ```
 fastlane build_and_test
 ```
-
+Create build and run tests
 
 ----
 
