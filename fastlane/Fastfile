@@ -22,4 +22,13 @@ lane :build_and_test do
   # scan
   build_for_testing
   run_tests
+  send
+end
+
+lane :send do
+  discord_notifier(
+    webhook_url: webhook_url,
+    title: "Tinkoff Chat",
+    description: "Build finished"
+  )
 end
