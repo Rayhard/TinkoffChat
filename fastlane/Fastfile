@@ -1,0 +1,30 @@
+# default_platform(:ios)
+
+#platform :ios do
+#  desc "Description of what the lane does"
+#  lane :custom_lane do
+#    # add actions here: https://docs.fastlane.tools/actions
+#  end
+# bundle exec fastlane build_and_test
+#end
+
+
+desc "Description of what the lane does"
+
+lane :build_for_testing do
+  scan(
+    build_for_testing: true
+  )
+end
+
+lane :run_tests do
+  scan(
+    test_without_building: true
+  )
+end
+
+lane :build_and_test do
+  # scan
+  build_for_testing
+  run_tests
+end
