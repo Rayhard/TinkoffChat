@@ -9,20 +9,23 @@
 #end
 
 
-desc "Description of what the lane does"
-
+desc "Create build for testing"
 lane :build_for_testing do
+  cocoapods
+
   scan(
     build_for_testing: true
   )
 end
 
+desc "Run tests on build"
 lane :run_tests do
   scan(
     test_without_building: true
   )
 end
 
+desc "Create build and run tests"
 lane :build_and_test do
   # scan
   build_for_testing
