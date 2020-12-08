@@ -10,7 +10,7 @@ import UIKit
 
 protocol IFileManagerCore {
     func saveTextFile(file: FileUrls, content: String)
-    func saveImageFile(file: FileUrls, content: Data)
+    func saveImageFile(file: FileUrls, content: UIImage)
     func getTextFile(file: FileUrls) -> String
     func getImageFile(file: FileUrls) -> UIImage?
 }
@@ -34,15 +34,25 @@ class FileManagerCore: IFileManagerCore {
         do {
             guard let url = self.getFileUrl(file: file) else { return }
             try content.write(to: url, atomically: false, encoding: .utf8)
+            
+            if file == .nameFile {
+                UserProfile.shared.name = content
+            } else {
+                UserProfile.shared.description = content
+            }
+            
         } catch {
             print(error)
         }
     }
     
-    func saveImageFile(file: FileUrls, content: Data) {
+    func saveImageFile(file: FileUrls, content: UIImage) {
         do {
-            guard let url = self.getFileUrl(file: file) else { return }
-            try content.write(to: url)
+            if let data = content.pngData() {
+                guard let url = self.getFileUrl(file: file) else { return }
+                try data.write(to: url)
+                UserProfile.shared.photo = content
+            }
         } catch {
             print(error)
         }
@@ -53,6 +63,12 @@ class FileManagerCore: IFileManagerCore {
         guard let url = self.getFileUrl(file: file) else { return content }
         do {
             content = try String(contentsOf: url, encoding: .utf8)
+            
+            if file == .nameFile {
+                UserProfile.shared.name = content
+            } else {
+                UserProfile.shared.description = content
+            }
         } catch {
             print(error)
         }
@@ -66,6 +82,7 @@ class FileManagerCore: IFileManagerCore {
         do {
             let imageData = try Data(contentsOf: url)
             content = UIImage(data: imageData)
+            UserProfile.shared.photo = content
         } catch {
             print(error)
         }

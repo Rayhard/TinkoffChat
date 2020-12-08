@@ -81,6 +81,9 @@ class ConversationsListViewController: UIViewController {
     private func setViews() {
         activityIndicator?.isHidden = false
         
+        profileView?.isAccessibilityElement = true
+        profileView?.accessibilityIdentifier = "OpenProfileButton"
+        
         profileView?.layer.cornerRadius = (profileView?.frame.width ?? 1) / 2
         profileImage?.layer.cornerRadius = (profileImage?.frame.width ?? 1) / 2
         profileImage?.clipsToBounds = true

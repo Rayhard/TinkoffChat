@@ -78,6 +78,7 @@ class ProfileViewController: UIViewController {
         loadProfileData()
         addKeyboardGesture()
         isEdited(false)
+        setViewForTest()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,6 +98,16 @@ class ProfileViewController: UIViewController {
             newProfileInfo.name = nameTextField?.text
             setStateSaveButtons(state: true)
         }
+    }
+    
+    private func setViewForTest() {
+        descriptionTextView?.isAccessibilityElement = true
+        nameTextField?.isAccessibilityElement = true
+        editProfileButton?.isAccessibilityElement = true
+        
+        descriptionTextView?.accessibilityIdentifier = "DescriptionTextView"
+        nameTextField?.accessibilityIdentifier = "NameTextField"
+        editProfileButton?.accessibilityIdentifier = "EditProfileButton"
     }
     
     private func setViews() {
