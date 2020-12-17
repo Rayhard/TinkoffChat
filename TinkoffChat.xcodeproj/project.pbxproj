@@ -265,9 +265,9 @@
 		3305A98325556B3E00DD07F9 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				338D95F025431627007B6E26 /* Chat.xcdatamodeld */,
 				336ECBC4252213A300ADB381 /* Fonts */,
 				336ED0D4250B4BCB00E64482 /* Assets.xcassets */,
+				338D95F025431627007B6E26 /* Chat.xcdatamodeld */,
 				336ED0D6250B4BCB00E64482 /* LaunchScreen.storyboard */,
 				336ED0D9250B4BCB00E64482 /* Info.plist */,
 			);

@@ -1,0 +1,13 @@
+language: swift
+osx_image: xcode12.2
+addons:
+  homebrew:
+    packages:
+      - libsodium
+before_install:
+  - yes | gem update --system --force
+  - gem install bundler
+install:
+  - bundle install
+script:
+  - fastlane build_and_test

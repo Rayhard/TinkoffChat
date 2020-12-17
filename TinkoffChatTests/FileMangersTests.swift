@@ -24,7 +24,7 @@ class FileMangersTests: XCTestCase {
         // Arrange
         let fileManagerMock = FileManagerMock()
         let gcdDataManager = GCDDataManager(fileCore: fileManagerMock)
-        let profileInfo = ProfileInfo(name: "Name", description: "Description", photo: nil)
+        let profileInfo = ProfileInfo(name: "Name", description: "Description", photo: UIImage(named: "clearFile"))
         
         // Act
         gcdDataManager.saveData(profileInfo) {
@@ -58,7 +58,7 @@ class FileMangersTests: XCTestCase {
         // Arrange
         let fileManagerMock = FileManagerMock()
         let gcdDataManager = OperationDataManager(fileCore: fileManagerMock)
-        let profileInfo = ProfileInfo(name: "Name", description: "Description", photo: nil)
+        let profileInfo = ProfileInfo(name: "Name", description: "Description", photo: UIImage(named: "clearFile"))
         
         // Act
         gcdDataManager.saveData(profileInfo) {
@@ -87,11 +87,11 @@ class FileMangersTests: XCTestCase {
         
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+//    func testPerformanceExample() throws {
+//        // This is an example of a performance test case.
+//        measure {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
 
 }
